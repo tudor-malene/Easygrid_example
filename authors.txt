@@ -1,0 +1,83 @@
+William Shakespeare	2000[1]	4000[2]	English	Plays and poetry	44+	British
+Agatha Christie	2000[3]	4000[2]	English	Whodunits including the Miss Marple and Hercule Poirot series	85	British
+Barbara Cartland	500[4]	1000[5]	English	Romance	723	British
+Danielle Steel	500[6]	800[7]	English	Romance	120	American
+Harold Robbins	750[8]	750[9]	English	Adventure	23	American
+Georges Simenon	500[10]	700[11]	French	Detectives, Maigret	570	Belgian
+Sidney Sheldon	370[12]	600[13]	English	Suspense	19	American
+Enid Blyton	300[14]	600[15]	English	Children's literature, Noddy, The Famous Five	800	British
+Dr. Seuss	100[16]	500[17]	English	Children's literature	44	American
+Gilbert Patten	125[18]	500[19]	English	Adolescent adventures	209	American
+J. K. Rowling	350[20]	450[21]	English	Harry Potter	9	British
+Leo Tolstoy		413[22]	Russian	Anna Karenina, War and Peace, philosophical works	48	Russian
+Jackie Collins	250[23]	400[24]	English	Romance	25	British
+Horatio Alger, Jr.	200[25]	400[26]	English	Dime novels	135	American
+R. L. Stine	100[27]	400[28]	English	Goosebumps series, Fear Street series, Horror, Comedy	430+	American
+Corin Tellado	400[29]	400[30]	Spanish	Romance	4,000	Spanish
+Dean Koontz	325[31]	400[32]	English	Thriller	91	American
+Alexander Pushkin		357[22]	Russian	Plays, poetry, prose, Eugene Onegin	17	Russian
+Stephen King	300[33]	350[34]	English	Horror, Fantasy, It, The Shining, The Stand, Bag Of Bones	70	American
+Louis L'Amour	230[35]	330[36]	English	Western	101	American
+Erle Stanley Gardner	100[37]	325[38]	English	Mystery, Perry Mason	140	American
+Jin Yong	100[39]	300[40][41]	Chinese	Wuxia	15	Hong Kong Chinese
+Jiro Akagawa		300[42]	Japanese	Mystery	500+	Japanese
+Janet Dailey	300[43]	300[44]	English	Romance	93	American
+Nora Roberts	145[45]	300[46]	English	Romance	145	American
+Edgar Wallace		300[47]	English	Detective	175	British
+Robert Ludlum	110[48]	290[49]	English	Espionage, Jason Bourne	40	American
+Frederic Dard	200[50]	290[51]	French	Detective, San Antonio	300	Swiss
+Stan and Jan Berenstain	200[52]	260[53]	English	Berenstain Bears	300+	American
+John Grisham	100[54]	250[55]	English	Legal thriller	22	American
+Zane Grey		250[56]	English	Western		American
+Irving Wallace		250[57]	English	Suspense		American
+J. R. R. Tolkien	200[58]	250[59]	English	The Lord of the Rings, The Hobbit, classical fantasy	36	British
+Jeffrey Archer	120[60]	250[61]	English	Crime thriller	30	British
+Karl May	100[62]	200[63]	German	Western, Adventure	80	German
+Mickey Spillane	100[64]	200[65]	English	Detective, Mike Hammer		American
+C. S. Lewis	100[66]	200[67]	English	The Chronicles of Narnia, fantasy, popular theology	38	British
+Kyotaro Nishimura		200[68]	Japanese	Mystery	400+	Japanese
+Charles Dickens		200[69]	English	Literature		British
+Ann M. Martin	172[70]	180[71]	English	The Baby-sitters Club	335	American
+Ryotaro Shiba		180[72]	Japanese	Historical	350	Japanese
+Arthur Hailey	150[73]	170[74]	English	Thriller	11	British/Canadian
+Gérard de Villiers		150[75]	French	Detectives, SAS	170	French
+Beatrix Potter	100[76]	150[77]	English	Peter Rabbit	23	British
+Michael Crichton	150[78]	150[79]	English	Techno Thriller	25	American
+Richard Scarry	100[80]	150[81]	English	Illustrated children's books	250	American
+James Patterson	100[82]	150[83]	English	Thriller	48	American
+Clive Cussler	40[84]	150[85]	English	Adventure, Dirk Pitt	37	American
+Alistair McLean		150[86]	English	Adventure,Thriller Wartime stories	32	British
+Astrid Lindgren	100[87]	145[88]	Swedish	Children's literature	100	Swedish
+Debbie Macomber	60[89]	140[90]	English	Romance		American
+Paulo Coelho	92[91]	140[92]	Portuguese	The Alchemist		Brazilian
+Dan Brown		120[93]	English	Thriller	5	American
+Eiji Yoshikawa		120[94]	Japanese	Musashi	7	Japanese
+Catherine Cookson	100[95]	120[96]	English	Romance	103	British
+Stephenie Meyer	100[97]	116[98]	English	The Twilight Saga, The Host, Romance	6	American
+Norman Bridwell	100[99]	110[100]	English	Clifford the Big Red Dog	80	American
+David Baldacci		110[101]	English	Thriller	25	American
+Roald Dahl	100[102]	100[103]	English	Children's literature	50	British
+Evan Hunter	100[104]	100[105]	English	Detective (Ed McBain)	94	American
+Andrew Neiderman	100[106]	100[107]	English	V. C. Andrews, The Devil's Advocate	60	American
+Roger Hargreaves	100[108]	100[109]	English	Children's literature, Mr. Men		British
+Anne Rice	75[110]	100[111]	English	Thriller, vampires, Interview with the Vampire (The Vampire Chronicles)	27	American
+Robin Cook	100[112]	100[113]	English	Medical Thriller	27	American
+Wilbur Smith	80[114]	100[115]	English	African Adventure	32	Zambian
+Erskine Caldwell	80[116]	100[117]	English	Literature	25	American
+Eleanor Hibbert	100[118]	100[119]	English	Romance, historical, suspense	200	British
+Lewis Carroll		100[120]	English	Alice's Adventures in Wonderland, Absurdist literature	5	British
+Denise Robins		100[121]	English	Romance	200	British
+Cao Xueqin		100[122]	Chinese	Dream of the Red Chamber		Chinese
+Ian Fleming	100[123]	100[124]	English	James Bond	14	British
+Hermann Hesse	100[125]	100[126]	German	Steppenwolf, Siddhartha, The Glass Bead Game	45	German-Swiss
+Rex Stout	100[127]	100[128]	English	Nero Wolfe	50	American
+Anne Golon	100[129]	100[130]	French	Angélique	14	French
+Ken Follett	90[131]	100[132]	English	Spy Thriller, Historical Thriller	30	British
+Frank G. Slaughter		100[133]	English	Medical	62	American
+Edgar Rice Burroughs	100[134]	100[135]	English	Tarzan, Barsoom and Pellucidar series and other science fantasy		American
+John Creasey		100[136]	English	Crime thriller	600	British
+James Michener		100[137]	English	Historical	47	American
+Yasuo Uchida		100[138]	Japanese	Mystery	130+	Japanese
+Seiichi Morimura		100[138]	Japanese	Mystery	350+	Japanese
+Mary Higgins Clark	100[139]	100[140]	English	Thriller		American
+Penny Jordan	90[141]	100[142]	English	Romance	200+	British
