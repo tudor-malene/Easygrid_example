@@ -55,7 +55,7 @@ grails.project.dependency.resolution = {
         compile ':cache:1.0.0'
 
         // Useful to test plugins you are developing.
-//        grails.plugin.location.easygrid ="e:\\work\\easygrid\\"
+        grails.plugin.location.easygrid ="/plugins"
 
         compile ':heroku:1.0.1'
         compile ':cloud-support:1.0.8'
