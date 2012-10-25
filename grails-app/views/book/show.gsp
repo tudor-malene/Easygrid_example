@@ -41,6 +41,15 @@
 				</li>
 				</g:if>
 			
+				<g:if test="${bookInstance?.date}">
+				<li class="fieldcontain">
+					<span id="date-label" class="property-label"><g:message code="book.date.label" default="Date" /></span>
+					
+						<span class="property-value" aria-labelledby="date-label"><g:formatDate date="${bookInstance?.date}" /></span>
+					
+				</li>
+				</g:if>
+			
 				<g:if test="${bookInstance?.title}">
 				<li class="fieldcontain">
 					<span id="title-label" class="property-label"><g:message code="book.title.label" default="Title" /></span>

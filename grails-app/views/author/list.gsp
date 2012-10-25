@@ -53,17 +53,21 @@
         <r:require modules="easygrid-jqgrid-dev"/>
         To be able to view the content you need to login with: me/password
         <grid:grid id='authorJQGrid'/>
+        <grid:exportButton id='authorJQGrid'/>
     </g:if>
     <g:elseif test="${params.impl == 'visualization'}">
         <r:require modules="easygrid-visualization-dev"/>
         <grid:grid id='authorVisualization'/>
+        <grid:exportButton id='authorVisualization'/>
     </g:elseif>
     <g:elseif test="${params.impl == 'datatables'}">
         <r:require modules="easygrid-datatables-dev"/>
         <grid:grid id='authorDatatables'/>
+        <grid:exportButton id='authorDatatables'/>
     </g:elseif>
     <g:else>
         <grid:grid id='authorClassic'/>
+        <grid:exportButton id='authorClassic'/>
     </g:else>
 
 </div>

@@ -24,14 +24,15 @@ class BootStrap {
                 Author author = new Author()
                 def values = line.split('\t')
                 author.name = values[0]
-                author.minEstSales = (values[1].split('\\[')[0] as long) * 1000 * 1000
-                author.maxEstSales = (values[2].split('\\[')[0] as long) * 1000 * 1000
+                author.minEstSales = values[1] ? (values[1].split('\\[')[0] as long) * 1000 * 1000 : 0
+                author.maxEstSales = values[2] ? (values[2].split('\\[')[0] as long) * 1000 * 1000 : 0
                 author.language = values[3]
                 author.nrBooks = values[5]
                 author.nationality = values[6]
 
                 author.save(failOnError: true)
             } catch (Exception e) {
+                e.printStackTrace()
                 //do nothing
             }
         }

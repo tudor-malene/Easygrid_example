@@ -18,6 +18,14 @@
 	<g:select id="author" name="author.id" from="${example.Author.list()}" optionKey="id" required="" value="${bookInstance?.author?.id}" class="many-to-one"/>
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: bookInstance, field: 'date', 'error')} required">
+	<label for="date">
+		<g:message code="book.date.label" default="Date" />
+		<span class="required-indicator">*</span>
+	</label>
+	<g:datePicker name="date" precision="day"  value="${bookInstance?.date}"  />
+</div>
+
 <div class="fieldcontain ${hasErrors(bean: bookInstance, field: 'title', 'error')} ">
 	<label for="title">
 		<g:message code="book.title.label" default="Title" />

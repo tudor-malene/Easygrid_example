@@ -52,5 +52,9 @@ grails.project.dependency.resolution = {
         runtime ":database-migration:1.1"
 
         compile ':cache:1.0.0'
+
+        // Useful to test plugins you are developing.
+//        grails.plugin.location.easygrid ="e:\\work\\easygrid\\"
+
     }
 }

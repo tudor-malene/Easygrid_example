@@ -1,6 +1,6 @@
-import com.google.visualization.datasource.datatable.value.ValueType
-import org.codehaus.groovy.grails.plugins.springsecurity.SpringSecurityUtils
+
 import groovy.text.SimpleTemplateEngine
+import org.codehaus.groovy.grails.plugins.springsecurity.SpringSecurityUtils
 
 // locations to search for config files that get merged into the main config;
 // config files can be ConfigSlurper scripts, Java properties files, or classes
@@ -109,7 +109,7 @@ easygrid {
 
         //jqgrid default properties
         jqgrid {
-            width = '100%'
+            width = '"100%"'
             height = 250
         }
 
@@ -169,6 +169,7 @@ easygrid {
             editRenderer = '/templates/jqGridEditResponse'
             formats = [
                     (Date.class): {it.format("dd/MM/yyyy")},
+                    (Calendar.class): {Calendar cal ->cal.format("dd/MM/yyyy")},
                     (Boolean.class): { it ? "Yes" : "No" }
             ]
         }
@@ -211,7 +212,7 @@ easygrid {
                 width = "'100%'"
             }
             export {
-                width = 30
+                width = 25
             }
         }
 
@@ -229,6 +230,9 @@ easygrid {
                 }
                 visualization {
                     valueType = com.google.visualization.datasource.datatable.value.ValueType.NUMBER
+                }
+                export {
+                    width = 10
                 }
 
             }
@@ -291,8 +295,6 @@ easygrid {
         }
     }
 }
-
-
 
 // Added by the Spring Security Core plugin:
 grails.plugins.springsecurity.userLookup.userDomainClassName = 'example.sec.User'

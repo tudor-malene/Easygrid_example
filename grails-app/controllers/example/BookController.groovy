@@ -1,18 +1,73 @@
 package example
 
 import org.springframework.dao.DataIntegrityViolationException
+import org.grails.plugin.easygrid.EasyGrid
 
+@EasyGrid
 class BookController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
+
+
+    static grids = {
+        customDatasourceBooks {
+            gridImpl 'jqgrid'
+            dataSourceType 'custom'
+            labelPrefix 'book'
+            dataProvider {gridConfig, filters, listParams ->
+                [
+                        new Book( author: Author.findByNameIlike('%Tolstoy%'), title: 'War and peace', description: 'bla bla', date:new GregorianCalendar(1821, 10, 11).time),
+                ]
+            }
+            dataCount {filters ->
+                1
+            }
+            jqgrid{
+                width 900
+            }
+            columns {
+                'book.id.label' {
+                    type 'id'
+                }
+                'book.author.label' {
+                    value {Book book ->
+                        book.author.name
+                    }
+                    jqgrid {
+                        name 'author'
+                        search false
+                    }
+                }
+                'book.title.label'{
+                    property 'title'
+                    jqgrid {
+                        search false
+                    }
+                }
+                'book.description.label'{
+                    property 'description'
+                    jqgrid {
+                        search false
+                    }
+                }
+                'book.date.label'{
+                    property 'date'
+                    jqgrid {
+                        search false
+                    }
+                }
+
+
+            }
+        }
+    }
+
 
     def index() {
         redirect(action: "list", params: params)
     }
 
     def list(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        [bookInstanceList: Book.list(params), bookInstanceTotal: Book.count()]
     }
 
     def create() {
