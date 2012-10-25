@@ -1,4 +1,3 @@
-
 import groovy.text.SimpleTemplateEngine
 import org.codehaus.groovy.grails.plugins.springsecurity.SpringSecurityUtils
 
@@ -169,7 +168,7 @@ easygrid {
             editRenderer = '/templates/jqGridEditResponse'
             formats = [
                     (Date.class): {it.format("dd/MM/yyyy")},
-                    (Calendar.class): {Calendar cal ->cal.format("dd/MM/yyyy")},
+                    (Calendar.class): {Calendar cal -> cal.format("dd/MM/yyyy")},
                     (Boolean.class): { it ? "Yes" : "No" }
             ]
         }
@@ -283,11 +282,11 @@ easygrid {
         }
 
         nrToString = {nr ->
-            if (nr / 1000000000 > 1) {
+            if (nr / 1000000000 >= 1) {
                 "${(nr / 1000000000) as int} billion"
-            } else if (nr / 1000000 > 1) {
+            } else if (nr / 1000000 >= 1) {
                 "${(nr / 1000000) as int} million"
-            } else if (nr / 1000 > 1) {
+            } else if (nr / 1000 >= 1) {
                 "${(nr / 1000) as int}k"
             } else {
                 nr

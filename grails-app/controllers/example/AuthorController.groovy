@@ -183,6 +183,34 @@ class AuthorController {
 
         }
 
+        authorDatatablesOverBill {
+            dataSourceType 'domain'
+            domainClass Author
+            gridImpl 'datatable'
+            initialCriteria {
+                gte('maxEstSales', 1000000000G)
+            }
+//            roles 'ROLE_ADMIN'
+            columns {
+                'author.id.label' {
+                    type 'id'
+                }
+                name
+                'author.minEstSales.label' {
+                    property 'minEstSales'
+                    formatName 'nrToString'
+                }
+                'author.maxEstSales.label' {
+                    property 'maxEstSales'
+                    formatName 'nrToString'
+                }
+                language
+                nrBooks
+                nationality
+            }
+
+        }
+
     }
 
     def index() {

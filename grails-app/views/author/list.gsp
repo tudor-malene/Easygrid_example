@@ -38,6 +38,8 @@
 
         <li><a href="${g.createLink(action: 'list', params: [impl: 'datatables'])}">Datatable (alpha)</a></li>
 
+        <li><a href="${g.createLink(action: 'list', params: [impl: 'authorDatatablesOverBill'])}">Datatable -over 1Billion </a></li>
+
 
     </ul>
 </div>
@@ -64,6 +66,11 @@
         <r:require modules="easygrid-datatables-dev"/>
         <grid:grid id='authorDatatables'/>
         <grid:exportButton id='authorDatatables'/>
+    </g:elseif>
+    <g:elseif test="${params.impl == 'authorDatatablesOverBill'}">
+        <r:require modules="easygrid-datatables-dev"/>
+        <grid:grid id='authorDatatablesOverBill'/>
+        <grid:exportButton id='authorDatatablesOverBill'/>
     </g:elseif>
     <g:else>
         <grid:grid id='authorClassic'/>
