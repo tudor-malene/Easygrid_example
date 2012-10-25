@@ -15,4 +15,8 @@ class Author {
 
     static constraints = {
     }
+
+    static mapping = {
+        cache true
+    }
 }

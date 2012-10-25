@@ -12,4 +12,8 @@ class Book {
         description(nullable: true)
     }
 
+    static mapping = {
+        cache true
+    }
+
 }

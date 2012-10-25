@@ -12,7 +12,7 @@ grails.project.dependency.resolution = {
         // specify dependency exclusions here; for example, uncomment this to disable ehcache:
         // excludes 'ehcache'
     }
-    log "error" // log level of Ivy resolver, either 'error', 'warn', 'info', 'debug' or 'verbose'
+    log "warn" // log level of Ivy resolver, either 'error', 'warn', 'info', 'debug' or 'verbose'
     checksums true // Whether to verify checksums on resolve
 
     repositories {
@@ -34,6 +34,7 @@ grails.project.dependency.resolution = {
     dependencies {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes eg.
 
+        runtime 'postgresql:postgresql:8.4-702.jdbc3'
         // runtime 'mysql:mysql-connector-java:5.1.20'
     }
 
@@ -56,5 +57,7 @@ grails.project.dependency.resolution = {
         // Useful to test plugins you are developing.
 //        grails.plugin.location.easygrid ="e:\\work\\easygrid\\"
 
+        compile ':heroku:1.0.1'
+        compile ':cloud-support:1.0.8'
     }
 }
