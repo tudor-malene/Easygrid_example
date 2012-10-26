@@ -18,6 +18,7 @@ grails.project.dependency.resolution = {
     repositories {
         inherits true // Whether to inherit repository definitions from plugins
 
+        mavenRepo "http://94.24.119.178:8081/nexus/content/repositories/releases/"
         grailsPlugins()
         grailsHome()
         grailsCentral()
@@ -25,8 +26,8 @@ grails.project.dependency.resolution = {
         mavenLocal()
         mavenCentral()
 
-        flatDir(name:'local-plgns', dirs:'local-plgns')
-        flatDir(name:'local-plgns', dirs:'/local-plgns')
+//        flatDir(name:'local-plgns', dirs:'local-plgns')
+//        flatDir(name:'local-plgns', dirs:'/local-plgns')
 
         // uncomment these (or add new ones) to enable remote dependency resolution from public Maven repositories
         //mavenRepo "http://snapshots.repository.codehaus.org"
