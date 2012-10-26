@@ -23,9 +23,9 @@ grails.project.dependency.resolution = {
         grailsHome()
         grailsCentral()
 
-        mavenRepo "http://94.24.119.178:8081/nexus/content/repositories/releases/"
         mavenLocal()
         mavenCentral()
+        mavenRepo "http://94.24.119.178:8081/nexus/content/repositories/releases/"
 
 //        flatDir(name:'local-plgns', dirs:'local-plgns')
 //        flatDir(name:'local-plgns', dirs:'/local-plgns')
