@@ -108,33 +108,18 @@ class AuthorController {
                     type 'version'
                 }
             }
-
         }
 
         authorVisualization {
             dataSourceType 'domain'
             domainClass Author
             gridImpl 'visualization'
-//            roles 'ROLE_ADMIN'
             visualization {
                 page 'enable'
                 allowHtml true
                 alternatingRowStyle true
-//                rtlTable true
                 showRowNumber false
-//                firstRowNumber 33
-//                page      5
                 pageSize 10
-//                scrollLeftStartPosition 44
-//                sortAscending true
-//                startPage 3
-//                width 900
-//                height  700
-
-//                SORT_COLUMN("sortColumn", [DataType.NUMBER]),
-//                cssClassNames
-//                sort 'id'
-
             }
 
             columns {
@@ -154,8 +139,6 @@ class AuthorController {
                 nrBooks
                 nationality
             }
-
-
         }
 
         authorDatatables {
@@ -180,7 +163,6 @@ class AuthorController {
                 nrBooks
                 nationality
             }
-
         }
 
         authorDatatablesOverBill {

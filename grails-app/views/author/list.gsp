@@ -56,25 +56,218 @@
         To be able to view the content you need to login with: me/password
         <grid:grid id='authorJQGrid'/>
         <grid:exportButton id='authorJQGrid'/>
+
+        <pre><code>
+        authorJQGrid {
+            dataSourceType &#39;domain&#39;
+            domainClass Author
+            gridImpl &#39;jqgrid&#39;
+            inlineEdit true
+            jqgrid {
+              width &#39;&quot;900&quot;&#39;
+            }
+            roles &#39;ROLE_USER&#39;
+            columns {
+                &#39;actions&#39; {
+                   type &#39;actions&#39;
+                }
+                &#39;author.id.label&#39; {
+                   type &#39;id&#39;
+                }
+                &#39;author.name.label&#39; {
+                    property &#39;name&#39;
+                    jqgrid {
+                        editable false
+                        // this will create a link to the wikipedia page
+                        formatter &#39;customWikiFormat&#39;
+                        searchClosure {params -&gt;
+                            ilike(&#39;name&#39;, &quot;%${params.name}%&quot;)
+                        }
+                    }
+                }
+                &#39;author.minEstSales.label&#39; {
+                    property &#39;minEstSales&#39;
+                    formatName &#39;nrToString&#39;
+                    jqgrid {
+                        editable false
+                        search false
+                    }
+                }
+                &#39;author.maxEstSales.label&#39; {
+                    property &#39;maxEstSales&#39;
+                    formatName &#39;nrToString&#39;
+                    jqgrid {
+                        editable false
+                        search false
+                    }
+                }
+                &#39;author.language.label&#39; {
+                    property &#39;language&#39;
+                    jqgrid {
+                        editable true
+                        searchClosure {params -&gt;
+                            ilike(&#39;language&#39;, &quot;%${params.language}%&quot;)
+                        }
+                    }
+                }
+                &#39;author.nrBooks.label&#39; {
+                    property &#39;nrBooks&#39;
+                    jqgrid {
+                        editable true
+                        search false
+                    }
+                }
+                &#39;author.nationality.label&#39; {
+                    property &#39;nationality&#39;
+                    jqgrid {
+                        editable true
+                        searchClosure {params -&gt;
+                            ilike(&#39;nationality&#39;, &quot;%${params.nationality}%&quot;)
+                        }
+                    }
+                }
+                &#39;version&#39; {
+                    type &#39;version&#39;
+                }
+            }
+        }
+        </code></pre>
+
+
     </g:if>
     <g:elseif test="${params.impl == 'visualization'}">
         <r:require modules="easygrid-visualization-dev"/>
         <grid:grid id='authorVisualization'/>
         <grid:exportButton id='authorVisualization'/>
+
+        <pre><code>
+        authorVisualization {
+            dataSourceType &#39;domain&#39;
+            domainClass Author
+            gridImpl &#39;visualization&#39;
+            visualization {
+                page &#39;enable&#39;
+                allowHtml true
+                alternatingRowStyle true
+                showRowNumber false
+                pageSize 10
+            }
+            columns {
+                &#39;author.id.label&#39; {
+                    type &#39;id&#39;
+                }
+                name
+                &#39;author.minEstSales.label&#39; {
+                    property &#39;minEstSales&#39;
+                    formatName &#39;nrToString&#39;
+                }
+                &#39;author.maxEstSales.label&#39; {
+                    property &#39;maxEstSales&#39;
+                    formatName &#39;nrToString&#39;
+                }
+                language
+                nrBooks
+                nationality
+            }
+        }
+        </code></pre>
+
+
     </g:elseif>
     <g:elseif test="${params.impl == 'datatables'}">
         <r:require modules="easygrid-datatables-dev"/>
         <grid:grid id='authorDatatables'/>
         <grid:exportButton id='authorDatatables'/>
+        <pre><code>
+        authorDatatables {
+            dataSourceType &#39;domain&#39;
+            domainClass Author
+            gridImpl &#39;datatable&#39;
+            columns {
+                &#39;author.id.label&#39; {
+                    type &#39;id&#39;
+                }
+                name
+                &#39;author.minEstSales.label&#39; {
+                    property &#39;minEstSales&#39;
+                    formatName &#39;nrToString&#39;
+                }
+                &#39;author.maxEstSales.label&#39; {
+                    property &#39;maxEstSales&#39;
+                    formatName &#39;nrToString&#39;
+                }
+                language
+                nrBooks
+                nationality
+            }
+        }
+        </code></pre>
+
     </g:elseif>
     <g:elseif test="${params.impl == 'authorDatatablesOverBill'}">
         <r:require modules="easygrid-datatables-dev"/>
         <grid:grid id='authorDatatablesOverBill'/>
         <grid:exportButton id='authorDatatablesOverBill'/>
+
+        <pre><code>
+        authorDatatablesOverBill {
+            dataSourceType &#39;domain&#39;
+            domainClass Author
+            gridImpl &#39;datatable&#39;
+            initialCriteria {
+                gte(&#39;maxEstSales&#39;, 1000000000G)
+            }
+            columns {
+                &#39;author.id.label&#39; {
+                    type &#39;id&#39;
+                }
+                name
+                &#39;author.minEstSales.label&#39; {
+                    property &#39;minEstSales&#39;
+                    formatName &#39;nrToString&#39;
+                }
+                &#39;author.maxEstSales.label&#39; {
+                    property &#39;maxEstSales&#39;
+                    formatName &#39;nrToString&#39;
+                }
+                language
+                nrBooks
+                nationality
+            }
+        }
+        </code></pre>
+
     </g:elseif>
     <g:else>
         <grid:grid id='authorClassic'/>
         <grid:exportButton id='authorClassic'/>
+
+        <pre><code>
+
+        authorClassic {
+            dataSourceType &#39;domain&#39;
+            domainClass Author
+            gridImpl &#39;classic&#39;
+            classic {
+            }
+            columns {
+            &#39;author.id.label&#39; {
+               type &#39;id&#39;
+            }
+            name
+            &#39;author.minEstSales.label&#39; {
+                property &#39;minEstSales&#39;
+                formatName &#39;nrToString&#39;
+            }
+            &#39;author.maxEstSales.label&#39; {
+                property &#39;maxEstSales&#39;
+                formatName &#39;nrToString&#39;
+            }
+            language
+            nrBooks
+            nationality
+            }
+        }</code></pre>
     </g:else>
 
 </div>
