@@ -26,6 +26,7 @@ grails.project.dependency.resolution = {
         mavenCentral()
 
         flatDir(name:'local-plgns', dirs:'local-plgns')
+        flatDir(name:'local-plgns', dirs:'/local-plgns')
 
         // uncomment these (or add new ones) to enable remote dependency resolution from public Maven repositories
         //mavenRepo "http://snapshots.repository.codehaus.org"
