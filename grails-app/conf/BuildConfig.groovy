@@ -62,11 +62,15 @@ grails.project.dependency.resolution = {
         // Useful to test plugins you are developing.
 //        grails.plugin.location.easygrid ="/plugin"
 
-        compile ':heroku:1.0.1'
+        compile ':heroku:1.0.1',{
+            transitive = false
+        }
         compile ':cloud-support:1.0.9'
+/*
         compile ':database-session:1.1.2',{
             transitive = false
         }
+*/
 
     }
 }
