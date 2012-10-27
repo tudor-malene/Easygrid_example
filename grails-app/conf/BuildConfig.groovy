@@ -12,8 +12,8 @@ grails.project.dependency.resolution = {
         // specify dependency exclusions here; for example, uncomment this to disable ehcache:
         // excludes 'ehcache'
     }
-    log "warn" // log level of Ivy resolver, either 'error', 'warn', 'info', 'debug' or 'verbose'
-    checksums true // Whether to verify checksums on resolve
+    log "info" // log level of Ivy resolver, either 'error', 'warn', 'info', 'debug' or 'verbose'
+    checksums false// Whether to verify checksums on resolve
 
     repositories {
         inherits true // Whether to inherit repository definitions from plugins
@@ -23,9 +23,9 @@ grails.project.dependency.resolution = {
         grailsHome()
         grailsCentral()
 
-        mavenLocal()
+//        mavenLocal()
         mavenCentral()
-//        mavenRepo "http://94.24.119.178:8081/nexus/content/repositories/releases/"
+        mavenRepo "http://94.24.119.178:8081/nexus/content/repositories/releases/"
 
 //        flatDir(name:'local-plgns', dirs:'local-plgns')
 //        flatDir(name:'local-plgns', dirs:'/local-plgns')
