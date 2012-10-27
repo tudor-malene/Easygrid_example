@@ -64,5 +64,9 @@ grails.project.dependency.resolution = {
 
         compile ':heroku:1.0.1'
         compile ':cloud-support:1.0.9'
+        compile ':database-session:1.1.2',{
+            transitive = false
+        }
+
     }
 }
