@@ -65,12 +65,13 @@ grails.project.dependency.resolution = {
         compile ':heroku:1.0.1',{
             transitive = false
         }
-        compile ':cloud-support:1.0.9'
-/*
-        compile ':database-session:1.1.2',{
+        runtime ':cloud-support:1.0.9'
+        runtime ':database-session:1.1.2',{
             transitive = false
         }
-*/
+
+        compile 'jquery-ui:1.8.24'
+        compile 'google-visualization:0.5.6'
 
     }
 }
