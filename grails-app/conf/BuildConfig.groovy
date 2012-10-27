@@ -66,9 +66,11 @@ grails.project.dependency.resolution = {
             transitive = false
         }
         runtime ':cloud-support:1.0.9'
+/*
         runtime ':database-session:1.1.2',{
             transitive = false
         }
+*/
 
         compile 'jquery-ui:1.8.24'
         compile 'google-visualization:0.5.6'
