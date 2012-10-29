@@ -289,7 +289,7 @@ easygrid {
             } else if (nr / 1000 >= 1) {
                 "${(nr / 1000) as int}k"
             } else {
-                nr
+                "${nr}"
             }
         }
     }

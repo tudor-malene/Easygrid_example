@@ -12,7 +12,7 @@ grails.project.dependency.resolution = {
         // specify dependency exclusions here; for example, uncomment this to disable ehcache:
         // excludes 'ehcache'
     }
-    log "verbose" // log level of Ivy resolver, either 'error', 'warn', 'info', 'debug' or 'verbose'
+    log "warn" // log level of Ivy resolver, either 'error', 'warn', 'info', 'debug' or 'verbose'
     checksums false// Whether to verify checksums on resolve
 
     repositories {
@@ -25,7 +25,7 @@ grails.project.dependency.resolution = {
 
 //        mavenLocal()
         mavenCentral()
-        mavenRepo "http://94.24.119.178:8081/nexus/content/repositories/releases/"
+//        mavenRepo "http://94.24.119.178:8081/nexus/content/repositories/releases/"
 
 //        flatDir(name:'local-plgns', dirs:'local-plgns')
 //        flatDir(name:'local-plgns', dirs:'/local-plgns')
@@ -60,20 +60,20 @@ grails.project.dependency.resolution = {
         compile ':cache:1.0.0'
 
         // Useful to test plugins you are developing.
-//        grails.plugin.location.easygrid ="/plugin"
+        grails.plugin.location.easygrid ="../Easygrid"
 
+/*
         compile ':heroku:1.0.1',{
             transitive = false
         }
         runtime ':cloud-support:1.0.9'
-/*
         runtime ':database-session:1.1.2',{
             transitive = false
         }
 */
 
-        compile 'jquery-ui:1.8.24'
-        compile 'google-visualization:0.5.6'
+//        compile 'jquery-ui:1.8.24'
+//        compile 'google-visualization:0.5.6'
 
     }
 }

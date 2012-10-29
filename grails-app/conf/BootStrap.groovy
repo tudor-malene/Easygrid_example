@@ -7,7 +7,6 @@ class BootStrap {
 
     def init = { servletContext ->
 
-
         def adminRole = new Role(authority: 'ROLE_ADMIN').save(flush: true)
         def userRole = new Role(authority: 'ROLE_USER').save(flush: true)
         def editRole = new Role(authority: 'ROLE_EDIT').save(flush: true)
@@ -17,8 +16,7 @@ class BootStrap {
 
         UserRole.create testUser, userRole, true
 
-
-        new File('authors.txt').eachLine {line ->
+        this.class.getResourceAsStream("authors.txt").eachLine{line ->
 
             try {
                 Author author = new Author()
@@ -37,6 +35,8 @@ class BootStrap {
             }
         }
     }
+
     def destroy = {
     }
+
 }
