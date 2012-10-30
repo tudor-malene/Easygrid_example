@@ -205,6 +205,8 @@ easygrid {
                 sortable = true
             }
             visualization {
+                search = false
+                searchType = 'text'
                 valueType = com.google.visualization.datasource.datatable.value.ValueType.TEXT
             }
             datatable {

@@ -136,7 +136,7 @@
 
     </g:if>
     <g:elseif test="${params.impl == 'visualization'}">
-        <r:require modules="easygrid-visualization-dev"/>
+        <r:require modules="easygrid-visualization-dev,jquery-dev"/>
         <grid:grid id='authorVisualization'/>
         <grid:exportButton id='authorVisualization'/>
 
