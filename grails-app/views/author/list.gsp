@@ -152,11 +152,20 @@
                 showRowNumber false
                 pageSize 10
             }
+
             columns {
                 &#39;author.id.label&#39; {
-                    type &#39;id&#39;
+                   type &#39;id&#39;
                 }
-                name
+                &#39;author.name.label&#39; {
+                    property &#39;name&#39;
+                    visualization {
+                        search true
+                        searchClosure {params -&gt;
+                            ilike(&#39;name&#39;, &quot;%${params.name}%&quot;)
+                        }
+                    }
+                }
                 &#39;author.minEstSales.label&#39; {
                     property &#39;minEstSales&#39;
                     formatName &#39;nrToString&#39;
@@ -164,10 +173,35 @@
                 &#39;author.maxEstSales.label&#39; {
                     property &#39;maxEstSales&#39;
                     formatName &#39;nrToString&#39;
+                    visualization {
+                        search true
+                        searchType &#39;number&#39;
+                        searchClosure {params -&gt;
+                            gt(&#39;maxEstSales&#39;, new BigInteger(params.maxEstSales))
+                        }
+                    }
                 }
-                language
-                nrBooks
-                nationality
+                &#39;author.language.label&#39; {
+                    property &#39;language&#39;
+                    visualization {
+                        search true
+                        searchClosure {params -&gt;
+                            ilike(&#39;language&#39;, &quot;%${params.language}%&quot;)
+                        }
+                    }
+                }
+                &#39;author.nrBooks.label&#39; {
+                    property &#39;nrBooks&#39;
+                }
+                &#39;author.nationality.label&#39; {
+                    property &#39;nationality&#39;
+                    visualization {
+                        search true
+                        searchClosure {params -&gt;
+                            ilike(&#39;nationality&#39;, &quot;%${params.nationality}%&quot;)
+                        }
+                    }
+                }
             }
         }
         </code></pre>
