@@ -183,7 +183,15 @@ class AuthorController {
                 'author.id.label' {
                     type 'id'
                 }
-                name
+                'author.name.label' {
+                    property 'name'
+                    datatable {
+                        search true
+                        searchClosure {params ->
+                            ilike('name', "%${params.name}%")
+                        }
+                    }
+                }
                 'author.minEstSales.label' {
                     property 'minEstSales'
                     formatName 'nrToString'
@@ -191,10 +199,34 @@ class AuthorController {
                 'author.maxEstSales.label' {
                     property 'maxEstSales'
                     formatName 'nrToString'
+                    datatable {
+                        search true
+                        searchClosure {params ->
+                            gt('maxEstSales', new BigInteger(params.maxEstSales))
+                        }
+                    }
                 }
-                language
-                nrBooks
-                nationality
+                'author.language.label' {
+                    property 'language'
+                    datatable {
+                        search true
+                        searchClosure {params ->
+                            ilike('language', "%${params.language}%")
+                        }
+                    }
+                }
+                'author.nrBooks.label' {
+                    property 'nrBooks'
+                }
+                'author.nationality.label' {
+                    property 'nationality'
+                    datatable {
+                        search true
+                        searchClosure {params ->
+                            ilike('nationality', "%${params.nationality}%")
+                        }
+                    }
+                }
             }
         }
 

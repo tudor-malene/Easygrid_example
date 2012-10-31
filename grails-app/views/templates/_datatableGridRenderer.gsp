@@ -1,16 +1,74 @@
-<jq:jquery>
-    $('#${gridConfig.id}').dataTable( {
-       "bProcessing": true,
-       "bServerSide": true,
-       "sAjaxSource": "${g.createLink(action: "${gridConfig.id}Rows")}"
-   } );
-</jq:jquery>
+%{--<jq:jquery>--}%
+<script type="text/javascript">jQuery(function () {
 
-<table cellpadding="0" cellspacing="0" border="0" class="display" id="${gridConfig.id}" width="${gridConfig.datatable.width}">
+    %{--todo - move some hardcodings to the config --}%
+    var oTable = $('#${gridConfig.id}').dataTable({
+        bFilter:true,
+        "bStateSave":false,
+        'sPaginationType':'full_numbers',
+        "fnInitComplete":function () {
+            //hack - removes the filter div
+            $('#${gridConfig.id}_filter').remove();
+            var oSettings = $('#${gridConfig.id}').dataTable().fnSettings();
+            for (var i = 0; i < oSettings.aoPreSearchCols.length; i++) {
+                if (oSettings.aoPreSearchCols[i].sSearch.length > 0) {
+                    console.log(oSettings.aoPreSearchCols[i].sSearch);
+                    $("tfoot input")[i].value = oSettings.aoPreSearchCols[i].sSearch;
+                    $("tfoot input")[i].className = "";
+                }
+            }
+        },
+        "bSort":true,
+        "bProcessing":true,
+        "bServerSide":true,
+        "sAjaxSource":"${g.createLink(action: "${gridConfig.id}Rows")}",
+        "aoColumns":[
+            <g:each in="${gridConfig.columns}" var="col" status="idx">
+            { "sName":"${col.datatable.name}", "bSortable":true }  <g:if test="${idx < gridConfig.columns.size() - 1}">,
+            </g:if>
+            </g:each>
+        ]
+
+    });
+
+    /* Add the events etc before DataTables hides a column */
+    $("tfoot input").keyup(function () {
+        /* Filter on the column (the index) of this element */
+        oTable.fnFilter(this.value, oTable.oApi._fnVisibleToColumnIndex(oTable.fnSettings(), $("tfoot input").index(this)));
+    });
+
+    /*
+     * Support functions to provide a little bit of 'user friendlyness' to the textboxes
+     */
+    $("tfoot input").each(function (i) {
+        this.initVal = this.value;
+    });
+
+    $("tfoot input").focus(function () {
+        if (this.className == "search_init") {
+            this.className = "";
+            this.value = "";
+        }
+    });
+
+    $("tfoot input").blur(function (i) {
+        if (this.value == "") {
+            this.className = "search_init";
+            this.value = this.initVal;
+        }
+    });
+
+});
+</script>
+
+%{--</jq:jquery>--}%
+
+<table id="${gridConfig.id}" cellpadding="0" cellspacing="0" border="0"
+       class="display">%{--width="${gridConfig.datatable.width}">--}%
     <thead>
     <tr>
         <g:each in="${gridConfig.columns}" var="col">
-            <th width="${col.datatable.width}">${message(code: col.label, default: col.label)}</th>
+            <th %{--width="${col.datatable.width}"--}%>${message(code: col.label, default: col.label)}</th>
         </g:each>
     </tr>
     </thead>
@@ -22,7 +80,14 @@
     <tfoot>
     <tr>
         <g:each in="${gridConfig.columns}" var="col">
-            <th width="${col.datatable.width}">${message(code: col.label, default: col.label)}</th>
+            <td>%{--width="${col.datatable.width}">--}%
+                <g:if test="${col.datatable.search}">
+                    <input type="text" name="search_${col.datatable.name}" class="search_init" size="10"/>
+                </g:if>
+                <g:else>
+                    &nbsp;
+                </g:else>
+            </td>
         </g:each>
     </tr>
     </tfoot>
