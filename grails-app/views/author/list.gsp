@@ -36,9 +36,9 @@
 
         <li><a href="${g.createLink(action: 'list', params: [impl: 'visualization'])}">Google Visualization</a></li>
 
-        <li><a href="${g.createLink(action: 'list', params: [impl: 'datatables'])}">Datatable (alpha)</a></li>
+        <li><a href="${g.createLink(action: 'list', params: [impl: 'datatables'])}">Datatables </a></li>
 
-        <li><a href="${g.createLink(action: 'list', params: [impl: 'authorDatatablesOverBill'])}">Datatable -over 1Billion </a></li>
+        <li><a href="${g.createLink(action: 'list', params: [impl: 'authorDatatablesOverBill'])}">Datatables -over 1Billion </a></li>
 
 
     </ul>
