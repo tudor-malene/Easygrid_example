@@ -39,7 +39,7 @@
         <option value="Belgian">Belgian</option>
         <option value="Russian">Russian</option>
     </select>
-    <grid:selectionComp gridName="authorJQGrid" controller="author" name="author.id" value="${bookInstance?.author?.id}" id="author"
+    <grid:selection gridName="authorJQGrid" controller="author" name="author.id" value="${bookInstance?.author?.id}" id="author"
         dynamicConstraints="[nationality:'#nationality']"
     />
 </div>
