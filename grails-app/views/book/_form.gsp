@@ -32,7 +32,7 @@
         <span class="required-indicator">*</span>
     </label>
 
-    <grid:selectionComp gridName="authorJQGrid" controller="author" name="author.id" id="author" />
+    <grid:selectionComp gridName="authorJQGrid" controller="author" name="author.id" value="${bookInstance?.author?.id}" id="author" />
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: bookInstance, field: 'date', 'error')} required">
