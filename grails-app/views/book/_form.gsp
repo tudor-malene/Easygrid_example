@@ -33,6 +33,7 @@
     </label>
 
     <select size="1" id='nationality'>
+        <option value="" >----</option>
         <option value="British" selected="selected">British</option>
         <option value="American">American</option>
         <option value="Belgian">Belgian</option>

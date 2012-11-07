@@ -34,9 +34,8 @@ class AuthorController {
                 nrBooks
                 nationality
             }
-            autocomplete{
+            autocomplete {
                 idProp 'id'                // evident e idul - in loc de selectbox - ar trebui sa fie default
-                codeProp 'name'                // valoarea care sa se afiseze - codul
                 labelProp 'name'                // daca vrei sa afisezi o descriere
                 textBoxSearchClosure { params ->
                     ilike('name', "%${params.term}%")
@@ -118,15 +117,19 @@ class AuthorController {
                     type 'version'
                 }
             }
-            autocomplete{
+            autocomplete {
                 idProp 'id'                // evident e idul - in loc de selectbox - ar trebui sa fie default
-                codeProp 'name'                // valoarea care sa se afiseze - codul     - todo - nu cred ca e nevoie
-                labelProp 'name'                // daca vrei sa afisezi o descriere
+//                labelProp 'name'                // daca vrei sa afisezi o descriere
+                labelValue { val, params ->
+                    "${val.name} (${val.nationality})"
+                }
                 textBoxSearchClosure { params ->
                     ilike('name', "%${params.term}%")
                 }
                 constraintsSearchClosure { params ->
-                    eq('nationality', params.nationality)
+                    if (params.nationality) {
+                        eq('nationality', params.nationality)
+                    }
                 }
             }
         }
@@ -193,9 +196,9 @@ class AuthorController {
                     }
                 }
             }
-            autocomplete{
+            autocomplete {
                 idProp 'id'                // evident e idul - in loc de selectbox - ar trebui sa fie default
-                codeProp 'name'                // valoarea care sa se afiseze - codul
+//                codeProp 'name'                // valoarea care sa se afiseze - codul
                 labelProp 'name'                // daca vrei sa afisezi o descriere
                 textBoxSearchClosure { params ->
                     ilike('name', "%${params.term}%")
@@ -258,9 +261,9 @@ class AuthorController {
                     }
                 }
             }
-            autocomplete{
+            autocomplete {
                 idProp 'id'                // evident e idul - in loc de selectbox - ar trebui sa fie default
-                codeProp 'name'                // valoarea care sa se afiseze - codul
+//                codeProp 'name'                // valoarea care sa se afiseze - codul
                 labelProp 'name'                // daca vrei sa afisezi o descriere
                 textBoxSearchClosure { params ->
                     ilike('name', "%${params.term}%")
