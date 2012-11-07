@@ -125,6 +125,9 @@ class AuthorController {
                 textBoxSearchClosure { params ->
                     ilike('name', "%${params.term}%")
                 }
+                constraintsSearchClosure { params ->
+                    eq('nationality', params.nationality)
+                }
             }
         }
 

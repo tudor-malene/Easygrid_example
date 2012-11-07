@@ -32,7 +32,15 @@
         <span class="required-indicator">*</span>
     </label>
 
-    <grid:selectionComp gridName="authorJQGrid" controller="author" name="author.id" value="${bookInstance?.author?.id}" id="author" />
+    <select size="1" id='nationality'>
+        <option value="British" selected="selected">British</option>
+        <option value="American">American</option>
+        <option value="Belgian">Belgian</option>
+        <option value="Russian">Russian</option>
+    </select>
+    <grid:selectionComp gridName="authorJQGrid" controller="author" name="author.id" value="${bookInstance?.author?.id}" id="author"
+        dynamicConstraints="[nationality:'#nationality']"
+    />
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: bookInstance, field: 'date', 'error')} required">
