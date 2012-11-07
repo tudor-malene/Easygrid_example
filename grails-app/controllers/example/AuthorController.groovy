@@ -34,7 +34,17 @@ class AuthorController {
                 nrBooks
                 nationality
             }
+            autocomplete{
+                idProp 'id'                // evident e idul - in loc de selectbox - ar trebui sa fie default
+                codeProp 'name'                // valoarea care sa se afiseze - codul
+                labelProp 'name'                // daca vrei sa afisezi o descriere
+                textBoxSearchClosure { params ->
+                    ilike('name', "%${params.term}%")
+                }
+            }
+
         }
+
 
         authorJQGrid {
             dataSourceType 'domain'
@@ -108,6 +118,14 @@ class AuthorController {
                     type 'version'
                 }
             }
+            autocomplete{
+                idProp 'id'                // evident e idul - in loc de selectbox - ar trebui sa fie default
+                codeProp 'name'                // valoarea care sa se afiseze - codul     - todo - nu cred ca e nevoie
+                labelProp 'name'                // daca vrei sa afisezi o descriere
+                textBoxSearchClosure { params ->
+                    ilike('name', "%${params.term}%")
+                }
+            }
         }
 
         authorVisualization {
@@ -172,6 +190,15 @@ class AuthorController {
                     }
                 }
             }
+            autocomplete{
+                idProp 'id'                // evident e idul - in loc de selectbox - ar trebui sa fie default
+                codeProp 'name'                // valoarea care sa se afiseze - codul
+                labelProp 'name'                // daca vrei sa afisezi o descriere
+                textBoxSearchClosure { params ->
+                    ilike('name', "%${params.term}%")
+                }
+            }
+
         }
 
         authorDatatables {
@@ -228,6 +255,15 @@ class AuthorController {
                     }
                 }
             }
+            autocomplete{
+                idProp 'id'                // evident e idul - in loc de selectbox - ar trebui sa fie default
+                codeProp 'name'                // valoarea care sa se afiseze - codul
+                labelProp 'name'                // daca vrei sa afisezi o descriere
+                textBoxSearchClosure { params ->
+                    ilike('name', "%${params.term}%")
+                }
+            }
+
         }
 
         authorDatatablesOverBill {

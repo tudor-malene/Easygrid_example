@@ -198,6 +198,7 @@ easygrid {
 
         //default values for the columns
         defaults {
+            showInSelection = true
             jqgrid {
                 editable = true
             }
@@ -240,6 +241,7 @@ easygrid {
 
             actions {
                 value = {''}
+                showInSelection = false
                 jqgrid {
                     name = 'actions'
                     formatter = '"actions"'
