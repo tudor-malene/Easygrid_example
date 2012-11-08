@@ -103,18 +103,26 @@
 			</ul>
 		</div>
 		<div id="page-body" role="main">
-			<h1>Welcome to Grails</h1>
-			<p>Congratulations, you have successfully started your first Grails application! At the moment
-			   this is the default page, feel free to modify it to either redirect to a controller or display whatever
-			   content you may choose. Below is a list of controllers that are currently deployed in this application,
-			   click on each to execute its default action:</p>
+			<h1>Welcome to Easygrid </h1>
+			<p>
+                This is a simple Author/Book showcase application for Easygrid.
+                You will find here an example grid of each type ( jqgrid, classic grails, google visualization, datatables ).
+                You will also find a simple selection widget.
+                (The css styles for the grids & widget are default - and can be customized )
+			</p>
 
 			<div id="controller-list" role="navigation">
-				<h2>Available Controllers:</h2>
+				<h2>Grids:</h2>
 				<ul>
-					<g:each var="c" in="${grailsApplication.controllerClasses.sort { it.fullName } }">
-						<li class="controller"><g:link controller="${c.logicalPropertyName}">${c.fullName}</g:link></li>
-					</g:each>
+                    <li class="controller"><g:link controller="author" action="list" params="[impl:'jqgrid']">JQGrid</g:link></li>
+                    <li class="controller"><g:link controller="author" action="list" params="[impl:'classic']">Standard grails grid </g:link></li>
+                    <li class="controller"><g:link controller="author" action="list" params="[impl:'visualization']">Google visualization grid</g:link></li>
+                    <li class="controller"><g:link controller="author" action="list" params="[impl:'datatables']">Datatables grid</g:link></li>
+                    <li class="controller"><g:link controller="author" action="list" params="[impl:'authorDatatablesOverBill']">Datatables grid ( with initial constraint: authors with over 1 billion sold books)</g:link></li>
+				</ul>
+				<h2>Selection widget:</h2>
+				<ul>
+                    <li class="controller"><g:link controller="book" action="create">New Book</g:link></li>
 				</ul>
 			</div>
 		</div>

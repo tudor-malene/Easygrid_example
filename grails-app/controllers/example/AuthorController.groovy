@@ -14,7 +14,6 @@ class AuthorController {
             dataSourceType 'domain'
             domainClass Author
             gridImpl 'classic'
-//            roles 'ROLE_ADMIN'
             classic {
             }
             columns {
@@ -34,14 +33,6 @@ class AuthorController {
                 nrBooks
                 nationality
             }
-            autocomplete {
-                idProp 'id'                // evident e idul - in loc de selectbox - ar trebui sa fie default
-                labelProp 'name'                // daca vrei sa afisezi o descriere
-                textBoxSearchClosure { params ->
-                    ilike('name', "%${params.term}%")
-                }
-            }
-
         }
 
 
@@ -53,7 +44,6 @@ class AuthorController {
             jqgrid {
                 width '"900"'
             }
-            roles 'ROLE_USER'
             columns {
                 'actions' {
                     type 'actions'
@@ -63,13 +53,13 @@ class AuthorController {
                 }
                 'author.name.label' {
                     property 'name'
+                    filterClosure {params ->
+                        ilike('name', "%${params.name}%")
+                    }
                     jqgrid {
                         editable false
                         // this will create a link to the wikipedia page
                         formatter 'customWikiFormat'
-                        searchClosure {params ->
-                            ilike('name', "%${params.name}%")
-                        }
                     }
                 }
                 'author.minEstSales.label' {
@@ -90,11 +80,11 @@ class AuthorController {
                 }
                 'author.language.label' {
                     property 'language'
+                    filterClosure {params ->
+                        ilike('language', "%${params.language}%")
+                    }
                     jqgrid {
                         editable true
-                        searchClosure {params ->
-                            ilike('language', "%${params.language}%")
-                        }
                     }
                 }
                 'author.nrBooks.label' {
@@ -106,11 +96,11 @@ class AuthorController {
                 }
                 'author.nationality.label' {
                     property 'nationality'
+                    filterClosure {params ->
+                        ilike('nationality', "%${params.nationality}%")
+                    }
                     jqgrid {
                         editable true
-                        searchClosure {params ->
-                            ilike('nationality', "%${params.nationality}%")
-                        }
                     }
                 }
                 'version' {
@@ -118,15 +108,15 @@ class AuthorController {
                 }
             }
             autocomplete {
-                idProp 'id'                // evident e idul - in loc de selectbox - ar trebui sa fie default
-//                labelProp 'name'                // daca vrei sa afisezi o descriere
+                idProp 'id'
+//                labelProp 'name'
                 labelValue { val, params ->
                     "${val.name} (${val.nationality})"
                 }
-                textBoxSearchClosure { params ->
+                textBoxFilterClosure { params ->
                     ilike('name', "%${params.term}%")
                 }
-                constraintsSearchClosure { params ->
+                constraintsFilterClosure { params ->
                     if (params.nationality) {
                         eq('nationality', params.nationality)
                     }
@@ -152,11 +142,11 @@ class AuthorController {
                 }
                 'author.name.label' {
                     property 'name'
+                    filterClosure {params ->
+                        ilike('name', "%${params.name}%")
+                    }
                     visualization {
                         search true
-                        searchClosure {params ->
-                            ilike('name', "%${params.name}%")
-                        }
                     }
                 }
                 'author.minEstSales.label' {
@@ -166,21 +156,21 @@ class AuthorController {
                 'author.maxEstSales.label' {
                     property 'maxEstSales'
                     formatName 'nrToString'
+                    filterClosure {params ->
+                        gt('maxEstSales', new BigInteger(params.maxEstSales))
+                    }
                     visualization {
                         search true
                         searchType 'number'
-                        searchClosure {params ->
-                            gt('maxEstSales', new BigInteger(params.maxEstSales))
-                        }
                     }
                 }
                 'author.language.label' {
                     property 'language'
+                    filterClosure {params ->
+                        ilike('language', "%${params.language}%")
+                    }
                     visualization {
                         search true
-                        searchClosure {params ->
-                            ilike('language', "%${params.language}%")
-                        }
                     }
                 }
                 'author.nrBooks.label' {
@@ -188,41 +178,31 @@ class AuthorController {
                 }
                 'author.nationality.label' {
                     property 'nationality'
+                    filterClosure {params ->
+                        ilike('nationality', "%${params.nationality}%")
+                    }
                     visualization {
                         search true
-                        searchClosure {params ->
-                            ilike('nationality', "%${params.nationality}%")
-                        }
                     }
                 }
             }
-            autocomplete {
-                idProp 'id'                // evident e idul - in loc de selectbox - ar trebui sa fie default
-//                codeProp 'name'                // valoarea care sa se afiseze - codul
-                labelProp 'name'                // daca vrei sa afisezi o descriere
-                textBoxSearchClosure { params ->
-                    ilike('name', "%${params.term}%")
-                }
-            }
-
         }
 
         authorDatatables {
             dataSourceType 'domain'
             domainClass Author
             gridImpl 'datatable'
-//            roles 'ROLE_ADMIN'
             columns {
                 'author.id.label' {
                     type 'id'
                 }
                 'author.name.label' {
                     property 'name'
+                    filterClosure {params ->
+                        ilike('name', "%${params.name}%")
+                    }
                     datatable {
                         search true
-                        searchClosure {params ->
-                            ilike('name', "%${params.name}%")
-                        }
                     }
                 }
                 'author.minEstSales.label' {
@@ -231,21 +211,21 @@ class AuthorController {
                 }
                 'author.maxEstSales.label' {
                     property 'maxEstSales'
+                    filterClosure {params ->
+                        gt('maxEstSales', new BigInteger(params.maxEstSales))
+                    }
                     formatName 'nrToString'
                     datatable {
                         search true
-                        searchClosure {params ->
-                            gt('maxEstSales', new BigInteger(params.maxEstSales))
-                        }
                     }
                 }
                 'author.language.label' {
                     property 'language'
+                    filterClosure {params ->
+                        ilike('language', "%${params.language}%")
+                    }
                     datatable {
                         search true
-                        searchClosure {params ->
-                            ilike('language', "%${params.language}%")
-                        }
                     }
                 }
                 'author.nrBooks.label' {
@@ -253,23 +233,14 @@ class AuthorController {
                 }
                 'author.nationality.label' {
                     property 'nationality'
+                    filterClosure {params ->
+                        ilike('nationality', "%${params.nationality}%")
+                    }
                     datatable {
                         search true
-                        searchClosure {params ->
-                            ilike('nationality', "%${params.nationality}%")
-                        }
                     }
                 }
             }
-            autocomplete {
-                idProp 'id'                // evident e idul - in loc de selectbox - ar trebui sa fie default
-//                codeProp 'name'                // valoarea care sa se afiseze - codul
-                labelProp 'name'                // daca vrei sa afisezi o descriere
-                textBoxSearchClosure { params ->
-                    ilike('name', "%${params.term}%")
-                }
-            }
-
         }
 
         authorDatatablesOverBill {
@@ -279,7 +250,7 @@ class AuthorController {
             initialCriteria {
                 gte('maxEstSales', 1000000000G)
             }
-//            roles 'ROLE_ADMIN'
+            roles 'ROLE_USER'
             columns {
                 'author.id.label' {
                     type 'id'
@@ -297,9 +268,7 @@ class AuthorController {
                 nrBooks
                 nationality
             }
-
         }
-
     }
 
     def index() {
@@ -307,8 +276,6 @@ class AuthorController {
     }
 
     def list(Integer max) {
-//        params.max = Math.min(max ?: 10, 100)
-//        [authorInstanceList: Author.list(params), authorInstanceTotal: Author.count()]
     }
 
     def create() {

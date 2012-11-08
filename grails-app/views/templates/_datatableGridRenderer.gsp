@@ -1,4 +1,3 @@
-%{--<jq:jquery>--}%
 <script type="text/javascript">jQuery(function () {
 
     %{--todo - move some hardcodings to the config --}%
@@ -7,9 +6,8 @@
         "bStateSave":false,
         'sPaginationType':'full_numbers',
         "fnInitComplete":function () {
-            console.log('fnInitComplete');
             //hack - removes the filter div
-            $('#${gridConfig.id}_filter').remove();
+            $('#${gridConfig.id}_datatable_filter').remove();
             var oSettings = $('#${gridConfig.id}_datatable').dataTable().fnSettings();
             for (var i = 0; i < oSettings.aoPreSearchCols.length; i++) {
                 if (oSettings.aoPreSearchCols[i].sSearch.length > 0) {
@@ -31,11 +29,6 @@
         ]
 
     });
-
-    console.log($('#${gridConfig.id}_datatable'));
-    console.log('${gridConfig.id}_datatable');
-    console.log('xxx');
-    console.log(oTable);
 
     /* Add the events etc before DataTables hides a column */
     $("tfoot input").keyup(function () {
@@ -67,7 +60,6 @@
 });
 </script>
 
-%{--</jq:jquery>--}%
 
 <table id="${gridConfig.id}_datatable" cellpadding="0" cellspacing="0" border="0"
        class="display">%{--width="${gridConfig.datatable.width}">--}%
