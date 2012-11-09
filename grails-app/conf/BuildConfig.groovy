@@ -6,6 +6,9 @@ grails.project.target.level = 1.6
 grails.project.source.level = 1.6
 //grails.project.war.file = "target/${appName}-${appVersion}.war"
 
+// Useful to test plugins you are developing.
+grails.plugin.location.easygrid ="../Easygrid"
+
 grails.project.dependency.resolution = {
     // inherit Grails' default dependencies
     inherits("global") {
@@ -59,8 +62,6 @@ grails.project.dependency.resolution = {
 
         compile ':cache:1.0.0'
 
-        // Useful to test plugins you are developing.
-        grails.plugin.location.easygrid ="../Easygrid"
 
 /*
         compile ':heroku:1.0.1',{
