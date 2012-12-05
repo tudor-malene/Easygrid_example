@@ -14,29 +14,15 @@
     <grid:eachColumn gridConfig="${gridConfig}" >
         '${message(code: col.label, default: col.label)}'<g:if test="${!last}">,</g:if>
     </grid:eachColumn>
-%{--
-    <g:each in="${gridConfig.columns}" var="col" status="idx">
-        '${message(code: col.label, default: col.label)}'<g:if test="${idx < gridConfig.columns.size() - 1}">,</g:if>
-    </g:each>
---}%
     ],
    colModel: [
     <grid:eachColumn gridConfig="${gridConfig}" >
-        {name:'${col.jqgrid.name}',
-        <g:findAll in="${col.jqgrid}" expr="${!(it.key in ['name'])}">
+        {name:'${col.name}',
+        <g:each in="${col.jqgrid}" >
             "${it.key}":${it.value},
-        </g:findAll>
+        </g:each>
         },
     </grid:eachColumn>
-%{--
-    <g:each in="${gridConfig.columns}" var="column">
-        {name:'${column.jqgrid.name}',
-        <g:findAll in="${column.jqgrid}" expr="${!(it.key in ['name', 'searchClosure'])}">
-            "${it.key}":${it.value},
-        </g:findAll>
-        },
-    </g:each>
---}%
     ],
    viewrecords: true,
    pager: '#${gridConfig.id}Pager',

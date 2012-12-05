@@ -53,8 +53,11 @@
 
     <g:if test="${params.impl == 'jqgrid'}">
         <r:require modules="easygrid-jqgrid-dev"/>
-        <grid:grid id='authorJQGrid'/>
+
+        <grid:grid id='authorJQGrid' columns[7].jqgrid.editable='false' />
+
         <grid:exportButton id='authorJQGrid'/>
+        <grid:grid id='authorJQGrid' />
 
         <pre><code>
 

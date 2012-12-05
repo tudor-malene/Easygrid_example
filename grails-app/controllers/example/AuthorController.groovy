@@ -1,9 +1,9 @@
 package example
 
 import org.springframework.dao.DataIntegrityViolationException
-import org.grails.plugin.easygrid.EasyGrid
+import org.grails.plugin.easygrid.Easygrid
 
-@EasyGrid
+@Easygrid
 class AuthorController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
@@ -14,19 +14,15 @@ class AuthorController {
             dataSourceType 'domain'
             domainClass Author
             gridImpl 'classic'
-            classic {
-            }
             columns {
-                'author.id.label' {
+                id {
                     type 'id'
                 }
                 name
-                'author.minEstSales.label' {
-                    property 'minEstSales'
+                minEstSales {
                     formatName 'nrToString'
                 }
-                'author.maxEstSales.label' {
-                    property 'maxEstSales'
+                maxEstSales {
                     formatName 'nrToString'
                 }
                 language
@@ -45,14 +41,13 @@ class AuthorController {
                 width '"900"'
             }
             columns {
-                'actions' {
+                actions {
                     type 'actions'
                 }
-                'author.id.label' {
+                id {
                     type 'id'
                 }
-                'author.name.label' {
-                    property 'name'
+                name {
                     filterClosure {params ->
                         ilike('name', "%${params.name}%")
                     }
@@ -62,24 +57,21 @@ class AuthorController {
                         formatter 'customWikiFormat'
                     }
                 }
-                'author.minEstSales.label' {
-                    property 'minEstSales'
+                minEstSales {
                     formatName 'nrToString'
                     jqgrid {
                         editable false
                         search false
                     }
                 }
-                'author.maxEstSales.label' {
-                    property 'maxEstSales'
+                maxEstSales {
                     formatName 'nrToString'
                     jqgrid {
                         editable false
                         search false
                     }
                 }
-                'author.language.label' {
-                    property 'language'
+                language {
                     filterClosure {params ->
                         ilike('language', "%${params.language}%")
                     }
@@ -87,15 +79,13 @@ class AuthorController {
                         editable true
                     }
                 }
-                'author.nrBooks.label' {
-                    property 'nrBooks'
+                nrBooks {
                     jqgrid {
                         editable true
                         search false
                     }
                 }
-                'author.nationality.label' {
-                    property 'nationality'
+                nationality {
                     filterClosure {params ->
                         ilike('nationality', "%${params.nationality}%")
                     }
@@ -103,7 +93,7 @@ class AuthorController {
                         editable true
                     }
                 }
-                'version' {
+                version {
                     type 'version'
                 }
             }
@@ -135,13 +125,11 @@ class AuthorController {
                 showRowNumber false
                 pageSize 10
             }
-
             columns {
-                'author.id.label' {
+                id {
                     type 'id'
                 }
-                'author.name.label' {
-                    property 'name'
+                name {
                     filterClosure {params ->
                         ilike('name', "%${params.name}%")
                     }
@@ -149,12 +137,10 @@ class AuthorController {
                         search true
                     }
                 }
-                'author.minEstSales.label' {
-                    property 'minEstSales'
+                minEstSales {
                     formatName 'nrToString'
                 }
-                'author.maxEstSales.label' {
-                    property 'maxEstSales'
+                maxEstSales {
                     formatName 'nrToString'
                     filterClosure {params ->
                         gt('maxEstSales', new BigInteger(params.maxEstSales))
@@ -164,8 +150,7 @@ class AuthorController {
                         searchType 'number'
                     }
                 }
-                'author.language.label' {
-                    property 'language'
+                language {
                     filterClosure {params ->
                         ilike('language', "%${params.language}%")
                     }
@@ -173,11 +158,8 @@ class AuthorController {
                         search true
                     }
                 }
-                'author.nrBooks.label' {
-                    property 'nrBooks'
-                }
-                'author.nationality.label' {
-                    property 'nationality'
+                nrBooks
+                nationality {
                     filterClosure {params ->
                         ilike('nationality', "%${params.nationality}%")
                     }
@@ -193,11 +175,10 @@ class AuthorController {
             domainClass Author
             gridImpl 'datatable'
             columns {
-                'author.id.label' {
+                id {
                     type 'id'
                 }
-                'author.name.label' {
-                    property 'name'
+                name {
                     filterClosure {params ->
                         ilike('name', "%${params.name}%")
                     }
@@ -205,12 +186,10 @@ class AuthorController {
                         search true
                     }
                 }
-                'author.minEstSales.label' {
-                    property 'minEstSales'
+                minEstSales {
                     formatName 'nrToString'
                 }
-                'author.maxEstSales.label' {
-                    property 'maxEstSales'
+                maxEstSales {
                     filterClosure {params ->
                         gt('maxEstSales', new BigInteger(params.maxEstSales))
                     }
@@ -219,8 +198,7 @@ class AuthorController {
                         search true
                     }
                 }
-                'author.language.label' {
-                    property 'language'
+                language {
                     filterClosure {params ->
                         ilike('language', "%${params.language}%")
                     }
@@ -228,11 +206,8 @@ class AuthorController {
                         search true
                     }
                 }
-                'author.nrBooks.label' {
-                    property 'nrBooks'
-                }
-                'author.nationality.label' {
-                    property 'nationality'
+                nrBooks
+                nationality {
                     filterClosure {params ->
                         ilike('nationality', "%${params.nationality}%")
                     }
@@ -252,16 +227,14 @@ class AuthorController {
             }
             roles 'ROLE_USER'
             columns {
-                'author.id.label' {
+                id {
                     type 'id'
                 }
                 name
-                'author.minEstSales.label' {
-                    property 'minEstSales'
+                minEstSales {
                     formatName 'nrToString'
                 }
-                'author.maxEstSales.label' {
-                    property 'maxEstSales'
+                maxEstSales {
                     formatName 'nrToString'
                 }
                 language

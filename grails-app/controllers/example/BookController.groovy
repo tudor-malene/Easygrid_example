@@ -1,9 +1,9 @@
 package example
 
 import org.springframework.dao.DataIntegrityViolationException
-import org.grails.plugin.easygrid.EasyGrid
+import org.grails.plugin.easygrid.Easygrid
 
-@EasyGrid
+@Easygrid
 class BookController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
@@ -12,6 +12,7 @@ class BookController {
     static grids = {
         customDatasourceBooks {
             gridImpl 'jqgrid'
+            labelPrefix 'book'
             dataSourceType 'custom'
             labelPrefix 'book'
             dataProvider {gridConfig, filters, listParams ->
@@ -26,38 +27,32 @@ class BookController {
                 width 900
             }
             columns {
-                'book.id.label' {
+                id {
                     type 'id'
                 }
-                'book.author.label' {
+                author {
                     value {Book book ->
                         book.author.name
                     }
                     jqgrid {
-                        name 'author'
                         search false
                     }
                 }
-                'book.title.label'{
-                    property 'title'
+                title{
                     jqgrid {
                         search false
                     }
                 }
-                'book.description.label'{
-                    property 'description'
+                description{
                     jqgrid {
                         search false
                     }
                 }
-                'book.date.label'{
-                    property 'date'
+                date{
                     jqgrid {
                         search false
                     }
                 }
-
-
             }
         }
     }
