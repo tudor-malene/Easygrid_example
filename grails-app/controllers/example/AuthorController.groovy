@@ -32,6 +32,68 @@ class AuthorController {
         }
 
 
+        authorJQGridSelection {
+            dataSourceType 'domain'
+            domainClass Author
+            gridImpl 'jqgrid'
+            inlineEdit false
+            jqgrid {
+                width '"900"'
+            }
+            columns {
+                id {
+                    type 'id'
+                }
+                name {
+                    filterClosure {params ->
+                        ilike('name', "%${params.name}%")
+                    }
+                }
+                minEstSales {
+                    formatName 'nrToString'
+                    jqgrid {
+                        search false
+                    }
+                }
+                maxEstSales {
+                    formatName 'nrToString'
+                    jqgrid {
+                        search false
+                    }
+                }
+                language {
+                    filterClosure {params ->
+                        ilike('language', "%${params.language}%")
+                    }
+                }
+                nrBooks {
+                    jqgrid {
+                        search false
+                    }
+                }
+                nationality {
+                    filterClosure {params ->
+                        ilike('nationality', "%${params.nationality}%")
+                    }
+                }
+            }
+            autocomplete {
+                idProp 'id'
+//                labelProp 'name'
+                labelValue { val, params ->
+                    "${val.name} (${val.nationality})"
+                }
+                textBoxFilterClosure { params ->
+                    ilike('name', "%${params.term}%")
+                }
+                constraintsFilterClosure { params ->
+                    if (params.nationality) {
+                        eq('nationality', params.nationality)
+                    }
+                }
+            }
+        }
+
         authorJQGrid {
             dataSourceType 'domain'
             domainClass Author
@@ -97,22 +159,8 @@ class AuthorController {
                     type 'version'
                 }
             }
-            autocomplete {
-                idProp 'id'
-//                labelProp 'name'
-                labelValue { val, params ->
-                    "${val.name} (${val.nationality})"
-                }
-                textBoxFilterClosure { params ->
-                    ilike('name', "%${params.term}%")
-                }
-                constraintsFilterClosure { params ->
-                    if (params.nationality) {
-                        eq('nationality', params.nationality)
-                    }
-                }
-            }
         }
+
 
         authorVisualization {
             dataSourceType 'domain'
@@ -173,7 +221,7 @@ class AuthorController {
         authorDatatables {
             dataSourceType 'domain'
             domainClass Author
-            gridImpl 'datatable'
+            gridImpl 'dataTables'
             columns {
                 id {
                     type 'id'
@@ -182,7 +230,7 @@ class AuthorController {
                     filterClosure {params ->
                         ilike('name', "%${params.name}%")
                     }
-                    datatable {
+                    dataTables {
                         search true
                     }
                 }
@@ -194,7 +242,7 @@ class AuthorController {
                         gt('maxEstSales', new BigInteger(params.maxEstSales))
                     }
                     formatName 'nrToString'
-                    datatable {
+                    dataTables {
                         search true
                     }
                 }
@@ -202,7 +250,7 @@ class AuthorController {
                     filterClosure {params ->
                         ilike('language', "%${params.language}%")
                     }
-                    datatable {
+                    dataTables {
                         search true
                     }
                 }
@@ -211,7 +259,7 @@ class AuthorController {
                     filterClosure {params ->
                         ilike('nationality', "%${params.nationality}%")
                     }
-                    datatable {
+                    dataTables {
                         search true
                     }
                 }
@@ -221,7 +269,7 @@ class AuthorController {
         authorDatatablesOverBill {
             dataSourceType 'domain'
             domainClass Author
-            gridImpl 'datatable'
+            gridImpl 'dataTables'
             initialCriteria {
                 gte('maxEstSales', 1000000000G)
             }

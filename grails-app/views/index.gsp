@@ -105,20 +105,20 @@
 		<div id="page-body" role="main">
 			<h1>Welcome to Easygrid </h1>
 			<p>
-                This is a simple Author/Book showcase application for Easygrid.
-                You will find here an example grid of each type ( jqgrid, classic grails, google visualization, datatables ).
-                You will also find a simple selection widget.
-                (The css styles for the grids & widget are default - and can be customized )
+                This is a simple Author/Book showcase application for <a href="http://www.grails.org/plugins/easygrid"> Easygrid Grails Plugin</a> .  <br/>
+                You will find here some basic example grids of each type ( jqgrid, classic grails, google visualization, datatables ).<br/>
+                You will also find an example of a powerful <g:link controller="book" action="create">selection widget</g:link> .<br/>
+                (The css styles and look&feel for the grids & widget are default - and can be customized )<br/>
 			</p>
 
 			<div id="controller-list" role="navigation">
 				<h2>Grids:</h2>
 				<ul>
                     <li class="controller"><g:link controller="author" action="list" params="[impl:'jqgrid']">JQGrid</g:link></li>
-                    <li class="controller"><g:link controller="author" action="list" params="[impl:'classic']">Standard grails grid </g:link></li>
                     <li class="controller"><g:link controller="author" action="list" params="[impl:'visualization']">Google visualization grid</g:link></li>
                     <li class="controller"><g:link controller="author" action="list" params="[impl:'datatables']">Datatables grid</g:link></li>
                     <li class="controller"><g:link controller="author" action="list" params="[impl:'authorDatatablesOverBill']">Datatables grid ( with initial constraint: authors with over 1 billion sold books)</g:link></li>
+                    <li class="controller"><g:link controller="author" action="list" params="[impl:'classic']">Standard grails grid </g:link></li>
 				</ul>
 				<h2>Selection widget:</h2>
 				<ul>

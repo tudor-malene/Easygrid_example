@@ -1,14 +1,14 @@
 <script type="text/javascript">jQuery(function () {
 
     %{--todo - move some hardcodings to the config --}%
-    var oTable = $('#${gridConfig.id}_datatable').dataTable({
+    var oTable = $('#${attrs.id}_datatable').dataTable({
         bFilter:true,
         "bStateSave":false,
         'sPaginationType':'full_numbers',
         "fnInitComplete":function () {
             //hack - removes the filter div
-            $('#${gridConfig.id}_datatable_filter').remove();
-            var oSettings = $('#${gridConfig.id}_datatable').dataTable().fnSettings();
+            $('#${attrs.id}_datatable_filter').remove();
+            var oSettings = $('#${attrs.id}_datatable').dataTable().fnSettings();
             for (var i = 0; i < oSettings.aoPreSearchCols.length; i++) {
                 if (oSettings.aoPreSearchCols[i].sSearch.length > 0) {
                     console.log(oSettings.aoPreSearchCols[i].sSearch);
@@ -61,7 +61,7 @@
 </script>
 
 
-<table id="${gridConfig.id}_datatable" cellpadding="0" cellspacing="0" border="0"
+<table id="${attrs.id}_datatable" cellpadding="0" cellspacing="0" border="0"
        class="display">%{--width="${gridConfig.datatable.width}">--}%
     <thead>
     <tr>
@@ -79,7 +79,7 @@
     <tr>
         <g:each in="${gridConfig.columns}" var="col">
             <td>%{--width="${col.datatable.width}">--}%
-                <g:if test="${col.datatable.search}">
+                <g:if test="${col.dataTables.search}">
                     <input type="text" name="search_${col.name}" class="search_init" size="10"/>
                 </g:if>
                 <g:else>

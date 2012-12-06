@@ -99,7 +99,7 @@ easygrid {
 
     //default values added to each defined grid
     defaults {
-        defaultMaxRows = 20
+        defaultMaxRows = 10
         labelFormat = new SimpleTemplateEngine().createTemplate('${prefix}.${column}.label')
         //called before inline editing : transforms the parameters into the actual object to be stored
         beforeSave = {params -> params}
@@ -110,6 +110,8 @@ easygrid {
         jqgrid {
             width = '"100%"'
             height = 250
+            // number of rows to display by default
+            rowNum = 10
         }
 
         // spring security implementation
@@ -173,9 +175,9 @@ easygrid {
             ]
         }
 
-        datatable {
-            gridImplService = org.grails.plugin.easygrid.grids.DatatableGridService
-            gridRenderer = '/templates/datatableGridRenderer'
+        dataTables {
+            gridImplService = org.grails.plugin.easygrid.grids.DataTablesGridService
+            gridRenderer = '/templates/dataTablesGridRenderer'
             inlineEdit = false
             formats = [
                     (Date.class): {it.format("dd/MM/yyyy")},
@@ -210,7 +212,7 @@ easygrid {
                 searchType = 'text'
                 valueType = com.google.visualization.datasource.datatable.value.ValueType.TEXT
             }
-            datatable {
+            dataTables {
                 width = "'100%'"
             }
             export {
