@@ -1,7 +1,7 @@
 package example
 
-import org.springframework.dao.DataIntegrityViolationException
 import org.grails.plugin.easygrid.Easygrid
+import org.springframework.dao.DataIntegrityViolationException
 
 @Easygrid
 class AuthorController {
@@ -11,7 +11,7 @@ class AuthorController {
     static grids = {
 
         authorClassic {
-            dataSourceType 'domain'
+            dataSourceType 'gorm'
             domainClass Author
             gridImpl 'classic'
             columns {
@@ -31,9 +31,8 @@ class AuthorController {
             }
         }
 
-
         authorJQGridSelection {
-            dataSourceType 'domain'
+            dataSourceType 'gorm'
             domainClass Author
             gridImpl 'jqgrid'
             inlineEdit false
@@ -44,38 +43,20 @@ class AuthorController {
                 id {
                     type 'id'
                 }
-                name {
-                    filterClosure {params ->
-                        ilike('name', "%${params.name}%")
-                    }
-                }
+                name
                 minEstSales {
+                    enableFilter false
                     formatName 'nrToString'
-                    jqgrid {
-                        search false
-                    }
                 }
                 maxEstSales {
+                    enableFilter false
                     formatName 'nrToString'
-                    jqgrid {
-                        search false
-                    }
                 }
-                language {
-                    filterClosure {params ->
-                        ilike('language', "%${params.language}%")
-                    }
-                }
+                language
                 nrBooks {
-                    jqgrid {
-                        search false
-                    }
+                    enableFilter false
                 }
-                nationality {
-                    filterClosure {params ->
-                        ilike('nationality', "%${params.nationality}%")
-                    }
-                }
+                nationality
             }
             autocomplete {
                 idProp 'id'
@@ -83,19 +64,19 @@ class AuthorController {
                 labelValue { val, params ->
                     "${val.name} (${val.nationality})"
                 }
-                textBoxFilterClosure { params ->
-                    ilike('name', "%${params.term}%")
+                textBoxFilterClosure { filter ->
+                    ilike('name', "%${filter.paramValue}%")
                 }
-                constraintsFilterClosure { params ->
-                    if (params.nationality) {
-                        eq('nationality', params.nationality)
+                constraintsFilterClosure { filter ->
+                    if (filter.params.nationality) {
+                        eq('nationality', filter.params.nationality)
                     }
                 }
             }
         }
 
         authorJQGrid {
-            dataSourceType 'domain'
+            dataSourceType 'gorm'
             domainClass Author
             gridImpl 'jqgrid'
             inlineEdit true
@@ -110,9 +91,6 @@ class AuthorController {
                     type 'id'
                 }
                 name {
-                    filterClosure {params ->
-                        ilike('name', "%${params.name}%")
-                    }
                     jqgrid {
                         editable false
                         // this will create a link to the wikipedia page
@@ -120,37 +98,31 @@ class AuthorController {
                     }
                 }
                 minEstSales {
+                    enableFilter false
                     formatName 'nrToString'
                     jqgrid {
                         editable false
-                        search false
                     }
                 }
                 maxEstSales {
+                    enableFilter false
                     formatName 'nrToString'
                     jqgrid {
                         editable false
-                        search false
                     }
                 }
                 language {
-                    filterClosure {params ->
-                        ilike('language', "%${params.language}%")
-                    }
                     jqgrid {
                         editable true
                     }
                 }
                 nrBooks {
+                    enableFilter false
                     jqgrid {
                         editable true
-                        search false
                     }
                 }
                 nationality {
-                    filterClosure {params ->
-                        ilike('nationality', "%${params.nationality}%")
-                    }
                     jqgrid {
                         editable true
                     }
@@ -161,9 +133,8 @@ class AuthorController {
             }
         }
 
-
         authorVisualization {
-            dataSourceType 'domain'
+            dataSourceType 'gorm'
             domainClass Author
             gridImpl 'visualization'
             visualization {
@@ -177,97 +148,57 @@ class AuthorController {
                 id {
                     type 'id'
                 }
-                name {
-                    filterClosure {params ->
-                        ilike('name', "%${params.name}%")
-                    }
-                    visualization {
-                        search true
-                    }
-                }
+                name
                 minEstSales {
+                    enableFilter false
                     formatName 'nrToString'
                 }
                 maxEstSales {
                     formatName 'nrToString'
-                    filterClosure {params ->
-                        gt('maxEstSales', new BigInteger(params.maxEstSales))
+                    filterClosure {filter ->
+                        gt('maxEstSales', filter.paramValue as BigInteger)
                     }
                     visualization {
-                        search true
                         searchType 'number'
                     }
                 }
-                language {
-                    filterClosure {params ->
-                        ilike('language', "%${params.language}%")
-                    }
-                    visualization {
-                        search true
-                    }
+                language
+                nrBooks {
+                    enableFilter false
                 }
-                nrBooks
-                nationality {
-                    filterClosure {params ->
-                        ilike('nationality', "%${params.nationality}%")
-                    }
-                    visualization {
-                        search true
-                    }
-                }
+                nationality
             }
         }
 
         authorDatatables {
-            dataSourceType 'domain'
+            dataSourceType 'gorm'
             domainClass Author
             gridImpl 'dataTables'
             columns {
                 id {
                     type 'id'
                 }
-                name {
-                    filterClosure {params ->
-                        ilike('name', "%${params.name}%")
-                    }
-                    dataTables {
-                        search true
-                    }
-                }
+                name
                 minEstSales {
+                    enableFilter false
                     formatName 'nrToString'
                 }
                 maxEstSales {
-                    filterClosure {params ->
-                        gt('maxEstSales', new BigInteger(params.maxEstSales))
+                    filterClosure {filter ->
+                        gt('maxEstSales', filter.paramValue as BigInteger)
                     }
                     formatName 'nrToString'
-                    dataTables {
-                        search true
-                    }
                 }
-                language {
-                    filterClosure {params ->
-                        ilike('language', "%${params.language}%")
-                    }
-                    dataTables {
-                        search true
-                    }
+                language
+                nrBooks  {
+                    enableFilter false
                 }
-                nrBooks
-                nationality {
-                    filterClosure {params ->
-                        ilike('nationality', "%${params.nationality}%")
-                    }
-                    dataTables {
-                        search true
-                    }
-                }
+                nationality
             }
         }
 
         authorDatatablesOverBill {
-            dataSourceType 'domain'
+            dataSourceType 'gorm'
             domainClass Author
             gridImpl 'dataTables'
             initialCriteria {
@@ -280,13 +211,19 @@ class AuthorController {
                 }
                 name
                 minEstSales {
+                    enableFilter false
                     formatName 'nrToString'
                 }
                 maxEstSales {
                     formatName 'nrToString'
+                    filterClosure {filter ->
+                        gt('maxEstSales', filter.paramValue as BigInteger)
+                    }
                 }
                 language
-                nrBooks
+                nrBooks  {
+                    enableFilter false
+                }
                 nationality
             }
         }

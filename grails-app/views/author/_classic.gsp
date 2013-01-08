@@ -3,25 +3,26 @@
 <grid:grid name='authorClassic'/>
 
 <h1 id="source-code">Source Code</h1>
-<pre><code>
+<markdown:renderHtml>
+
     authorClassic {
-        dataSourceType &#39;domain&#39;
+        dataSourceType 'gorm'
         domainClass Author
-        gridImpl &#39;classic&#39;
+        gridImpl 'classic'
         columns {
             id {
-                type &#39;id&#39;
+                type 'id'
             }
             name
             minEstSales {
-                formatName &#39;nrToString&#39;
+                formatName 'nrToString'
             }
             maxEstSales {
-                formatName &#39;nrToString&#39;
+                formatName 'nrToString'
             }
             language
             nrBooks
             nationality
         }
     }
-</code></pre>
+</markdown:renderHtml>

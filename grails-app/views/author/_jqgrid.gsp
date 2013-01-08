@@ -21,71 +21,65 @@
 
 <h1 id="source-code">Source Code</h1>
 
-<pre><code>
+<markdown:renderHtml>
+
     authorJQGrid {
-        dataSourceType &#39;domain&#39;
+        dataSourceType 'gorm'
         domainClass Author
-        gridImpl &#39;jqgrid&#39;
+        gridImpl 'jqgrid'
         inlineEdit true
         jqgrid {
-            width &#39;&quot;900&quot;&#39;
+            width '"900"'
         }
         columns {
             actions {
-                type &#39;actions&#39;
+                type 'actions'
             }
             id {
-                type &#39;id&#39;
+                type 'id'
             }
             name {
-                filterClosure {params -&gt;
-                    ilike(&#39;name&#39;, &quot;%&#36;{params.name}%&quot;)
-                }
                 jqgrid {
                     editable false
                     // this will create a link to the wikipedia page
-                    formatter &#39;customWikiFormat&#39;
+                    formatter 'customWikiFormat'
                 }
             }
             minEstSales {
-                formatName &#39;nrToString&#39;
+                enableFilter false
+                formatName 'nrToString'
                 jqgrid {
                     editable false
-                    search false
                 }
             }
             maxEstSales {
-                formatName &#39;nrToString&#39;
+                enableFilter false
+                formatName 'nrToString'
                 jqgrid {
                     editable false
-                    search false
                 }
             }
             language {
-                filterClosure {params -&gt;
-                    ilike(&#39;language&#39;, &quot;%&#36;{params.language}%&quot;)
-                }
                 jqgrid {
                     editable true
                 }
             }
             nrBooks {
+                enableFilter false
                 jqgrid {
                     editable true
-                    search false
                 }
             }
             nationality {
-                filterClosure {params -&gt;
-                    ilike(&#39;nationality&#39;, &quot;%&#36;{params.nationality}%&quot;)
-                }
                 jqgrid {
                     editable true
                 }
             }
             version {
-                type &#39;version&#39;
+                type 'version'
             }
         }
     }
- </code></pre>
+
+
+</markdown:renderHtml>

@@ -38,7 +38,14 @@
         <div class="message" role="status">${flash.message}</div>
     </g:if>
 
-    <g:render template="${params.impl}"/>
+    <g:if test="${params.impl == null}">
+        <g:set var="template" value="classic"/>
+    </g:if>
+    <g:else>
+        <g:set var="template" value="${params.impl}"/>
+    </g:else>
+
+    <g:render template="${template}"/>
 
 </div>
 </body>

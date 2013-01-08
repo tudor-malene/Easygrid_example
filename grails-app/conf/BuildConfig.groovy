@@ -42,7 +42,7 @@ grails.project.dependency.resolution = {
     dependencies {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes eg.
 
-        runtime 'postgresql:postgresql:8.4-702.jdbc3'
+//        runtime 'postgresql:postgresql:8.4-702.jdbc3'
         // runtime 'mysql:mysql-connector-java:5.1.20'
     }
 
@@ -62,19 +62,12 @@ grails.project.dependency.resolution = {
 
         compile ':cache:1.0.0'
 
+        compile ':jquery-ui:1.8.24'
+        compile ':google-visualization:0.5.6'
+        compile ':export:1.5'
+        compile ":markdown:1.0.0.RC1"
 
-/*
-        compile ':heroku:1.0.1',{
-            transitive = false
-        }
-        runtime ':cloud-support:1.0.9'
-        runtime ':database-session:1.1.2',{
-            transitive = false
-        }
-*/
-
-//        compile 'jquery-ui:1.8.24'
-//        compile 'google-visualization:0.5.6'
+//        compile ':easygrid:1.0.0'
 
     }
 }

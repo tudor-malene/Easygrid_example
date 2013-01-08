@@ -63,7 +63,7 @@
     <form name="${attrs.id}_FilterForm" onsubmit="return rewriteDatasource(this)" action="${gridConfig.id}Rows">
         <fieldset class="form">
             <g:hiddenField name="_filter" value="true"/>
-            <g:findAll in="${gridConfig.columns}"   expr="${it.visualization.search}">
+            <g:findAll in="${gridConfig.columns}"   expr="${it.enableFilter}">
                 <div>
                     <label for="${it.name}">
                         <g:message code="${it.label}" default="${it.label}"/>

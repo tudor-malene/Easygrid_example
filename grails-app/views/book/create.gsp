@@ -47,68 +47,52 @@
                 /&gt;
                 </code></pre>
                 <br/><br/><br/>
+
                 <b>Grid definition</b>
-                <pre><code>
-  authorJQGridSelection {
-        dataSourceType &#39;domain&#39;
+
+<markdown:renderHtml>
+    authorJQGridSelection {
+        dataSourceType 'gorm'
         domainClass Author
-        gridImpl &#39;jqgrid&#39;
+        gridImpl 'jqgrid'
         inlineEdit false
         jqgrid {
-            width &#39;&quot;900&quot;&#39;
+            width '"900"'
         }
         columns {
             id {
-                type &#39;id&#39;
+                type 'id'
             }
-            name {
-                filterClosure {params -&gt;
-                    ilike(&#39;name&#39;, &quot;%${params.name}%&quot;)
-                }
-            }
+            name
             minEstSales {
-                formatName &#39;nrToString&#39;
-                jqgrid {
-                    search false
-                }
+                enableFilter false
+                formatName 'nrToString'
             }
             maxEstSales {
-                formatName &#39;nrToString&#39;
-                jqgrid {
-                    search false
-                }
+                enableFilter false
+                formatName 'nrToString'
             }
-            language {
-                filterClosure {params -&gt;
-                    ilike(&#39;language&#39;, &quot;%${params.language}%&quot;)
-                }
-            }
+            language
             nrBooks {
-                jqgrid {
-                    search false
-                }
+                enableFilter false
             }
-            nationality {
-                filterClosure {params -&gt;
-                    ilike(&#39;nationality&#39;, &quot;%${params.nationality}%&quot;)
-                }
-            }
+            nationality
         }
         autocomplete {
-            idProp &#39;id&#39;
-            labelValue { val, params -&gt;
-                &quot;&#36;{val.name} (&#36;{val.nationality})&quot;
+            labelValue { val, params ->
+                "&#36;{val.name} (&#36;{val.nationality})"
             }
-            textBoxFilterClosure { params -&gt;
-                ilike(&#39;name&#39;, &quot;%&#36;{params.term}%&quot;)
+            textBoxFilterClosure { filter ->
+                ilike('name', "%&#36;{filter.paramValue}%")
             }
-            constraintsFilterClosure { params -&gt;
-                if (params.nationality) {
-                    eq(&#39;nationality&#39;, params.nationality)
+            constraintsFilterClosure { filter ->
+                if (filter.params.nationality) {
+                    eq('nationality', filter.params.nationality)
                 }
             }
         }
-    }</code></pre>
+    }
+</markdown:renderHtml>
 
             </div>
 

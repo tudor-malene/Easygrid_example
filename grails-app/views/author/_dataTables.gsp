@@ -5,53 +5,32 @@
 
 <h1 id="source-code">Source Code</h1>
 
-
-                   <pre><code>
+<markdown:renderHtml>
     authorDatatables {
-        dataSourceType &#39;domain&#39;
+        dataSourceType 'gorm'
         domainClass Author
-        gridImpl &#39;dataTables&#39;
+        gridImpl 'dataTables'
         columns {
             id {
-                type &#39;id&#39;
+                type 'id'
             }
-            name {
-                filterClosure {params -&gt;
-                    ilike(&#39;name&#39;, &quot;%${params.name}%&quot;)
-                }
-                dataTables {
-                    search true
-                }
-            }
+            name
             minEstSales {
-                formatName &#39;nrToString&#39;
+                enableFilter false
+                formatName 'nrToString'
             }
             maxEstSales {
-                filterClosure {params -&gt;
-                    gt(&#39;maxEstSales&#39;, new BigInteger(params.maxEstSales))
+                filterClosure {filter ->
+                    gt('maxEstSales', filter.paramValue as BigInteger)
                 }
-                formatName &#39;nrToString&#39;
-                dataTables {
-                    search true
-                }
+                formatName 'nrToString'
             }
-            language {
-                filterClosure {params -&gt;
-                    ilike(&#39;language&#39;, &quot;%${params.language}%&quot;)
-                }
-                dataTables {
-                    search true
-                }
+            language
+            nrBooks  {
+                enableFilter false
             }
-            nrBooks
-            nationality {
-                filterClosure {params -&gt;
-                    ilike(&#39;nationality&#39;, &quot;%${params.nationality}%&quot;)
-                }
-                dataTables {
-                    search true
-                }
-            }
+            nationality
         }
-    }</code></pre>
+    }
+</markdown:renderHtml>
 

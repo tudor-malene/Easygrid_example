@@ -79,7 +79,7 @@
     <tr>
         <g:each in="${gridConfig.columns}" var="col">
             <td>%{--width="${col.datatable.width}">--}%
-                <g:if test="${col.dataTables.search}">
+                <g:if test="${col.enableFilter}">
                     <input type="text" name="search_${col.name}" class="search_init" size="10"/>
                 </g:if>
                 <g:else>

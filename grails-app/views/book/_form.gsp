@@ -14,11 +14,11 @@ var firstTime = true;
 
 
 <div class="fieldcontain ">
-    <label for="nationality">
+    <label for="constraint_nationality">
         Nationality
     </label>
 
-    <select size="1" id='nationality'>
+    <select size="1" id='constraint_nationality'>
         <option value="">----</option>
         <option value="British" selected="selected">British</option>
         <option value="American">American</option>

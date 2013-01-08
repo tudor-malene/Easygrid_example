@@ -7,28 +7,38 @@
 
 <h1 id="source-code">Source Code</h1>
 
-                        <pre><code>
+<markdown:renderHtml>
+
     authorDatatablesOverBill {
-        dataSourceType &#39;domain&#39;
+        dataSourceType 'gorm'
         domainClass Author
-        gridImpl &#39;dataTables&#39;
+        gridImpl 'dataTables'
         initialCriteria {
-            gte(&#39;maxEstSales&#39;, 1000000000G)
+            gte('maxEstSales', 1000000000G)
         }
-        roles &#39;ROLE_USER&#39;
+        roles 'ROLE_USER'
         columns {
             id {
-                type &#39;id&#39;
+                type 'id'
             }
             name
             minEstSales {
-                formatName &#39;nrToString&#39;
+                enableFilter false
+                formatName 'nrToString'
             }
             maxEstSales {
-                formatName &#39;nrToString&#39;
+                formatName 'nrToString'
+                filterClosure {filter ->
+                    gt('maxEstSales', filter.paramValue as BigInteger)
+                }
             }
             language
-            nrBooks
+            nrBooks  {
+                enableFilter false
+            }
             nationality
         }
-    }</code></pre>
+    }
+}
+
+</markdown:renderHtml>

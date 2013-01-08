@@ -87,7 +87,6 @@
 			<ul>
 				<li>App version: <g:meta name="app.version"/></li>
 				<li>Grails version: <g:meta name="app.grails.version"/></li>
-				<li>Groovy version: ${org.codehaus.groovy.runtime.InvokerHelper.getVersion()}</li>
 				<li>JVM version: ${System.getProperty('java.version')}</li>
 				<li>Reloading active: ${grails.util.Environment.reloadingAgentEnabled}</li>
 				<li>Controllers: ${grailsApplication.controllerClasses.size()}</li>
@@ -116,8 +115,8 @@
 				<ul>
                     <li class="controller"><g:link controller="author" action="list" params="[impl:'jqgrid']">JQGrid</g:link></li>
                     <li class="controller"><g:link controller="author" action="list" params="[impl:'visualization']">Google visualization grid</g:link></li>
-                    <li class="controller"><g:link controller="author" action="list" params="[impl:'datatables']">Datatables grid</g:link></li>
-                    <li class="controller"><g:link controller="author" action="list" params="[impl:'authorDatatablesOverBill']">Datatables grid ( with initial constraint: authors with over 1 billion sold books)</g:link></li>
+                    <li class="controller"><g:link controller="author" action="list" params="[impl:'dataTables']">Datatables grid</g:link></li>
+                    <li class="controller"><g:link controller="author" action="list" params="[impl:'dataTablesFilter']">Datatables grid ( with initial constraint: authors with over 1 billion sold books)</g:link></li>
                     <li class="controller"><g:link controller="author" action="list" params="[impl:'classic']">Standard grails grid </g:link></li>
 				</ul>
 				<h2>Selection widget:</h2>

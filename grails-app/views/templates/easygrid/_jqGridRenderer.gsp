@@ -18,12 +18,14 @@
    colModel: [
     <grid:eachColumn gridConfig="${gridConfig}" >
         {name:'${col.name}',
+        "search":${col.enableFilter},
         <g:each in="${col.jqgrid}" >
             "${it.key}":${it.value},
         </g:each>
         },
     </grid:eachColumn>
     ],
+   rowNum:${gridConfig.defaultMaxRows},
    viewrecords: true,
    pager: '#${attrs.id}Pager',
     <g:if test="${gridConfig.inlineEdit}">
