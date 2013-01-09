@@ -10,19 +10,19 @@
         query = new google.visualization.Query(dataSourceUrl);
         container = document.getElementById("${attrs.id}_div");
 
-    <g:if test="${gridConfig.visualization.loadAllData}">
+        <g:if test="${gridConfig.visualization.loadAllData}">
         // Send the query with a callback function.
         query.send(handleQueryResponse);
         //todo - add options
 
-    </g:if>
-    <g:else>
+        </g:if>
+        <g:else>
         options = {};
         query.abort();
         var tableQueryWrapper = new TableQueryWrapper(query, container, options);
         tableQueryWrapper.sendAndDraw();
 
-    </g:else>
+        </g:else>
 
 
     }

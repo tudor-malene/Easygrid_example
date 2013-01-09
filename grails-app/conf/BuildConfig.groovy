@@ -12,28 +12,22 @@ grails.plugin.location.easygrid ="../Easygrid"
 grails.project.dependency.resolution = {
     // inherit Grails' default dependencies
     inherits("global") {
-        // specify dependency exclusions here; for example, uncomment this to disable ehcache:
+        // uncomment to disable ehcache
         // excludes 'ehcache'
     }
-    log "warn" // log level of Ivy resolver, either 'error', 'warn', 'info', 'debug' or 'verbose'
-    checksums false// Whether to verify checksums on resolve
+    log "error" // log level of Ivy resolver, either 'error', 'warn', 'info', 'debug' or 'verbose'
+    checksums true // Whether to verify checksums on resolve
 
     repositories {
         inherits true // Whether to inherit repository definitions from plugins
-
-//        mavenRepo "http://repo.grails.org/grails/plugins-releases/"
         grailsPlugins()
         grailsHome()
         grailsCentral()
-
-//        mavenLocal()
         mavenCentral()
-//        mavenRepo "http://94.24.119.178:8081/nexus/content/repositories/releases/"
 
-//        flatDir(name:'local-plgns', dirs:'local-plgns')
-//        flatDir(name:'local-plgns', dirs:'/local-plgns')
-
-        // uncomment these (or add new ones) to enable remote dependency resolution from public Maven repositories
+        // uncomment these to enable remote dependency resolution from public Maven repositories
+        //mavenCentral()
+        //mavenLocal()
         //mavenRepo "http://snapshots.repository.codehaus.org"
         //mavenRepo "http://repository.codehaus.org"
         //mavenRepo "http://download.java.net/maven/2/"
@@ -42,13 +36,12 @@ grails.project.dependency.resolution = {
     dependencies {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes eg.
 
-//        runtime 'postgresql:postgresql:8.4-702.jdbc3'
-        // runtime 'mysql:mysql-connector-java:5.1.20'
+        // runtime 'mysql:mysql-connector-java:5.1.16'
     }
 
     plugins {
         runtime ":hibernate:$grailsVersion"
-        runtime ":jquery:1.7.2"
+        runtime ":jquery:1.7.1"
         runtime ":resources:1.1.6"
 
         // Uncomment these (or add new ones) to enable additional resources capabilities
@@ -57,17 +50,5 @@ grails.project.dependency.resolution = {
         //runtime ":yui-minify-resources:0.1.4"
 
         build ":tomcat:$grailsVersion"
-
-        runtime ":database-migration:1.1"
-
-        compile ':cache:1.0.0'
-
-        compile ':jquery-ui:1.8.24'
-        compile ':google-visualization:0.5.6'
-        compile ':export:1.5'
-        compile ":markdown:1.0.0.RC1"
-
-//        compile ':easygrid:1.0.0'
-
     }
-}
+} 
