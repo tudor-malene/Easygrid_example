@@ -1,7 +1,7 @@
 
-<r:require modules="easygrid-datatables-dev"/>
-<grid:exportButton name='authorDatatables'/>
+<r:require modules="easygrid-datatables-dev,export"/>
 <grid:grid name='authorDatatables'/>
+<grid:exportButton name='authorDatatables'/>
 
 <h1 id="source-code">Source Code</h1>
 

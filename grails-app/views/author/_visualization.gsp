@@ -1,7 +1,7 @@
-<r:require modules="easygrid-visualization-dev,jquery-dev"/>
+<r:require modules="easygrid-visualization-dev,jquery-dev,export"/>
 
-<grid:exportButton name='authorVisualization'/>
 <grid:grid name='authorVisualization'/>
+<grid:exportButton name='authorVisualization'/>
 
 <h1 id="source-code">Source Code</h1>
 

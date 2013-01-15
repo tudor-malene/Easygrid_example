@@ -1,9 +1,9 @@
 
-<r:require modules="easygrid-datatables-dev"/>
+<r:require modules="easygrid-datatables-dev,export"/>
 <h3>To be able to view the content you need to <a href="${createLink(controller: 'login', action: 'auth')}">login</a>  with: me/password</h3>
 
-<grid:exportButton name='authorDatatablesOverBill'/>
 <grid:grid name='authorDatatablesOverBill'/>
+<grid:exportButton name='authorDatatablesOverBill'/>
 
 <h1 id="source-code">Source Code</h1>
 

@@ -1,6 +1,7 @@
-<grid:exportButton name='authorClassic'/>
+<r:require modules="export"/>
 
 <grid:grid name='authorClassic'/>
+<grid:exportButton name='authorClassic'/>
 
 <h1 id="source-code">Source Code</h1>
 <markdown:renderHtml>

@@ -83,6 +83,12 @@ class AuthorController {
             jqgrid {
                 width '"900"'
             }
+            export {
+                export_title 'Author'
+                pdf {
+                    'border.color' java.awt.Color.BLUE
+                }
+            }
             columns {
                 actions {
                     type 'actions'
@@ -155,7 +161,7 @@ class AuthorController {
                 }
                 maxEstSales {
                     formatName 'nrToString'
-                    filterClosure {filter ->
+                    filterClosure { filter ->
                         gt('maxEstSales', filter.paramValue as BigInteger)
                     }
                     visualization {
@@ -184,13 +190,13 @@ class AuthorController {
                     formatName 'nrToString'
                 }
                 maxEstSales {
-                    filterClosure {filter ->
+                    filterClosure { filter ->
                         gt('maxEstSales', filter.paramValue as BigInteger)
                     }
                     formatName 'nrToString'
                 }
                 language
-                nrBooks  {
+                nrBooks {
                     enableFilter false
                 }
                 nationality
@@ -216,12 +222,12 @@ class AuthorController {
                 }
                 maxEstSales {
                     formatName 'nrToString'
-                    filterClosure {filter ->
+                    filterClosure { filter ->
                         gt('maxEstSales', filter.paramValue as BigInteger)
                     }
                 }
                 language
-                nrBooks  {
+                nrBooks {
                     enableFilter false
                 }
                 nationality

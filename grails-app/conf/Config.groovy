@@ -1,6 +1,8 @@
 import groovy.text.SimpleTemplateEngine
 import org.codehaus.groovy.grails.plugins.springsecurity.SpringSecurityUtils
+import org.fusesource.jansi.Ansi
 import org.grails.plugin.easygrid.Filter
+import org.grails.plugin.easygrid.GridUtils
 import org.grails.plugin.easygrid.grids.DataTablesGridService
 
 // locations to search for config files that get merged into the main config;
@@ -19,19 +21,23 @@ import org.grails.plugin.easygrid.grids.DataTablesGridService
 grails.project.groupId = EasygridShowcase // change this to alter the default package name and Maven publishing destination
 grails.mime.file.extensions = true // enables the parsing of file extensions from URLs into the request format
 grails.mime.use.accept.header = false
-grails.mime.types = [
-        all: '*/*',
+//export plugin
+grails.mime.types = [html: ['text/html', 'application/xhtml+xml'],
+        xml: ['text/xml', 'application/xml'],
+        text: 'text-plain',
+        js: 'text/javascript',
+        rss: 'application/rss+xml',
         atom: 'application/atom+xml',
         css: 'text/css',
         csv: 'text/csv',
-        form: 'application/x-www-form-urlencoded',
-        html: ['text/html', 'application/xhtml+xml'],
-        js: 'text/javascript',
+        pdf: 'application/pdf',
+        rtf: 'application/rtf',
+        excel: 'application/vnd.ms-excel',
+        ods: 'application/vnd.oasis.opendocument.spreadsheet',
+        all: '*/*',
         json: ['application/json', 'text/json'],
-        multipartForm: 'multipart/form-data',
-        rss: 'application/rss+xml',
-        text: 'text/plain',
-        xml: ['text/xml', 'application/xml']
+        form: 'application/x-www-form-urlencoded',
+        multipartForm: 'multipart/form-data'
 ]
 
 // URL Mapping Cache Max Size, defaults to 5000
@@ -79,7 +85,7 @@ log4j = {
     // Example of changing the log pattern for the default console appender:
     //
     appenders {
-        console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
+        console name: 'stdout', layout: pattern(conversionPattern: '%c{2} %m%n')
     }
 
     error 'org.codehaus.groovy.grails.web.servlet',        // controllers
@@ -113,7 +119,63 @@ easygrid {
 
         gridImpl = 'jqgrid' // the default grid implementation
 
-        exportService = org.grails.plugin.easygrid.EasygridExportService
+
+        //default export settings for various formats
+        export {
+            exportService = org.grails.plugin.easygrid.EasygridExportService
+
+            //this section provides default values for the different export formats
+            // for more options check out the export plugin
+
+            // csv settings
+            csv {
+                separator = ','
+                quoteCharacter  = '"'
+            }
+            csv['header.enabled'] = true
+
+
+            // excel settings
+            excel['header.enabled'] = true
+            //property that aggregates the widths defined per column
+            excel['column.widths'] = { gridConfig ->
+                def widths = []
+                GridUtils.eachColumn(gridConfig, true) { column ->
+                    widths.add(column?.export?.width ?: 0.2)
+                }
+                widths
+            }
+
+            // pdf settings
+            pdf['header.enabled'] = true
+            pdf['column.widths'] = { gridConfig ->
+                def widths = []
+                GridUtils.eachColumn(gridConfig, true) { column ->
+                    widths.add(column?.export?.width ?: 0.2)
+                }
+                widths
+            }
+            pdf['border.color'] = java.awt.Color.BLACK
+            pdf['pdf.orientation'] = 'landscape'
+
+
+            // rtf settings
+            rtf['header.enabled'] = true
+            rtf {
+            }
+
+            // ods settings
+            ods {
+            }
+
+            // xml settings
+            xml['xml.root']= { gridConfig ->
+                //defaults to the export title
+                gridConfig.export.export_title
+            }
+            xml {
+            }
+        }
 
         // jqgrid default properties
         // check the jqgrid documentation
@@ -255,7 +317,6 @@ easygrid {
 
     }
 
-
     // section to define per column configurations
     columns {
 
@@ -351,7 +412,7 @@ easygrid {
             it ? "Yes" : "No"
         }
 
-        nrToString = {nr ->
+        nrToString = { nr ->
             if (nr / 1000000000 >= 1) {
                 "${(nr / 1000000000) as int} billion"
             } else if (nr / 1000000 >= 1) {
