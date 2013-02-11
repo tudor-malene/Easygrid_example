@@ -7,7 +7,7 @@ grails.project.source.level = 1.6
 //grails.project.war.file = "target/${appName}-${appVersion}.war"
 
 // Useful to test plugins you are developing.
-grails.plugin.location.easygrid ="../Easygrid"
+//grails.plugin.location.easygrid ="../Easygrid"
 
 grails.project.dependency.resolution = {
     // inherit Grails' default dependencies
@@ -37,6 +37,7 @@ grails.project.dependency.resolution = {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes eg.
 
         // runtime 'mysql:mysql-connector-java:5.1.16'
+        compile('org.mvel:mvel2:2.1.3.Final')
     }
 
     plugins {
@@ -50,5 +51,6 @@ grails.project.dependency.resolution = {
         //runtime ":yui-minify-resources:0.1.4"
 
         build ":tomcat:$grailsVersion"
+        compile ":easygrid:1.3.0"
     }
 } 

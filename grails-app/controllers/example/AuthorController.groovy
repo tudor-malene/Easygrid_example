@@ -1,5 +1,6 @@
 package example
 
+import org.codehaus.groovy.grails.plugins.web.taglib.ApplicationTagLib
 import org.grails.plugin.easygrid.Easygrid
 import org.springframework.dao.DataIntegrityViolationException
 
@@ -67,9 +68,9 @@ class AuthorController {
                 textBoxFilterClosure { filter ->
                     ilike('name', "%${filter.paramValue}%")
                 }
-                constraintsFilterClosure { filter ->
-                    if (filter.params.nationality) {
-                        eq('nationality', filter.params.nationality)
+                constraintsFilterClosure { params ->
+                    if (params.nationality) {
+                        eq('nationality', params.nationality)
                     }
                 }
             }
@@ -80,9 +81,7 @@ class AuthorController {
             domainClass Author
             gridImpl 'jqgrid'
             inlineEdit true
-            jqgrid {
-                width '"900"'
-            }
+            enableFilter true
             export {
                 export_title 'Author'
                 pdf {
@@ -99,8 +98,6 @@ class AuthorController {
                 name {
                     jqgrid {
                         editable false
-                        // this will create a link to the wikipedia page
-                        formatter 'customWikiFormat'
                     }
                 }
                 minEstSales {
@@ -143,13 +140,6 @@ class AuthorController {
             dataSourceType 'gorm'
             domainClass Author
             gridImpl 'visualization'
-            visualization {
-                page 'enable'
-                allowHtml true
-                alternatingRowStyle true
-                showRowNumber false
-                pageSize 10
-            }
             columns {
                 id {
                     type 'id'
@@ -180,11 +170,11 @@ class AuthorController {
             dataSourceType 'gorm'
             domainClass Author
             gridImpl 'dataTables'
+            fixedColumns true
             columns {
-                id {
-                    type 'id'
+                name {
+                    formatName 'authorWikiFormat'
                 }
-                name
                 minEstSales {
                     enableFilter false
                     formatName 'nrToString'
@@ -212,24 +202,17 @@ class AuthorController {
             }
             roles 'ROLE_USER'
             columns {
-                id {
-                    type 'id'
+                name {
+                    formatName 'authorWikiFormat'
                 }
-                name
                 minEstSales {
-                    enableFilter false
                     formatName 'nrToString'
                 }
                 maxEstSales {
                     formatName 'nrToString'
-                    filterClosure { filter ->
-                        gt('maxEstSales', filter.paramValue as BigInteger)
-                    }
                 }
                 language
-                nrBooks {
-                    enableFilter false
-                }
+                nrBooks
                 nationality
             }
         }

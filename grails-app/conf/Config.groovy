@@ -1,6 +1,4 @@
-import groovy.text.SimpleTemplateEngine
 import org.codehaus.groovy.grails.plugins.springsecurity.SpringSecurityUtils
-import org.fusesource.jansi.Ansi
 import org.grails.plugin.easygrid.Filter
 import org.grails.plugin.easygrid.GridUtils
 import org.grails.plugin.easygrid.grids.DataTablesGridService
@@ -102,7 +100,7 @@ log4j = {
     debug 'example'
 }
 
-// Added by Easygrid:
+def stdDateFormat = 'MM/dd/yyyy'
 easygrid {
 
     //default values added to each defined grid  ( if they are not already set )
@@ -119,6 +117,12 @@ easygrid {
 
         gridImpl = 'jqgrid' // the default grid implementation
 
+        // these are properties used by the jqgrid template
+        enableFilter = true
+        addNavGrid = true
+
+        fixedColumns = true
+        noFixedColumns = 1
 
         //default export settings for various formats
         export {
@@ -130,10 +134,9 @@ easygrid {
             // csv settings
             csv {
                 separator = ','
-                quoteCharacter  = '"'
+                quoteCharacter = '"'
             }
             csv['header.enabled'] = true
-
 
             // excel settings
             excel['header.enabled'] = true
@@ -158,7 +161,6 @@ easygrid {
             pdf['border.color'] = java.awt.Color.BLACK
             pdf['pdf.orientation'] = 'landscape'
 
-
             // rtf settings
             rtf['header.enabled'] = true
             rtf {
@@ -169,7 +171,7 @@ easygrid {
             }
 
             // xml settings
-            xml['xml.root']= { gridConfig ->
+            xml['xml.root'] = { gridConfig ->
                 //defaults to the export title
                 gridConfig.export.export_title
             }
@@ -184,6 +186,17 @@ easygrid {
             height = 250
             // number of rows to display by default
             rowNum = 20
+        }
+
+        dataTables {
+        }
+
+        visualization {
+            page = "'enable'"
+            allowHtml = true
+            alternatingRowStyle = true
+//            showRowNumber = false
+            pageSize = 10
         }
 
         // default security provider
@@ -271,7 +284,7 @@ easygrid {
             gridImplService = org.grails.plugin.easygrid.grids.ClassicGridService
             inlineEdit = false
             formats = [
-                    (Date): { it.format("dd/MM/yyyy") },
+                    (Date): { it.format(stdDateFormat) },
                     (Boolean): { it ? "Yes" : "No" }
             ]
         }
@@ -288,8 +301,8 @@ easygrid {
             // using the named formatters ( defined below )
             // using the default type formats ( defined here ) - where you specify the type of data & the format closure
             formats = [
-                    (Date): { it.format("dd/MM/yyyy") },
-                    (Calendar): { Calendar cal -> cal.format("dd/MM/yyyy") },
+                    (Date): { it.format(stdDateFormat) },
+                    (Calendar): { Calendar cal -> cal.format(stdDateFormat) },
                     (Boolean): { it ? "Yes" : "No" }
             ]
         }
@@ -300,7 +313,7 @@ easygrid {
             gridRenderer = '/templates/easygrid/dataTablesGridRenderer'
             inlineEdit = false
             formats = [
-                    (Date): { it.format("dd/MM/yyyy") },
+                    (Date): { it.format(stdDateFormat) },
                     (Boolean): { it ? "Yes" : "No" }
             ]
         }
@@ -324,6 +337,7 @@ easygrid {
         defaults {
             enableFilter = true
             showInSelection = true
+            sortable = true
             jqgrid {
                 editable = true
             }
@@ -336,7 +350,8 @@ easygrid {
                 valueType = com.google.visualization.datasource.datatable.value.ValueType.TEXT
             }
             dataTables {
-                width = "'100%'"
+                sWidth = "'100%'"
+                sClass = "''"
             }
             export {
                 width = 25
@@ -403,7 +418,7 @@ easygrid {
     // these are specified in the column section using : formatName
     formats {
         stdDateFormatter = {
-            it.format("dd/MM/yyyy")
+            it.format(stdDateFormat)
         }
         visualizationDateFormatter = {
             def cal = com.ibm.icu.util.Calendar.getInstance(); cal.setTime(it); cal.setTimeZone(java.util.TimeZone.getTimeZone("GMT")); cal
@@ -422,6 +437,9 @@ easygrid {
             } else {
                 "${nr}"
             }
+        }
+        authorWikiFormat = {
+            "<a href='http://en.wikipedia.org/wiki/${it.replace(" ", "_")}'>${it}</a>";
         }
     }
 }

@@ -1,6 +1,5 @@
-
 <r:require modules="easygrid-datatables-dev,export"/>
-<grid:grid name='authorDatatables'/>
+<grid:grid name='authorDatatables' />
 <grid:exportButton name='authorDatatables'/>
 
 <h1 id="source-code">Source Code</h1>
@@ -10,23 +9,23 @@
         dataSourceType 'gorm'
         domainClass Author
         gridImpl 'dataTables'
+        fixedColumns true
         columns {
-            id {
-                type 'id'
+            name{
+                formatName 'authorWikiFormat'
             }
-            name
             minEstSales {
                 enableFilter false
                 formatName 'nrToString'
             }
             maxEstSales {
-                filterClosure {filter ->
+                filterClosure { filter ->
                     gt('maxEstSales', filter.paramValue as BigInteger)
                 }
                 formatName 'nrToString'
             }
             language
-            nrBooks  {
+            nrBooks {
                 enableFilter false
             }
             nationality

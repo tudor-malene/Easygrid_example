@@ -29,7 +29,7 @@ var firstTime = true;
 
 <i>
     <br/><br/>
-    - Type any 2 or more carachters in the textbox below( for ex: 'wi') and select an author. (if there is only 1 item you can just hit Tab) <br/>
+    - Type any 2 or more characters in the textbox below( for ex: 'wi') and select an author. (if there is only 1 item you can just hit Tab) <br/>
     - You can also press 'Sel' and select from the grid shown in the popup. ( just click on any row ) <br/>
     - You can change the nationality from the combo, and see what happens. (These are dynamic constraints, useful to correlate the widget with other elements from the page ) <br/>
     - Double click on the name of the author - to clear the selection <br/>
