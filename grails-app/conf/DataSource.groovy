@@ -27,7 +27,7 @@ environments {
     production {
         dataSource {
             dbCreate = "create-drop"
-            url = "jdbc:h2:prodDb;MVCC=TRUE;LOCK_TIMEOUT=10000"
+            url = "jdbc:h2:easygridExampleDb;MVCC=TRUE;LOCK_TIMEOUT=10000"
             pooled = true
             properties {
                maxActive = -1
