@@ -39,3 +39,11 @@
 
 </markdown:renderHtml>
 
+GSP:
+<markdown:renderHtml>
+    <r:require modules="easygrid-visualization-dev,jquery-dev,export"/>
+
+    <grid:grid name='authorVisualization'  />
+    <grid:exportButton name='authorVisualization' formats="['csv', 'excel']"/>
+</markdown:renderHtml>
+
