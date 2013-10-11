@@ -38,6 +38,10 @@ grails.project.dependency.resolution = {
 
         // runtime 'mysql:mysql-connector-java:5.1.16'
         compile('org.mvel:mvel2:2.1.3.Final')
+        compile('com.google.visualization:visualization-datasource:1.1.1') {
+            exclude (group: 'commons-logging', name: 'commons-logging')
+            exclude (group: 'commons-lang', name: 'commons-lang')
+        }
     }
 
     plugins {
