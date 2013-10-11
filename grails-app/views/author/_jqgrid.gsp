@@ -10,7 +10,6 @@
     }
 </r:script>
 
-
 <r:require modules="easygrid-jqgrid-dev,export"/>
 
 <grid:grid id='jqgridinitial' name='authorJQGrid' jqgrid.caption="'Author List'" jqgrid.width='"900"' columns.name.jqgrid.formatter='customWikiFormat'/>

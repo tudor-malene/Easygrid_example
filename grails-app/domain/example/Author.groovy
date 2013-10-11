@@ -14,6 +14,7 @@ class Author {
     static hasMany = [ books:Book ]
 
     static constraints = {
+        nationality blank: false
     }
 
     static mapping = {

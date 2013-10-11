@@ -1,4 +1,5 @@
 import org.codehaus.groovy.grails.plugins.springsecurity.SpringSecurityUtils
+import org.grails.plugin.easygrid.AutocompleteService
 import org.grails.plugin.easygrid.Filter
 import org.grails.plugin.easygrid.GridUtils
 import org.grails.plugin.easygrid.grids.DataTablesGridService
@@ -97,7 +98,8 @@ log4j = {
             'org.springframework',
             'org.hibernate',
             'net.sf.ehcache.hibernate'
-    debug 'example'
+    debug 'example',
+            'org.grails.plugin.easygrid'
 }
 
 def stdDateFormat = 'MM/dd/yyyy'
@@ -127,6 +129,7 @@ easygrid {
         //default export settings for various formats
         export {
             exportService = org.grails.plugin.easygrid.EasygridExportService
+            maxRows = 10000 // maximum rows to be exported - to avoid out of memory exceptions
 
             //this section provides default values for the different export formats
             // for more options check out the export plugin
@@ -222,6 +225,9 @@ easygrid {
             idProp = 'id'  // the name of the property of the id of the selected element (optionKey - in the replaced select tag)
             maxRows = 10 // the max no of elements to be displayed by the jquery autocomplete box
             template = '/templates/autocompleteRenderer' //the default autocomplete renderer
+            autocompleteService= AutocompleteService
+            showSeparateLabel = false
+            autocompleteSize = 30
         }
     }
 
@@ -233,10 +239,10 @@ easygrid {
             dataSourceService = org.grails.plugin.easygrid.datasource.GormDatasourceService
             filters {
                 //default search closures for different column types
-                text = { Filter filter -> ilike(filter.column.name, "%${filter.paramValue}%") }
-                number = { Filter filter -> eq(filter.column.name, filter.paramValue as int) }
+                text = { Filter filter -> ilike(filter.filterable.name, "%${filter.paramValue}%") }
+                number = { Filter filter -> eq(filter.filterable.name, filter.paramValue as int) }
                 //todo
-                date = { Filter filter -> eq(filter.column.name, filter.paramValue as Date) }
+                date = { Filter filter -> eq(filter.filterable.name, filter.paramValue as Date) }
 
             }
         }
@@ -247,10 +253,10 @@ easygrid {
             dataSourceService = org.grails.plugin.easygrid.datasource.GormDatasourceService
             filters {
                 //default search closures
-                text = { Filter filter -> ilike(filter.column.name, "%${filter.paramValue}%") }
-                number = { Filter filter -> eq(filter.column.name, filter.paramValue as int) }
+                text = { Filter filter -> ilike(filter.filterable.name, "%${filter.paramValue}%") }
+                number = { Filter filter -> eq(filter.filterable.name, filter.paramValue as int) }
                 //todo
-                date = { Filter filter -> eq(filter.column.name, filter.paramValue as Date) }
+                date = { Filter filter -> eq(filter.filterable.name, filter.paramValue as Date) }
 
             }
         }
@@ -260,10 +266,10 @@ easygrid {
             dataSourceService = org.grails.plugin.easygrid.datasource.ListDatasourceService
             filters {
                 //default search closures
-                text = { Filter filter, row -> row[filter.column.name].contains filter.paramValue }
-                number = { Filter filter, row -> row[filter.column.name] == filter.paramValue as int }
+                text = { Filter filter, row -> row[filter.filterable.name].contains filter.paramValue }
+                number = { Filter filter, row -> row[filter.filterable.name] == filter.paramValue as int }
                 //todo
-                date = { Filter filter, row -> row[filter.column.name] == filter.paramValue as Date }
+                date = { Filter filter, row -> row[filter.filterable.name] == filter.paramValue as Date }
 
             }
         }
@@ -294,7 +300,6 @@ easygrid {
             gridRenderer = '/templates/easygrid/jqGridRenderer'          //  a gsp template that will be rendered
             gridImplService = org.grails.plugin.easygrid.grids.JqueryGridService  // the service class for this implementation
             inlineEdit = true    // specifies that this implementation allows inline Editing
-            editRenderer = '/templates/easygrid/jqGridEditResponse'
 
             // there are 3 options to format the data
             // using the value closure in the column
@@ -327,6 +332,17 @@ easygrid {
                     (Date): { def cal = com.ibm.icu.util.Calendar.getInstance(); cal.setTime(it); cal.setTimeZone(com.ibm.icu.util.TimeZone.getTimeZone("GMT")); cal }, //wtf?
             ]
         }
+
+/*
+        // google visualization implementation
+        nggrid {
+            gridImplService = org.grails.plugin.easygrid.grids.NgGridService
+            gridRenderer = '/templates/easygrid/ngGridRenderer'
+            inlineEdit = true
+            formats = [
+            ]
+        }
+*/
 
     }
 
@@ -412,6 +428,16 @@ easygrid {
             }
         }
     }
+
+    //section to define the filter form configurations
+    //todo - default service & default template
+    filterForm {
+        defaults{
+            filterFormService = org.grails.plugin.easygrid.FilterFormService
+            filterFormTemplate =  '/templates/filterFormRenderer'
+        }
+    }
+
 
     // here we define different formatters
     // these are closures  which are called before the data is displayed to format the cell data

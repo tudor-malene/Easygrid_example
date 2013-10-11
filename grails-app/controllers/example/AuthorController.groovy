@@ -1,9 +1,11 @@
 package example
 
-import org.codehaus.groovy.grails.plugins.web.taglib.ApplicationTagLib
+import grids.test.GridsConfig
 import org.grails.plugin.easygrid.Easygrid
+import org.grails.plugin.easygrid.Filter
 import org.springframework.dao.DataIntegrityViolationException
 
+//@Easygrid  (externalGrids = GridsConfig)
 @Easygrid
 class AuthorController {
 
@@ -88,6 +90,24 @@ class AuthorController {
                     'border.color' java.awt.Color.BLUE
                 }
             }
+            filterForm {
+                fields {
+                    'ff.name' {
+                        label 'name'
+                        type 'text'
+                        filterClosure { Filter filter ->
+                            ilike('name', "%${filter.paramValue}%")
+                        }
+                    }
+                    'estSales' {
+                        label 'estSales'
+                        type 'between'
+                        filterClosure { Filter filter ->
+                            between('maxEstSales', filter.params.estSales.from as BigInteger, filter.params.estSales.to as BigInteger)
+                        }
+                    }
+                }
+            }
             columns {
                 actions {
                     type 'actions'
@@ -136,10 +156,31 @@ class AuthorController {
             }
         }
 
+
         authorVisualization {
             dataSourceType 'gorm'
             domainClass Author
             gridImpl 'visualization'
+            filterForm {
+                fields {
+                    'ff.name' {
+                        label 'name'
+                        type 'text'
+                        filterClosure { Filter filter ->
+                            ilike('name', "%${filter.paramValue}%")
+                        }
+                    }
+                    'estSales' {
+                        label 'estSales'
+                        type 'interval'
+                        //todo - sa fac cumva sa nu se selecteze
+                        //si sa fac cumva sa renderizez
+                        filterClosure { Filter filter ->
+                            between('maxEstSales', filter.params.estSales.from as BigInteger, filter.params.estSales.to as BigInteger)
+                        }
+                    }
+                }
+            }
             columns {
                 id {
                     type 'id'
@@ -166,11 +207,48 @@ class AuthorController {
             }
         }
 
+        authorVisualizationChart {
+            dataSourceType 'gorm'
+            domainClass Author
+            gridImpl 'visualization'
+            columns {
+                name
+                minEstSales {
+                    visualization {
+                        valueType = com.google.visualization.datasource.datatable.value.ValueType.NUMBER
+                    }
+                }
+                maxEstSales {
+                    visualization {
+                        valueType = com.google.visualization.datasource.datatable.value.ValueType.NUMBER
+                    }
+                }
+            }
+        }
+
         authorDatatables {
             dataSourceType 'gorm'
             domainClass Author
             gridImpl 'dataTables'
             fixedColumns true
+            filterForm {
+                fields {
+                    'ff.name' {
+                        label 'name'
+                        type 'text'
+                        filterClosure { Filter filter ->
+                            ilike('name', "%${filter.paramValue}%")
+                        }
+                    }
+                    'estSales' {
+                        label 'estSales'
+                        type 'between'
+                        filterClosure { Filter filter ->
+                            between('maxEstSales', filter.params.estSales.from as BigInteger, filter.params.estSales.to as BigInteger)
+                        }
+                    }
+                }
+            }
             columns {
                 name {
                     formatName 'authorWikiFormat'
@@ -217,6 +295,7 @@ class AuthorController {
             }
         }
     }
+
 
     def index() {
         redirect(action: "list", params: params)

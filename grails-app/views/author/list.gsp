@@ -24,8 +24,9 @@
 
         <li><a href="${g.createLink(action: 'list', params: [impl: 'dataTables'])}">DataTables</a></li>
 
-        <li><a href="${g.createLink(action: 'list', params: [impl: 'dataTablesFilter'])}">DataTables(with Filter)</a>
-        </li>
+        <li><a href="${g.createLink(action: 'list', params: [impl: 'dataTablesFilter'])}">DataTables(with Filter)</a></li>
+
+        %{--<li><a href="${g.createLink(action: 'list', params: [impl: 'ngGrid'])}">Ng Grid</a></li>--}%
 
         <li><g:link class="create" action="create" controller="book">Selection Widget</g:link></li>
 

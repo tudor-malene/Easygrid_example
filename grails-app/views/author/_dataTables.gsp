@@ -1,4 +1,5 @@
 <r:require modules="easygrid-datatables-dev,export"/>
+<grid:filterForm name="authorDatatables" />
 <grid:grid name='authorDatatables' />
 <grid:exportButton name='authorDatatables'/>
 

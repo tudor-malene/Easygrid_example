@@ -45,7 +45,9 @@ var firstTime = true;
                     onChange="if(firstTime){firstTime=false;alert('Well done! ( This is the onchange event)')}"
                     gridName="authorJQGridSelection" controller="author"
                     name="author.id" value="${bookInstance?.author?.id}"
-                    dynamicConstraints="[nationality: '#nationality']"/>
+                    dynamicConstraints="[nationality: '#nationality']"
+                    showSeparateLabel="false"    />
+
 </div>
 
 
