@@ -101,9 +101,11 @@ class AuthorController {
                     }
                     'estSales' {
                         label 'estSales'
-                        type 'between'
+                        type 'interval'
                         filterClosure { Filter filter ->
-                            between('maxEstSales', filter.params.estSales.from as BigInteger, filter.params.estSales.to as BigInteger)
+                            if (filter.params.estSales.from && filter.params.estSales.to) {
+                                between('maxEstSales', filter.params.estSales.from as BigInteger, filter.params.estSales.to as BigInteger)
+                            }
                         }
                     }
                 }
@@ -176,7 +178,9 @@ class AuthorController {
                         //todo - sa fac cumva sa nu se selecteze
                         //si sa fac cumva sa renderizez
                         filterClosure { Filter filter ->
-                            between('maxEstSales', filter.params.estSales.from as BigInteger, filter.params.estSales.to as BigInteger)
+                            if (filter.params.estSales.from && filter.params.estSales.to) {
+                                between('maxEstSales', filter.params.estSales.from as BigInteger, filter.params.estSales.to as BigInteger)
+                            }
                         }
                     }
                 }
@@ -242,9 +246,11 @@ class AuthorController {
                     }
                     'estSales' {
                         label 'estSales'
-                        type 'between'
+                        type 'interval'
                         filterClosure { Filter filter ->
-                            between('maxEstSales', filter.params.estSales.from as BigInteger, filter.params.estSales.to as BigInteger)
+                            if (filter.params.estSales.from && filter.params.estSales.to) {
+                                between('maxEstSales', filter.params.estSales.from as BigInteger, filter.params.estSales.to as BigInteger)
+                            }
                         }
                     }
                 }
@@ -252,6 +258,12 @@ class AuthorController {
             columns {
                 name {
                     formatName 'authorWikiFormat'
+                    export{
+                        //define a different value for the export
+                        value {Author author ->
+                            "(${author.id}) ${author.name}"
+                        }
+                    }
                 }
                 minEstSales {
                     enableFilter false
