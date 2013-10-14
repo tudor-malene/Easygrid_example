@@ -37,5 +37,5 @@
 </script>
 
 
-<div id="${attrs.id}_div" style="width: 900px; height: 3500px;"></div>
+<div id="${attrs.id}_div" style="width: ${attrs.width}; height: ${attrs.height};"></div>
 

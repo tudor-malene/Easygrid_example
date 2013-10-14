@@ -175,8 +175,6 @@ class AuthorController {
                     'estSales' {
                         label 'estSales'
                         type 'interval'
-                        //todo - sa fac cumva sa nu se selecteze
-                        //si sa fac cumva sa renderizez
                         filterClosure { Filter filter ->
                             if (filter.params.estSales.from && filter.params.estSales.to) {
                                 between('maxEstSales', filter.params.estSales.from as BigInteger, filter.params.estSales.to as BigInteger)
@@ -214,6 +212,9 @@ class AuthorController {
         authorVisualizationChart {
             dataSourceType 'gorm'
             domainClass Author
+            initialCriteria {
+                gte('maxEstSales', 500000000G)
+            }
             gridImpl 'visualization'
             columns {
                 name
@@ -258,9 +259,9 @@ class AuthorController {
             columns {
                 name {
                     formatName 'authorWikiFormat'
-                    export{
+                    export {
                         //define a different value for the export
-                        value {Author author ->
+                        value { Author author ->
                             "(${author.id}) ${author.name}"
                         }
                     }
@@ -304,6 +305,86 @@ class AuthorController {
                 language
                 nrBooks
                 nationality
+            }
+        }
+
+        jqgridTree {
+            dataSourceType 'custom'
+            gridImpl 'jqgrid'
+            gridRenderer '/templates/treeGridRenderer'
+            inlineEdit false
+            jqgrid {
+                'ExpandColumn' '"name"'
+                treeGrid 'true'
+                treeGridModel '"adjacency"'
+                treedatatype '"json"'
+                'ExpandColClick' "true"
+            }
+            dataProvider { gridConfig, filters, listParams ->
+                println params
+                switch (params.n_level) {
+                    case "0":
+                        Book.findAllByAuthor(Author.findById(params.nodeid[2..-1] as long))
+                        break;
+                    default:
+                        Author.list().findAll { it.books }
+                }
+            }
+            dataCount { filters ->
+                switch (params.n_level) {
+                    case "0":
+                        Book.countByAuthor(Author.findById(params.nodeid[2..-1] as long))
+                        break;
+                    default:
+                        Author.list().findAll { it.books }.size()
+                }
+            }
+            columns {
+                id {
+                    label 'Id'
+                    jqgrid {
+                        hidden 'true'
+                    }
+                    value { domain ->
+                        (domain instanceof Book) ? "b_${domain.id}" : "a_${domain.id}"
+
+                    }
+                }
+                name {
+                    label 'Tree'
+                    enableFilter false
+                    value { domain ->
+                        (domain instanceof Book) ? domain.title : domain.name
+                    }
+                }
+                level {
+                    label 'level'
+                    treeProperty true
+                    value { domain, params ->
+                        (domain instanceof Book) ? "1" : '0'
+                    }
+                }
+                parent {
+                    label 'parent'
+                    treeProperty true
+                    value { domain, params ->
+                        (domain instanceof Book) ? "a_${domain.author.id}" : 'null'
+                    }
+                }
+                isLeaf {
+                    label 'isLeaf'
+                    treeProperty true
+                    value { domain, params ->
+                        (domain instanceof Book) ? "true" : "false"
+                    }
+                }
+                expanded {
+                    label 'expanded'
+                    treeProperty true
+                    value {
+                        false
+                    }
+                }
             }
         }
     }

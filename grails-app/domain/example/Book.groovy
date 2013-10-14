@@ -10,10 +10,10 @@ class Book {
 
     static constraints = {
         description(nullable: true)
+        date (nullable: true)
     }
 
     static mapping = {
-        cache true
     }
 
 }

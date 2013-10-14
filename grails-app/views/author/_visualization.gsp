@@ -23,6 +23,26 @@
         dataSourceType 'gorm'
         domainClass Author
         gridImpl 'visualization'
+        filterForm {
+            fields {
+                'ff.name' {
+                    label 'name'
+                    type 'text'
+                    filterClosure { Filter filter ->
+                        ilike('name', "%$ {filter.paramValue}%")
+                    }
+                }
+                'estSales' {
+                    label 'estSales'
+                    type 'interval'
+                    filterClosure { Filter filter ->
+                        if (filter.params.estSales.from && filter.params.estSales.to) {
+                            between('maxEstSales', filter.params.estSales.from as BigInteger, filter.params.estSales.to as BigInteger)
+                        }
+                    }
+                }
+            }
+        }
         columns {
             id {
                 type 'id'

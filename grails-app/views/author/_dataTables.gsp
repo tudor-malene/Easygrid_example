@@ -11,9 +11,35 @@
         domainClass Author
         gridImpl 'dataTables'
         fixedColumns true
+            filterForm {
+                fields {
+                    'ff.name' {
+                        label 'name'
+                        type 'text'
+                        filterClosure { Filter filter ->
+                            ilike('name', "%$ {filter.paramValue}%")
+                        }
+                    }
+                    'estSales' {
+                        label 'estSales'
+                        type 'interval'
+                        filterClosure { Filter filter ->
+                            if (filter.params.estSales.from && filter.params.estSales.to) {
+                                between('maxEstSales', filter.params.estSales.from as BigInteger, filter.params.estSales.to as BigInteger)
+                            }
+                        }
+                    }
+                }
+            }
         columns {
             name{
                 formatName 'authorWikiFormat'
+                                    export{
+                        //define a different value for the export
+                        value {Author author ->
+                            "($ {author.id}) $ {author.name}"
+                        }
+                    }
             }
             minEstSales {
                 enableFilter false

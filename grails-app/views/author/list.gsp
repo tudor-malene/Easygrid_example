@@ -14,13 +14,12 @@
 
 <div class="nav" role="navigation">
     <ul>
-        <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-
-        <li><a href="${g.createLink(action: 'list', params: [impl: 'classic'])}">Grails</a></li>
-
+        <li><a href="${g.createLink(action: 'list', params: [impl: 'classic'])}">Static</a></li>
         <li><a href="${g.createLink(action: 'list', params: [impl: 'jqgrid'])}">JQGrid</a></li>
+        <li><a href="${g.createLink(action: 'list', params: [impl: 'tree'])}">TreeGrid</a></li>
 
         <li><a href="${g.createLink(action: 'list', params: [impl: 'visualization'])}">Google Visualization</a></li>
+        <li><a href="${g.createLink(action: 'list', params: [impl: 'visualizationChart'])}">Chart</a></li>
 
         <li><a href="${g.createLink(action: 'list', params: [impl: 'dataTables'])}">DataTables</a></li>
 

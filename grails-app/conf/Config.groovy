@@ -122,6 +122,7 @@ easygrid {
         // these are properties used by the jqgrid template
         enableFilter = true
         addNavGrid = true
+        idColName = 'id'
 
         fixedColumns = true
         noFixedColumns = 1

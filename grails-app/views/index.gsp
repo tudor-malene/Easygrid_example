@@ -114,7 +114,9 @@
 				<h2>Grids:</h2>
 				<ul>
                     <li class="controller"><g:link controller="author" action="list" params="[impl:'jqgrid']">JQGrid</g:link></li>
+                    <li class="controller"><g:link controller="author" action="list" params="[impl:'tree']">TreeGrid</g:link></li>
                     <li class="controller"><g:link controller="author" action="list" params="[impl:'visualization']">Google visualization grid</g:link></li>
+                    <li class="controller"><g:link controller="author" action="list" params="[impl:'visualizationChart']">Chart</g:link></li>
                     <li class="controller"><g:link controller="author" action="list" params="[impl:'dataTables']">Datatables grid</g:link></li>
                     <li class="controller"><g:link controller="author" action="list" params="[impl:'dataTablesFilter']">Datatables grid ( with initial constraint: authors with over 1 billion sold books)</g:link></li>
                     <li class="controller"><g:link controller="author" action="list" params="[impl:'classic']">Standard grails grid </g:link></li>

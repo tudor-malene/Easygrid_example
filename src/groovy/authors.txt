@@ -40,7 +40,7 @@ Charles Dickens		200[69]	English	Literature		British
 Ann M. Martin	172[70]	180[71]	English	The Baby-sitters Club	335	American
 Ryotaro Shiba		180[72]	Japanese	Historical	350	Japanese
 Arthur Hailey	150[73]	170[74]	English	Thriller	11	British/Canadian
-Gérard de Villiers		150[75]	French	Detectives, SAS	170	French
+Gerard de Villiers		150[75]	French	Detectives, SAS	170	French
 Beatrix Potter	100[76]	150[77]	English	Peter Rabbit	23	British
 Michael Crichton	150[78]	150[79]	English	Techno Thriller	25	American
 Richard Scarry	100[80]	150[81]	English	Illustrated children's books	250	American
@@ -71,7 +71,7 @@ Cao Xueqin		100[122]	Chinese	Dream of the Red Chamber		Chinese
 Ian Fleming	100[123]	100[124]	English	James Bond	14	British
 Hermann Hesse	100[125]	100[126]	German	Steppenwolf, Siddhartha, The Glass Bead Game	45	German-Swiss
 Rex Stout	100[127]	100[128]	English	Nero Wolfe	50	American
-Anne Golon	100[129]	100[130]	French	Angélique	14	French
+Anne Golon	100[129]	100[130]	French	Angelique	14	French
 Ken Follett	90[131]	100[132]	English	Spy Thriller, Historical Thriller	30	British
 Frank G. Slaughter		100[133]	English	Medical	62	American
 Edgar Rice Burroughs	100[134]	100[135]	English	Tarzan, Barsoom and Pellucidar series and other science fantasy		American

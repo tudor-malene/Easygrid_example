@@ -1,4 +1,5 @@
 import example.Author
+import example.Book
 import example.sec.UserRole
 import example.sec.User
 import example.sec.Role
@@ -16,7 +17,7 @@ class BootStrap {
 
         UserRole.create testUser, userRole, true
 
-        this.class.getResourceAsStream("authors.txt").eachLine{line ->
+        this.class.getResourceAsStream("authors.txt").eachLine { line ->
 
             try {
                 Author author = new Author()
@@ -33,6 +34,18 @@ class BootStrap {
                 e.printStackTrace()
                 //do nothing
             }
+        }
+
+        def currentAuthor
+        this.class.getResourceAsStream("books.txt").eachLine { line ->
+            if (!line.startsWith(' ')) {
+                currentAuthor = Author.findByName line.trim()
+                assert currentAuthor
+            } else {
+                assert currentAuthor
+                new Book(author: currentAuthor, title: line.trim()).save(failOnError: true)
+            }
+
         }
     }
 
