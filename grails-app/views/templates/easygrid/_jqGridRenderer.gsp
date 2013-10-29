@@ -1,16 +1,16 @@
 <g:if test="${gridConfig.filterForm}">
 
     <script type="text/javascript">
-        // implementation to work with the dynamic search form
-        function filterForm${attrs.id}(form) {
-            var ser = jQuery(form).serialize();
-            console.log(ser);
-            var grid = jQuery("#${attrs.id}_table");
-            grid.jqGrid('setGridParam', {postData: ser});
-            grid.trigger('reloadGrid');
-            return false;
-        }
-    </script>
+    // implementation to work with the dynamic search form
+    function filterForm${attrs.id}(form) {
+        var ser = jQuery(form).serialize();
+        console.log(ser);
+        var grid = jQuery("#${attrs.id}_table");
+        grid.jqGrid('setGridParam', {postData: ser});
+        grid.trigger('reloadGrid');
+        return false;
+    }
+</script>
 </g:if>
 
 <jq:jquery>

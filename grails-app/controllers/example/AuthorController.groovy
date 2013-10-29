@@ -11,379 +11,379 @@ class AuthorController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
-    static grids = {
 
-        authorClassic {
-            dataSourceType 'gorm'
-            domainClass Author
-            gridImpl 'classic'
-            columns {
-                id {
-                    type 'id'
-                }
-                name
-                minEstSales {
-                    formatName 'nrToString'
-                }
-                maxEstSales {
-                    formatName 'nrToString'
-                }
-                language
-                nrBooks
-                nationality
+    def authorClassicGrid = {
+        dataSourceType 'gorm'
+        domainClass Author
+        gridImpl 'classic'
+        columns {
+            id {
+                type 'id'
             }
+            name
+            minEstSales {
+                formatName 'nrToString'
+            }
+            maxEstSales {
+                formatName 'nrToString'
+            }
+            language
+            nrBooks
+            nationality
         }
+    }
 
-        authorJQGridSelection {
-            dataSourceType 'gorm'
-            domainClass Author
-            gridImpl 'jqgrid'
-            inlineEdit false
-            jqgrid {
-                width '"900"'
+    def authorJQGridSelectionGrid = {
+        dataSourceType 'gorm'
+        domainClass Author
+        gridImpl 'jqgrid'
+        inlineEdit false
+        jqgrid {
+            width '"900"'
+        }
+        columns {
+            id {
+                type 'id'
             }
-            columns {
-                id {
-                    type 'id'
-                }
-                name
-                minEstSales {
-                    enableFilter false
-                    formatName 'nrToString'
-                }
-                maxEstSales {
-                    enableFilter false
-                    formatName 'nrToString'
-                }
-                language
-                nrBooks {
-                    enableFilter false
-                }
-                nationality
+            name
+            minEstSales {
+                enableFilter false
+                formatName 'nrToString'
             }
-            autocomplete {
-                idProp 'id'
+            maxEstSales {
+                enableFilter false
+                formatName 'nrToString'
+            }
+            language
+            nrBooks {
+                enableFilter false
+            }
+            nationality
+        }
+        autocomplete {
+            idProp 'id'
 //                labelProp 'name'
-                labelValue { val, params ->
-                    "${val.name} (${val.nationality})"
+            labelValue { val, params ->
+                "${val.name} (${val.nationality})"
+            }
+            textBoxFilterClosure { filter ->
+                ilike('name', "%${filter.paramValue}%")
+            }
+            constraintsFilterClosure { params ->
+                if (params.nationality) {
+                    eq('nationality', params.nationality)
                 }
-                textBoxFilterClosure { filter ->
-                    ilike('name', "%${filter.paramValue}%")
+            }
+        }
+    }
+
+    def authorJQGridGrid = {
+        dataSourceType 'gorm'
+        domainClass Author
+        gridImpl 'jqgrid'
+        inlineEdit true
+        enableFilter true
+        export {
+            export_title 'Author'
+            pdf {
+                'border.color' java.awt.Color.BLUE
+            }
+        }
+        filterForm {
+            fields {
+                'ff.name' {
+                    label 'name'
+                    type 'text'
+                    filterClosure { Filter filter ->
+                        ilike('name', "%${filter.paramValue}%")
+                    }
                 }
-                constraintsFilterClosure { params ->
-                    if (params.nationality) {
-                        eq('nationality', params.nationality)
+                'estSales' {
+                    label 'estSales'
+                    type 'interval'
+                    filterClosure { Filter filter ->
+                        if (filter.params.estSales.from && filter.params.estSales.to) {
+                            between('maxEstSales', filter.params.estSales.from as BigInteger, filter.params.estSales.to as BigInteger)
+                        }
                     }
                 }
             }
         }
-
-        authorJQGrid {
-            dataSourceType 'gorm'
-            domainClass Author
-            gridImpl 'jqgrid'
-            inlineEdit true
-            enableFilter true
-            export {
-                export_title 'Author'
-                pdf {
-                    'border.color' java.awt.Color.BLUE
+        columns {
+            actions {
+                type 'actions'
+            }
+            id {
+                type 'id'
+            }
+            name {
+                jqgrid {
+                    editable false
                 }
             }
-            filterForm {
-                fields {
-                    'ff.name' {
-                        label 'name'
-                        type 'text'
-                        filterClosure { Filter filter ->
-                            ilike('name', "%${filter.paramValue}%")
-                        }
-                    }
-                    'estSales' {
-                        label 'estSales'
-                        type 'interval'
-                        filterClosure { Filter filter ->
-                            if (filter.params.estSales.from && filter.params.estSales.to) {
-                                between('maxEstSales', filter.params.estSales.from as BigInteger, filter.params.estSales.to as BigInteger)
-                            }
-                        }
-                    }
+            minEstSales {
+                enableFilter false
+                formatName 'nrToString'
+                jqgrid {
+                    editable false
                 }
             }
-            columns {
-                actions {
-                    type 'actions'
+            maxEstSales {
+                enableFilter false
+                formatName 'nrToString'
+                jqgrid {
+                    editable false
                 }
-                id {
-                    type 'id'
+            }
+            language {
+                jqgrid {
+                    editable true
                 }
-                name {
-                    jqgrid {
-                        editable false
-                    }
+            }
+            nrBooks {
+                enableFilter false
+                jqgrid {
+                    editable true
                 }
-                minEstSales {
-                    enableFilter false
-                    formatName 'nrToString'
-                    jqgrid {
-                        editable false
-                    }
+            }
+            nationality {
+                jqgrid {
+                    editable true
                 }
-                maxEstSales {
-                    enableFilter false
-                    formatName 'nrToString'
-                    jqgrid {
-                        editable false
-                    }
-                }
-                language {
-                    jqgrid {
-                        editable true
-                    }
-                }
-                nrBooks {
-                    enableFilter false
-                    jqgrid {
-                        editable true
-                    }
-                }
-                nationality {
-                    jqgrid {
-                        editable true
-                    }
-                }
-                version {
-                    type 'version'
-                }
+            }
+            version {
+                type 'version'
             }
         }
+    }
 
 
-        authorVisualization {
-            dataSourceType 'gorm'
-            domainClass Author
-            gridImpl 'visualization'
-            filterForm {
-                fields {
-                    'ff.name' {
-                        label 'name'
-                        type 'text'
-                        filterClosure { Filter filter ->
-                            ilike('name', "%${filter.paramValue}%")
+    def authorVisualizationGrid = {
+        dataSourceType 'gorm'
+        domainClass Author
+        gridImpl 'visualization'
+        filterForm {
+            fields {
+                'ff.name' {
+                    label 'name'
+                    type 'text'
+                    filterClosure { Filter filter ->
+                        ilike('name', "%${filter.paramValue}%")
+                    }
+                }
+                'estSales' {
+                    label 'estSales'
+                    type 'interval'
+                    filterClosure { Filter filter ->
+                        if (filter.params.estSales.from && filter.params.estSales.to) {
+                            between('maxEstSales', filter.params.estSales.from as BigInteger, filter.params.estSales.to as BigInteger)
                         }
-                    }
-                    'estSales' {
-                        label 'estSales'
-                        type 'interval'
-                        filterClosure { Filter filter ->
-                            if (filter.params.estSales.from && filter.params.estSales.to) {
-                                between('maxEstSales', filter.params.estSales.from as BigInteger, filter.params.estSales.to as BigInteger)
-                            }
-                        }
-                    }
-                }
-            }
-            columns {
-                id {
-                    type 'id'
-                }
-                name
-                minEstSales {
-                    enableFilter false
-                    formatName 'nrToString'
-                }
-                maxEstSales {
-                    formatName 'nrToString'
-                    filterClosure { filter ->
-                        gt('maxEstSales', filter.paramValue as BigInteger)
-                    }
-                    visualization {
-                        searchType 'number'
-                    }
-                }
-                language
-                nrBooks {
-                    enableFilter false
-                }
-                nationality
-            }
-        }
-
-        authorVisualizationChart {
-            dataSourceType 'gorm'
-            domainClass Author
-            initialCriteria {
-                gte('maxEstSales', 500000000G)
-            }
-            gridImpl 'visualization'
-            columns {
-                name
-                minEstSales {
-                    visualization {
-                        valueType = com.google.visualization.datasource.datatable.value.ValueType.NUMBER
-                    }
-                }
-                maxEstSales {
-                    visualization {
-                        valueType = com.google.visualization.datasource.datatable.value.ValueType.NUMBER
                     }
                 }
             }
         }
-
-        authorDatatables {
-            dataSourceType 'gorm'
-            domainClass Author
-            gridImpl 'dataTables'
-            fixedColumns true
-            filterForm {
-                fields {
-                    'ff.name' {
-                        label 'name'
-                        type 'text'
-                        filterClosure { Filter filter ->
-                            ilike('name', "%${filter.paramValue}%")
-                        }
-                    }
-                    'estSales' {
-                        label 'estSales'
-                        type 'interval'
-                        filterClosure { Filter filter ->
-                            if (filter.params.estSales.from && filter.params.estSales.to) {
-                                between('maxEstSales', filter.params.estSales.from as BigInteger, filter.params.estSales.to as BigInteger)
-                            }
-                        }
-                    }
+        columns {
+            id {
+                type 'id'
+            }
+            name
+            minEstSales {
+                enableFilter false
+                formatName 'nrToString'
+            }
+            maxEstSales {
+                formatName 'nrToString'
+                filterClosure { filter ->
+                    gt('maxEstSales', filter.paramValue as BigInteger)
+                }
+                visualization {
+                    searchType 'number'
                 }
             }
-            columns {
-                name {
-                    formatName 'authorWikiFormat'
-                    export {
-                        //define a different value for the export
-                        value { Author author ->
-                            "(${author.id}) ${author.name}"
-                        }
-                    }
+            language
+            nrBooks {
+                enableFilter false
+            }
+            nationality
+        }
+    }
+
+    def authorVisualizationChartGrid = {
+        dataSourceType 'gorm'
+        domainClass Author
+        initialCriteria {
+            gte('maxEstSales', 500000000G)
+        }
+        gridImpl 'visualization'
+        columns {
+            name
+            minEstSales {
+                visualization {
+                    valueType = com.google.visualization.datasource.datatable.value.ValueType.NUMBER
                 }
-                minEstSales {
-                    enableFilter false
-                    formatName 'nrToString'
+            }
+            maxEstSales {
+                visualization {
+                    valueType = com.google.visualization.datasource.datatable.value.ValueType.NUMBER
                 }
-                maxEstSales {
-                    filterClosure { filter ->
-                        gt('maxEstSales', filter.paramValue as BigInteger)
-                    }
-                    formatName 'nrToString'
-                }
-                language
-                nrBooks {
-                    enableFilter false
-                }
-                nationality
             }
         }
+    }
 
-        authorDatatablesOverBill {
-            dataSourceType 'gorm'
-            domainClass Author
-            gridImpl 'dataTables'
-            initialCriteria {
-                gte('maxEstSales', 1000000000G)
-            }
-            roles 'ROLE_USER'
-            columns {
-                name {
-                    formatName 'authorWikiFormat'
+    def authorDatatablesGrid = {
+        dataSourceType 'gorm'
+        domainClass Author
+        gridImpl 'dataTables'
+        fixedColumns true
+        filterForm {
+            fields {
+                'ff.name' {
+                    label 'name'
+                    type 'text'
+                    filterClosure { Filter filter ->
+                        ilike('name', "%${filter.paramValue}%")
+                    }
                 }
-                minEstSales {
-                    formatName 'nrToString'
+                'estSales' {
+                    label 'estSales'
+                    type 'interval'
+                    filterClosure { Filter filter ->
+                        if (filter.params.estSales.from && filter.params.estSales.to) {
+                            between('maxEstSales', filter.params.estSales.from as BigInteger, filter.params.estSales.to as BigInteger)
+                        }
+                    }
                 }
-                maxEstSales {
-                    formatName 'nrToString'
-                }
-                language
-                nrBooks
-                nationality
             }
         }
+        columns {
+            name {
+                formatName 'authorWikiFormat'
+                export {
+                    //define a different value for the export
+                    value { Author author ->
+                        "(${author.id}) ${author.name}"
+                    }
+                }
+            }
+            minEstSales {
+                enableFilter false
+                formatName 'nrToString'
+            }
+            maxEstSales {
+                filterClosure { filter ->
+                    gt('maxEstSales', filter.paramValue as BigInteger)
+                }
+                formatName 'nrToString'
+            }
+            language
+            nrBooks {
+                enableFilter false
+            }
+            nationality
+        }
+    }
 
-        jqgridTree {
-            dataSourceType 'custom'
-            gridImpl 'jqgrid'
-            gridRenderer '/templates/treeGridRenderer'
-            inlineEdit false
-            jqgrid {
-                'ExpandColumn' '"name"'
-                treeGrid 'true'
-                treeGridModel '"adjacency"'
-                treedatatype '"json"'
-                'ExpandColClick' "true"
-            }
-            dataProvider { gridConfig, filters, listParams ->
-                println params
-                switch (params.n_level) {
-                    case "0":
-                        Book.findAllByAuthor(Author.findById(params.nodeid[2..-1] as long))
-                        break;
-                    default:
-                        Author.list().findAll { it.books }
-                }
-            }
-            dataCount { filters ->
-                switch (params.n_level) {
-                    case "0":
-                        Book.countByAuthor(Author.findById(params.nodeid[2..-1] as long))
-                        break;
-                    default:
-                        Author.list().findAll { it.books }.size()
-                }
-            }
-            columns {
-                id {
-                    label 'Id'
-                    jqgrid {
-                        hidden 'true'
-                    }
-                    value { domain ->
-                        (domain instanceof Book) ? "b_${domain.id}" : "a_${domain.id}"
 
-                    }
+    def authorDatatablesOverBillGrid = {
+        dataSourceType 'gorm'
+        domainClass Author
+        gridImpl 'dataTables'
+        initialCriteria {
+            gte('maxEstSales', 1000000000G)
+        }
+        roles 'ROLE_USER'
+        columns {
+            name {
+                formatName 'authorWikiFormat'
+            }
+            minEstSales {
+                formatName 'nrToString'
+            }
+            maxEstSales {
+                formatName 'nrToString'
+            }
+            language
+            nrBooks
+            nationality
+        }
+    }
+
+    def jqgridTreeGrid = {
+        dataSourceType 'custom'
+        gridImpl 'jqgrid'
+        gridRenderer '/templates/treeGridRenderer'
+        inlineEdit false
+        jqgrid {
+            'ExpandColumn' '"name"'
+            treeGrid 'true'
+            treeGridModel '"adjacency"'
+            treedatatype '"json"'
+            'ExpandColClick' "true"
+        }
+        dataProvider { gridConfig, filters, listParams ->
+            println params
+            switch (params.n_level) {
+                case "0":
+                    println params.nodeid
+                    Book.findAllByAuthor(Author.findById(params.nodeid[2..-1] as long))
+                    break;
+                default:
+                    Author.list().findAll { it.books }
+            }
+        }
+        dataCount { filters ->
+            switch (params.n_level) {
+                case "0":
+                    Book.countByAuthor(Author.findById(params.nodeid[2..-1] as long))
+                    break;
+                default:
+                    Author.list().findAll { it.books }.size()
+            }
+        }
+        columns {
+            id {
+                label 'Id'
+                jqgrid {
+                    hidden 'true'
                 }
-                name {
-                    label 'Tree'
-                    enableFilter false
-                    value { domain ->
-                        (domain instanceof Book) ? domain.title : domain.name
-                    }
+                value { domain ->
+                    (domain instanceof Book) ? "b_${domain.id}" : "a_${domain.id}"
+
                 }
-                level {
-                    label 'level'
-                    treeProperty true
-                    value { domain, params ->
-                        (domain instanceof Book) ? "1" : '0'
-                    }
+            }
+            name {
+                label 'Tree'
+                enableFilter false
+                value { domain ->
+                    (domain instanceof Book) ? domain.title : domain.name
                 }
-                parent {
-                    label 'parent'
-                    treeProperty true
-                    value { domain, params ->
-                        (domain instanceof Book) ? "a_${domain.author.id}" : 'null'
-                    }
+            }
+            level {
+                label 'level'
+                treeProperty true
+                value { domain, params ->
+                    (domain instanceof Book) ? "1" : '0'
                 }
-                isLeaf {
-                    label 'isLeaf'
-                    treeProperty true
-                    value { domain, params ->
-                        (domain instanceof Book) ? "true" : "false"
-                    }
+            }
+            parent {
+                label 'parent'
+                treeProperty true
+                value { domain, params ->
+                    (domain instanceof Book) ? "a_${domain.author.id}" : 'null'
                 }
-                expanded {
-                    label 'expanded'
-                    treeProperty true
-                    value {
-                        false
-                    }
+            }
+            isLeaf {
+                label 'isLeaf'
+                treeProperty true
+                value { domain, params ->
+                    (domain instanceof Book) ? "true" : "false"
+                }
+            }
+            expanded {
+                label 'expanded'
+                treeProperty true
+                value {
+                    false
                 }
             }
         }

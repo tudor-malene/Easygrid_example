@@ -2,7 +2,7 @@
 
     var ${attrs.id}FilterParams ;
 
-    <g:if test="${gridConfig.filterForm}">
+<g:if test="${gridConfig.filterForm}">
     // implementation to work with the dynamic search form
     function filterForm${attrs.id}(form){
         ${attrs.id}FilterParams  = jQuery(form).serializeArray();
@@ -12,96 +12,97 @@
     }
     </g:if>
 
-    jQuery(function () {
+jQuery(function () {
 
-        var oTable = $('#${attrs.id}_datatable').dataTable({
+    var oTable = $('#${attrs.id}_datatable').dataTable({
 
-            <g:each in="${gridConfig.dataTables}" var="property">
-            "${property.key}":${property.value},
-            </g:each>
+        <g:each in="${gridConfig.dataTables}" var="property">
+        "${property.key}":${property.value},
+        </g:each>
 
-            bFilter: true,
-            "bStateSave": false,
-            'sPaginationType': 'full_numbers',
-            "bSort": true,
-            "bProcessing": true,
-            "bServerSide": true,
-            "sAjaxSource": "${g.createLink(action: "${gridConfig.id}Rows")}",
+        bFilter: true,
+        "bStateSave": false,
+        'sPaginationType': 'full_numbers',
+        "bSort": true,
+        "bProcessing": true,
+        "bServerSide": true,
 
-            "fnInitComplete": function () {
-                //hack - removes the filter div
-                $('#${attrs.id}_datatable_filter').remove();
-                var oSettings = $('#${attrs.id}_datatable').dataTable().fnSettings();
-                for (var i = 0; i < oSettings.aoPreSearchCols.length; i++) {
-                    if (oSettings.aoPreSearchCols[i].sSearch.length > 0) {
-                        console.log(oSettings.aoPreSearchCols[i].sSearch);
-                        $("tfoot input")[i].value = oSettings.aoPreSearchCols[i].sSearch;
-                        $("tfoot input")[i].className = "";
-                    }
+        "sAjaxSource": '${g.createLink(controller: attrs.controller, action: "${gridConfig.id}Rows", params: params)}',
+
+        "fnInitComplete": function () {
+            //hack - removes the filter div
+            $('#${attrs.id}_datatable_filter').remove();
+            var oSettings = $('#${attrs.id}_datatable').dataTable().fnSettings();
+            for (var i = 0; i < oSettings.aoPreSearchCols.length; i++) {
+                if (oSettings.aoPreSearchCols[i].sSearch.length > 0) {
+                    console.log(oSettings.aoPreSearchCols[i].sSearch);
+                    $("tfoot input")[i].value = oSettings.aoPreSearchCols[i].sSearch;
+                    $("tfoot input")[i].className = "";
                 }
-                <g:if test="${gridConfig.fixedColumns == 'true'}">
-                new FixedColumns(oTable, {
-                    "iLeftColumns": ${gridConfig.noFixedColumns}
+            }
+            <g:if test="${gridConfig.fixedColumns == 'true'}">
+            new FixedColumns(oTable, {
+                "iLeftColumns": ${gridConfig.noFixedColumns}
 //                "iLeftWidth": 350
+            });
+            </g:if>
+
+        },
+        "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+        },
+        "fnServerParams": function ( aoData ) {
+            if(${attrs.id}FilterParams){
+                jQuery.each(${attrs.id}FilterParams, function() {
+                    aoData.push(this);
                 });
-                </g:if>
+            }
+        },
 
-            },
-            "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-            },
-            "fnServerParams": function ( aoData ) {
-                if(${attrs.id}FilterParams){
-                    jQuery.each(${attrs.id}FilterParams, function() {
-                        aoData.push(this);
-                    });
-                }
-            },
-
-            "aoColumns": [
-                <g:each in="${gridConfig.columns}" var="col" status="idx">
-                {   "sName": "${col.name}",
-                    "bSearchable": ${col.enableFilter},
-                    "bSortable": ${col.sortable},
-                    <g:each in="${col.dataTables}" var="property">
-                    "${property.key}":${property.value},
-                    </g:each>
-                    "bVisible": true
-                    %{--"sWidth": "${col.dataTables.sWidth}",--}%
-                    %{--"sClass": "${col.dataTables.sClass}"--}%
-                }  <g:if test="${idx < gridConfig.columns.size() - 1}">,</g:if>
+        "aoColumns": [
+            <g:each in="${gridConfig.columns}" var="col" status="idx">
+            {   "sName": "${col.name}",
+                "bSearchable": ${col.enableFilter},
+                "bSortable": ${col.sortable},
+                <g:each in="${col.dataTables}" var="property">
+                "${property.key}":${property.value},
                 </g:each>
-            ]
-
-        });
-
-        /* Add the events etc before DataTables hides a column */
-        $("tfoot input").keyup(function () {
-            /* Filter on the column (the index) of this element */
-            oTable.fnFilter(this.value, oTable.oApi._fnVisibleToColumnIndex(oTable.fnSettings(), $("tfoot input").index(this)));
-        });
-
-        /*
-         * Support functions to provide a little bit of 'user friendlyness' to the textboxes
-         */
-        $("tfoot input").each(function (i) {
-            this.initVal = this.value;
-        });
-
-        $("tfoot input").focus(function () {
-            if (this.className == "search_init") {
-                this.className = "";
-                this.value = "";
-            }
-        });
-
-        $("tfoot input").blur(function (i) {
-            if (this.value == "") {
-                this.className = "search_init";
-                this.value = this.initVal;
-            }
-        });
+                "bVisible": true
+                %{--"sWidth": "${col.dataTables.sWidth}",--}%
+                %{--"sClass": "${col.dataTables.sClass}"--}%
+            }  <g:if test="${idx < gridConfig.columns.size() - 1}">,</g:if>
+            </g:each>
+        ]
 
     });
+
+    /* Add the events etc before DataTables hides a column */
+    $("tfoot input").keyup(function () {
+        /* Filter on the column (the index) of this element */
+        oTable.fnFilter(this.value, oTable.oApi._fnVisibleToColumnIndex(oTable.fnSettings(), $("tfoot input").index(this)));
+    });
+
+    /*
+     * Support functions to provide a little bit of 'user friendlyness' to the textboxes
+     */
+    $("tfoot input").each(function (i) {
+        this.initVal = this.value;
+    });
+
+    $("tfoot input").focus(function () {
+        if (this.className == "search_init") {
+            this.className = "";
+            this.value = "";
+        }
+    });
+
+    $("tfoot input").blur(function (i) {
+        if (this.value == "") {
+            this.className = "search_init";
+            this.value = this.initVal;
+        }
+    });
+
+});
 </script>
 
 

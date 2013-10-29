@@ -24,20 +24,10 @@ grails.project.dependency.resolution = {
         grailsHome()
         grailsCentral()
         mavenCentral()
-
-        // uncomment these to enable remote dependency resolution from public Maven repositories
-        //mavenCentral()
-        //mavenLocal()
-        //mavenRepo "http://snapshots.repository.codehaus.org"
-        //mavenRepo "http://repository.codehaus.org"
-        //mavenRepo "http://download.java.net/maven/2/"
-        //mavenRepo "http://repository.jboss.com/maven2/"
     }
     dependencies {
-        // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes eg.
 
         // runtime 'mysql:mysql-connector-java:5.1.16'
-        compile('org.mvel:mvel2:2.1.3.Final')
         compile('com.google.visualization:visualization-datasource:1.1.1') {
             exclude (group: 'commons-logging', name: 'commons-logging')
             exclude (group: 'commons-lang', name: 'commons-lang')
@@ -48,23 +38,13 @@ grails.project.dependency.resolution = {
         runtime ":hibernate:$grailsVersion"
 
         compile ":spring-security-core:1.2.7.3"
+        compile ":webxml:1.4.1"
         runtime ":jquery:1.8.0", ":jquery-ui:1.8.24"
         runtime(':google-visualization:0.5.6')
-//        runtime ":angularjs-resources:1.0.8"
 //
 //        //only for 2.2.0
         runtime ":resources:1.2"
-
-//        runtime ":jquery:1.7.1"
-//        runtime ":resources:1.1.6"
-        compile ":dynamic-controller:0.4"
-
-        // Uncomment these (or add new ones) to enable additional resources capabilities
-        //runtime ":zipped-resources:1.0"
-        //runtime ":cached-resources:1.0"
-        //runtime ":yui-minify-resources:0.1.4"
-
         build ":tomcat:$grailsVersion"
-        compile ":easygrid:1.4.0"
+        compile ":easygrid:1.4.1"
     }
 } 
