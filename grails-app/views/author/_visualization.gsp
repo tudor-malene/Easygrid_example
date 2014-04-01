@@ -1,73 +1,57 @@
 <r:require modules="easygrid-visualization-dev,jquery-dev,export"/>
 
 <grid:filterForm name="authorVisualization"/>
-
 <grid:grid name='authorVisualization'/>
 <grid:exportButton name='authorVisualization' formats="['csv', 'excel']"/>
 
-%{--
-<grid:grid
-        name='authorVisualizationChart'
-        id='authorChart'
-        gridRenderer="/templates/visualizationChartRenderer"
-        visualization.title= "'Author'"
-        visualization.vAxis= "{title: 'Name',  titleTextStyle: {color: 'red'}}"
-/>
---}%
 
 <h1 id="source-code">Source Code</h1>
 
 <markdown:renderHtml>
 
-    authorVisualization {
-        dataSourceType 'gorm'
-        domainClass Author
-        gridImpl 'visualization'
-        filterForm {
-            fields {
-                'ff.name' {
-                    label 'name'
-                    type 'text'
-                    filterClosure { Filter filter ->
-                        ilike('name', "%$ {filter.paramValue}%")
-                    }
-                }
-                'estSales' {
-                    label 'estSales'
-                    type 'interval'
-                    filterClosure { Filter filter ->
-                        if (filter.params.estSales.from && filter.params.estSales.to) {
-                            between('maxEstSales', filter.params.estSales.from as BigInteger, filter.params.estSales.to as BigInteger)
-                        }
-                    }
-                }
-            }
-        }
-        columns {
-            id {
-                type 'id'
-            }
-            name
-            minEstSales {
-                enableFilter false
-                formatName 'nrToString'
-            }
-            maxEstSales {
-                formatName 'nrToString'
-                filterClosure { filter ->
-                    gt('maxEstSales', filter.paramValue as BigInteger)
-                }
-                visualization {
-                    searchType 'number'
-                }
-            }
-            language
-            nrBooks {
-                enableFilter false
-            }
-            nationality
-        }
-    }
+    def authorVisualizationGrid = {
+         dataSourceType 'gorm'
+         domainClass Author
+         gridImpl 'visualization'
+         filterForm {
+             fields {
+                 'ff.name' {
+                     label 'name'
+                     type 'text'
+                 }
+                 'estSales' {
+                     label 'estSales'
+                     type 'interval'
+                     filterClosure { Filter filter ->
+                         if (params.estSales.from && params.estSales.to) {
+                             between('maxEstSales', params.estSales.from as BigInteger, params.estSales.to as BigInteger)
+                         }
+                     }
+                 }
+             }
+         }
+         columns {
+             id {
+                 type 'id'
+             }
+             name
+             minEstSales {
+                 enableFilter false
+                 formatName 'nrToString'
+             }
+             maxEstSales {
+                 formatName 'nrToString'
+                 visualization {
+                     searchType 'number'
+                 }
+             }
+             language
+             nrBooks {
+                 enableFilter false
+             }
+             nationality
+         }
+     }
 
 </markdown:renderHtml>
 

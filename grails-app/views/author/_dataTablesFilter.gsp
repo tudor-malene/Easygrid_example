@@ -4,16 +4,15 @@
             href="${createLink(controller: 'login', action: 'auth')}">login</a>  with: me/password</h3>
 </sec:ifNotLoggedIn>
 
-<grid:grid name='authorDatatablesOverBill' fixedColumns='true'
-           columns.name.dataTables.sWidth='"350px"'
-           columns.minEstSales.dataTables.sWidth='"100px"'
-           columns.maxEstSales.dataTables.sWidth='"100px"'
-           columns.language.dataTables.sWidth='"100px"'
-           columns.nrBooks.dataTables.sWidth='"100px"'
-           columns.nationality.dataTables.sWidth='"100px"'
-           dataTables.sScrollX='"100%"'
-           dataTables.sScrollXInner='"120%"'
-           dataTables.bScrollCollapse="true"/>
+<grid:grid name='authorDatatablesOverBill'>
+    <grid:set sScrollX="100%" sScrollXInner="100%" bScrollCollapse="true"/>
+    <grid:set col="name" sWidth="250px"/>
+    <grid:set col="minEstSales" sWidth="70px" />
+    <grid:set col="maxEstSales" sWidth="70px"/>
+    <grid:set col="language" sWidth="80px"/>
+    <grid:set col="nrBooks" sWidth="40px"/>
+    <grid:set col="nationality" sWidth="40px"/>
+</grid:grid>
 
 <grid:exportButton name='authorDatatablesOverBill'/>
 
@@ -21,41 +20,42 @@
 
 <markdown:renderHtml>
 
-    authorDatatablesOverBill {
-        dataSourceType 'gorm'
-        domainClass Author
-        gridImpl 'dataTables'
-        initialCriteria {
-            gte('maxEstSales', 1000000000G)
-        }
-        roles 'ROLE_USER'
-        columns {
-            name {
-                formatName 'authorWikiFormat'
-            }
-            minEstSales {
-                formatName 'nrToString'
-            }
-            maxEstSales {
-                formatName 'nrToString'
-            }
-            language
-            nrBooks
-            nationality
-        }
-    }
+    def authorDatatablesOverBillGrid = {
+          domainClass Author
+          gridImpl 'dataTables'
+          initialCriteria {
+              gte('maxEstSales', 1000000000G)
+          }
+          roles([list: 'ROLE_USER', add: 'ROLE_USER'])
+          columns {
+              name {
+                  formatName 'authorWikiFormat'
+              }
+              minEstSales {
+                  formatName 'nrToString'
+                  enableFilter false
+              }
+              maxEstSales {
+                  formatName 'nrToString'
+                  enableFilter false
+              }
+              language
+              nrBooks
+              nationality
+          }
+      }
 
 </markdown:renderHtml>
 <markdown:renderHtml>
-    < grid:grid name='authorDatatablesOverBill' fixedColumns='true'
-               columns.name.dataTables.sWidth='"350px"'
-               columns.minEstSales.dataTables.sWidth='"100px"'
-               columns.maxEstSales.dataTables.sWidth='"100px"'
-               columns.language.dataTables.sWidth='"100px"'
-               columns.nrBooks.dataTables.sWidth='"100px"'
-               columns.nationality.dataTables.sWidth='"100px"'
-               dataTables.sScrollX='"100%"'
-               dataTables.sScrollXInner='"120%"'
-               dataTables.bScrollCollapse="true"/>
+    < grid:grid name='authorDatatablesOverBill'>
+        < grid:set sScrollX="100%" sScrollXInner="100%" bScrollCollapse="true"/>
+        < grid:set col="name" sWidth="250px"/>
+        < grid:set col="minEstSales" sWidth="70px" />
+        < grid:set col="maxEstSales" sWidth="70px"/>
+        < grid:set col="language" sWidth="80px"/>
+        < grid:set col="nrBooks" sWidth="40px"/>
+        < grid:set col="nationality" sWidth="40px"/>
+    < /grid:grid>
+
 
 </markdown:renderHtml>

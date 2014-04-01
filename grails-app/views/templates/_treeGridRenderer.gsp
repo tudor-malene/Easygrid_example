@@ -1,3 +1,4 @@
+<%@page defaultCodec="none" %>
 <jq:jquery>
     jQuery("#${attrs.id}_table").jqGrid(
             {

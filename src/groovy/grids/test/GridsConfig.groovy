@@ -36,9 +36,9 @@ class GridsConfig {
             enableFilter true
             export {
                 export_title 'Author'
-                pdf {
-                    'border.color' java.awt.Color.BLUE
-                }
+//                pdf {
+//                    'border.color' java.awt.Color.BLUE
+//                }
             }
             filterForm {
                 field {

@@ -1,13 +1,18 @@
-grails.servlet.version = "2.5" // Change depending on target container compliance (2.5 or 3.0)
+grails.servlet.version = "3.0" // Change depending on target container compliance (2.5 or 3.0)
 grails.project.class.dir = "target/classes"
 grails.project.test.class.dir = "target/test-classes"
 grails.project.test.reports.dir = "target/test-reports"
+grails.project.work.dir = "target/work"
 grails.project.target.level = 1.6
 grails.project.source.level = 1.6
 //grails.project.war.file = "target/${appName}-${appVersion}.war"
 
+grails.project.fork = false
+
+grails.project.dependency.resolver = "maven" // or ivy
 // Useful to test plugins you are developing.
-//grails.plugin.location.easygrid ="../Easygrid"
+grails.plugin.location.easygrid ="../Easygrid"
+//grails.plugin.location.ajaxify ="../ajaxify-tag"
 
 grails.project.dependency.resolution = {
     // inherit Grails' default dependencies
@@ -24,6 +29,7 @@ grails.project.dependency.resolution = {
         grailsHome()
         grailsCentral()
         mavenCentral()
+        mavenRepo "http://repo.spring.io/milestone/"
     }
     dependencies {
 
@@ -35,16 +41,25 @@ grails.project.dependency.resolution = {
     }
 
     plugins {
-        runtime ":hibernate:$grailsVersion"
+        build ":tomcat:7.0.52.1"
 
-        compile ":spring-security-core:1.2.7.3"
-        compile ":webxml:1.4.1"
-        runtime ":jquery:1.8.0", ":jquery-ui:1.8.24"
-        runtime(':google-visualization:0.5.6')
+        // plugins for the compile step
+        compile ":scaffolding:2.0.2"
+        compile ':cache:1.1.1'
+
+        // plugins needed at runtime but not for compilation
+        runtime ":hibernate:3.6.10.9" // or ":hibernate4:4.3.4"
+        runtime ":database-migration:1.3.8"
+        runtime ":jquery:1.11.0.2"
+        runtime ":resources:1.2.7"
+
+//        compile ":spring-security-core:1.2.7.3"
+        compile ':spring-security-core:2.0-RC2'
+        runtime(':google-visualization:0.6.2')
 //
 //        //only for 2.2.0
-        runtime ":resources:1.2"
-        build ":tomcat:$grailsVersion"
-        compile ":easygrid:1.4.1"
+//        compile ":easygrid:1.4.1"
+
+        compile ":markdown:1.1.1"
     }
 } 

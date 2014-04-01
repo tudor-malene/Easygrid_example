@@ -9,55 +9,6 @@ class BookController {
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
 
-    static grids = {
-        customDatasourceBooks {
-            gridImpl 'jqgrid'
-            labelPrefix 'book'
-            dataSourceType 'custom'
-            labelPrefix 'book'
-            dataProvider {gridConfig, filters, listParams ->
-                [
-                        new Book( author: Author.findByNameIlike('%Tolstoy%'), title: 'War and peace', description: 'bla bla', date:new GregorianCalendar(1821, 10, 11).time),
-                ]
-            }
-            dataCount {filters ->
-                1
-            }
-            jqgrid{
-                width 900
-            }
-            columns {
-                id {
-                    type 'id'
-                }
-                author {
-                    value {Book book ->
-                        book.author.name
-                    }
-                    jqgrid {
-                        search false
-                    }
-                }
-                title{
-                    jqgrid {
-                        search false
-                    }
-                }
-                description{
-                    jqgrid {
-                        search false
-                    }
-                }
-                date{
-                    jqgrid {
-                        search false
-                    }
-                }
-            }
-        }
-    }
-
-
     def index() {
         redirect(action: "list", params: params)
     }

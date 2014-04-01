@@ -1,9 +1,3 @@
-import org.codehaus.groovy.grails.plugins.springsecurity.SpringSecurityUtils
-import org.grails.plugin.easygrid.AutocompleteService
-import org.grails.plugin.easygrid.Filter
-import org.grails.plugin.easygrid.GridUtils
-import org.grails.plugin.easygrid.grids.DataTablesGridService
-
 // locations to search for config files that get merged into the main config;
 // config files can be ConfigSlurper scripts, Java properties files, or classes
 // in the classpath in ConfigSlurper format
@@ -21,22 +15,22 @@ grails.project.groupId = EasygridShowcase // change this to alter the default pa
 grails.mime.file.extensions = true // enables the parsing of file extensions from URLs into the request format
 grails.mime.use.accept.header = false
 //export plugin
-grails.mime.types = [html: ['text/html', 'application/xhtml+xml'],
-        xml: ['text/xml', 'application/xml'],
-        text: 'text-plain',
-        js: 'text/javascript',
-        rss: 'application/rss+xml',
-        atom: 'application/atom+xml',
-        css: 'text/css',
-        csv: 'text/csv',
-        pdf: 'application/pdf',
-        rtf: 'application/rtf',
-        excel: 'application/vnd.ms-excel',
-        ods: 'application/vnd.oasis.opendocument.spreadsheet',
-        all: '*/*',
-        json: ['application/json', 'text/json'],
-        form: 'application/x-www-form-urlencoded',
-        multipartForm: 'multipart/form-data'
+grails.mime.types = [html         : ['text/html', 'application/xhtml+xml'],
+                     xml          : ['text/xml', 'application/xml'],
+                     text         : 'text-plain',
+                     js           : 'text/javascript',
+                     rss          : 'application/rss+xml',
+                     atom         : 'application/atom+xml',
+                     css          : 'text/css',
+                     csv          : 'text/csv',
+                     pdf          : 'application/pdf',
+                     rtf          : 'application/rtf',
+                     excel        : 'application/vnd.ms-excel',
+                     ods          : 'application/vnd.oasis.opendocument.spreadsheet',
+                     all          : '*/*',
+                     json         : ['application/json', 'text/json'],
+                     form         : 'application/x-www-form-urlencoded',
+                     multipartForm: 'multipart/form-data'
 ]
 
 // URL Mapping Cache Max Size, defaults to 5000
@@ -102,376 +96,43 @@ log4j = {
             'org.grails.plugin.easygrid'
 }
 
-def stdDateFormat = 'MM/dd/yyyy'
-easygrid {
+// Uncomment and edit the following lines to start using Grails encoding & escaping improvements
 
-    //default values added to each defined grid  ( if they are not already set )
-    defaults {
-
-        defaultMaxRows = 10 // the max no of rows displayed in the grid
-
-        //used for automatically generating label messages from the column name
-        //this will be transformed into a SimpleTemplateEngine instance ( '#' will be replaced with '$') and the binding variables will be: labelPrefix , column, gridConfig
-        labelFormat = '#{labelPrefix}.#{column.name}.label'
-
-        //called before inline editing : transforms the parameters into the actual object to be stored
-        beforeSave = { params -> params }
-
-        gridImpl = 'jqgrid' // the default grid implementation
-
-        // these are properties used by the jqgrid template
-        enableFilter = true
-        addNavGrid = true
-        idColName = 'id'
-
-        fixedColumns = true
-        noFixedColumns = 1
-
-        //default export settings for various formats
-        export {
-            exportService = org.grails.plugin.easygrid.EasygridExportService
-            maxRows = 10000 // maximum rows to be exported - to avoid out of memory exceptions
-
-            //this section provides default values for the different export formats
-            // for more options check out the export plugin
-
-            // csv settings
-            csv {
-                separator = ','
-                quoteCharacter = '"'
-            }
-            csv['header.enabled'] = true
-
-            // excel settings
-            excel['header.enabled'] = true
-            //property that aggregates the widths defined per column
-            excel['column.widths'] = { gridConfig ->
-                def widths = []
-                GridUtils.eachColumn(gridConfig, true) { column ->
-                    widths.add(column?.export?.width ?: 0.2)
-                }
-                widths
-            }
-
-            // pdf settings
-            pdf['header.enabled'] = true
-            pdf['column.widths'] = { gridConfig ->
-                def widths = []
-                GridUtils.eachColumn(gridConfig, true) { column ->
-                    widths.add(column?.export?.width ?: 0.2)
-                }
-                widths
-            }
-            pdf['border.color'] = java.awt.Color.BLACK
-            pdf['pdf.orientation'] = 'landscape'
-
-            // rtf settings
-            rtf['header.enabled'] = true
-            rtf {
-            }
-
-            // ods settings
-            ods {
-            }
-
-            // xml settings
-            xml['xml.root'] = { gridConfig ->
-                //defaults to the export title
-                gridConfig.export.export_title
-            }
-            xml {
+/* remove this line 
+// GSP settings
+grails {
+    views {
+        gsp {
+            encoding = 'UTF-8'
+            htmlcodec = 'xml' // use xml escaping instead of HTML4 escaping
+            codecs {
+                expression = 'html' // escapes values inside null
+                scriptlet = 'none' // escapes output from scriptlets in GSPs
+                taglib = 'none' // escapes output from taglibs
+                staticparts = 'none' // escapes output from static template parts
             }
         }
-
-        // jqgrid default properties
-        // check the jqgrid documentation
-        jqgrid {
-            width = '"100%"'
-            height = 250
-            // number of rows to display by default
-            rowNum = 20
-        }
-
-        dataTables {
-        }
-
-        visualization {
-            page = "'enable'"
-            allowHtml = true
-            alternatingRowStyle = true
-//            showRowNumber = false
-            pageSize = 10
-        }
-
-        // default security provider
-        // spring security implementation
-        // interprets the 'roles' property
-        securityProvider = { grid, oper ->
-            if (!grid.roles) {
-                return true
-            }
-            def grantedRoles
-            if (Map.isAssignableFrom(grid.roles.getClass())) {
-                grantedRoles = grid.roles.findAll { op, role -> oper == op }.collect { op, role -> role }
-            } else if (List.isAssignableFrom(grid.roles.getClass())) {
-                grantedRoles = grid.roles
-            } else {
-                grantedRoles = [grid.roles]
-            }
-            SpringSecurityUtils.ifAllGranted(grantedRoles.inject('') { roles, role -> "${roles},${role}" })
-        }
-
-        //default autocomplete settings
-        autocomplete {
-            idProp = 'id'  // the name of the property of the id of the selected element (optionKey - in the replaced select tag)
-            maxRows = 10 // the max no of elements to be displayed by the jquery autocomplete box
-            template = '/templates/autocompleteRenderer' //the default autocomplete renderer
-            autocompleteService= AutocompleteService
-            showSeparateLabel = false
-            autocompleteSize = 30
-        }
-    }
-
-    // each grid has a "type" - which must be one of the datasources defined here
-    dataSourceImplementations {
-        //deprecated
-        domain {
-            // mandatory attribute: domainClass or initialCriteria
-            dataSourceService = org.grails.plugin.easygrid.datasource.GormDatasourceService
-            filters {
-                //default search closures for different column types
-                text = { Filter filter -> ilike(filter.filterable.name, "%${filter.paramValue}%") }
-                number = { Filter filter -> eq(filter.filterable.name, filter.paramValue as int) }
-                //todo
-                date = { Filter filter -> eq(filter.filterable.name, filter.paramValue as Date) }
-
-            }
-        }
-
-        // renamed for consistency - todo  -rename everywhere
-        gorm {
-            // mandatory attribute: domainClass or initialCriteria
-            dataSourceService = org.grails.plugin.easygrid.datasource.GormDatasourceService
-            filters {
-                //default search closures
-                text = { Filter filter -> ilike(filter.filterable.name, "%${filter.paramValue}%") }
-                number = { Filter filter -> eq(filter.filterable.name, filter.paramValue as int) }
-                //todo
-                date = { Filter filter -> eq(filter.filterable.name, filter.paramValue as Date) }
-
-            }
-        }
-
-        list {
-            //mandatory attributes: context, attributeName
-            dataSourceService = org.grails.plugin.easygrid.datasource.ListDatasourceService
-            filters {
-                //default search closures
-                text = { Filter filter, row -> row[filter.filterable.name].contains filter.paramValue }
-                number = { Filter filter, row -> row[filter.filterable.name] == filter.paramValue as int }
-                //todo
-                date = { Filter filter, row -> row[filter.filterable.name] == filter.paramValue as Date }
-
-            }
-        }
-
-        custom {
-            // mandatory attributes: 'dataProvider', 'dataCount'
-            dataSourceService = org.grails.plugin.easygrid.datasource.CustomDatasourceService
-        }
-    }
-
-    // these are the actual UI grid implementations
-    // will be specified in the grid config using the 'gridImpl' property
-    gridImplementations {
-
-        //grails classic implementation - for demo purposes
-        classic {
-            gridRenderer = '/templates/easygrid/classicGridRenderer'
-            gridImplService = org.grails.plugin.easygrid.grids.ClassicGridService
-            inlineEdit = false
-            formats = [
-                    (Date): { it.format(stdDateFormat) },
-                    (Boolean): { it ? "Yes" : "No" }
-            ]
-        }
-
-        //  jqgrid implementation
-        jqgrid {
-            gridRenderer = '/templates/easygrid/jqGridRenderer'          //  a gsp template that will be rendered
-            gridImplService = org.grails.plugin.easygrid.grids.JqueryGridService  // the service class for this implementation
-            inlineEdit = true    // specifies that this implementation allows inline Editing
-
-            // there are 3 options to format the data
-            // using the value closure in the column
-            // using the named formatters ( defined below )
-            // using the default type formats ( defined here ) - where you specify the type of data & the format closure
-            formats = [
-                    (Date): { it.format(stdDateFormat) },
-                    (Calendar): { Calendar cal -> cal.format(stdDateFormat) },
-                    (Boolean): { it ? "Yes" : "No" }
-            ]
-        }
-
-        //  jquery datatables implementation
-        dataTables {
-            gridImplService = DataTablesGridService
-            gridRenderer = '/templates/easygrid/dataTablesGridRenderer'
-            inlineEdit = false
-            formats = [
-                    (Date): { it.format(stdDateFormat) },
-                    (Boolean): { it ? "Yes" : "No" }
-            ]
-        }
-
-        // google visualization implementation
-        visualization {
-            gridImplService = org.grails.plugin.easygrid.grids.VisualizationGridService
-            gridRenderer = '/templates/easygrid/visualizationGridRenderer'
-            inlineEdit = false
-            formats = [
-                    (Date): { def cal = com.ibm.icu.util.Calendar.getInstance(); cal.setTime(it); cal.setTimeZone(com.ibm.icu.util.TimeZone.getTimeZone("GMT")); cal }, //wtf?
-            ]
-        }
-
-/*
-        // google visualization implementation
-        nggrid {
-            gridImplService = org.grails.plugin.easygrid.grids.NgGridService
-            gridRenderer = '/templates/easygrid/ngGridRenderer'
-            inlineEdit = true
-            formats = [
-            ]
-        }
-*/
-
-    }
-
-    // section to define per column configurations
-    columns {
-
-        //default values for the columns
-        defaults {
-            enableFilter = true
-            showInSelection = true
-            sortable = true
-            jqgrid {
-                editable = true
-            }
-            classic {
-                sortable = true
-            }
-            visualization {
-                search = false
-                searchType = 'text'
-                valueType = com.google.visualization.datasource.datatable.value.ValueType.TEXT
-            }
-            dataTables {
-                sWidth = "'100%'"
-                sClass = "''"
-            }
-            export {
-                width = 25
-            }
-        }
-
-        // predefined column types  (set of configurations)
-        // used to avoid code duplication
-        types {
-            id {
-                property = 'id'
-                enableFilter = false
-
-                jqgrid {
-                    width = 40
-                    fixed = true
-                    search = false
-                    editable = false
-//                formatter = 'editFormatter'
-                }
-                visualization {
-                    valueType = com.google.visualization.datasource.datatable.value.ValueType.NUMBER
-                }
-                export {
-                    width = 10
-                }
-
-            }
-
-            actions {
-                value = { '' }
-                jqgrid {
-                    formatter = '"actions"'
-                    editable = false
-                    sortable = false
-                    resizable = false
-                    fixed = true
-                    width = 60
-                    search = false
-                    formatoptions = '{"keys":true}'
-                }
-                export {
-                    hidden = true
-                }
-            }
-
-            version {
-                property = 'version'
-                jqgrid {
-                    hidden = true
-                }
-                export {
-                    hidden = true
-                }
-                visualization {
-                    valueType = com.google.visualization.datasource.datatable.value.ValueType.NUMBER
-                }
-            }
-        }
-    }
-
-    //section to define the filter form configurations
-    //todo - default service & default template
-    filterForm {
-        defaults{
-            filterFormService = org.grails.plugin.easygrid.FilterFormService
-            filterFormTemplate =  '/templates/filterFormRenderer'
-        }
-    }
-
-
-    // here we define different formatters
-    // these are closures  which are called before the data is displayed to format the cell data
-    // these are specified in the column section using : formatName
-    formats {
-        stdDateFormatter = {
-            it.format(stdDateFormat)
-        }
-        visualizationDateFormatter = {
-            def cal = com.ibm.icu.util.Calendar.getInstance(); cal.setTime(it); cal.setTimeZone(java.util.TimeZone.getTimeZone("GMT")); cal
-        }
-        stdBoolFormatter = {
-            it ? "Yes" : "No"
-        }
-
-        nrToString = { nr ->
-            if (nr / 1000000000 >= 1) {
-                "${(nr / 1000000000) as int} billion"
-            } else if (nr / 1000000 >= 1) {
-                "${(nr / 1000000) as int} million"
-            } else if (nr / 1000 >= 1) {
-                "${(nr / 1000) as int}k"
-            } else {
-                "${nr}"
-            }
-        }
-        authorWikiFormat = {
-            "<a href='http://en.wikipedia.org/wiki/${it.replace(" ", "_")}'>${it}</a>";
+        // escapes all not-encoded output at final stage of outputting
+        filteringCodecForContentType {
+            //'text/html' = 'html'
         }
     }
 }
+remove this line */
 
 // Added by the Spring Security Core plugin:
-grails.plugins.springsecurity.userLookup.userDomainClassName = 'example.sec.User'
-grails.plugins.springsecurity.userLookup.authorityJoinClassName = 'example.sec.UserRole'
-grails.plugins.springsecurity.authority.className = 'example.sec.Role'
+grails.plugin.springsecurity.userLookup.userDomainClassName = 'example.sec.User'
+grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'example.sec.UserRole'
+grails.plugin.springsecurity.authority.className = 'example.sec.Role'
+grails.plugin.springsecurity.controllerAnnotations.staticRules = [
+        '/'              : ['permitAll'],
+        '/author/**'     : ['permitAll'],
+        '/book/**'     : ['permitAll'],
+        '/index'         : ['permitAll'],
+        '/index.gsp'     : ['permitAll'],
+        '/**/js/**'      : ['permitAll'],
+        '/**/css/**'     : ['permitAll'],
+        '/**/images/**'  : ['permitAll'],
+        '/**/favicon.ico': ['permitAll']
+]
+

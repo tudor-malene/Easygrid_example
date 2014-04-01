@@ -1,21 +1,20 @@
 import example.Author
 import example.Book
-import example.sec.UserRole
-import example.sec.User
 import example.sec.Role
+import example.sec.User
+import example.sec.UserRole
 
 class BootStrap {
 
     def init = { servletContext ->
 
         def adminRole = new Role(authority: 'ROLE_ADMIN').save(flush: true)
-        def userRole = new Role(authority: 'ROLE_USER').save(flush: true)
+        def userRole = new Role(authority: 'ROLE_USER').save(flush: true, failOnError: true)
         def editRole = new Role(authority: 'ROLE_EDIT').save(flush: true)
 
-        def testUser = new User(username: 'me', enabled: true, password: 'password')
-        testUser.save(flush: true)
+        def testUser = new User(username: 'me', password: 'password').save(flush: true, failOnError: true)
 
-        UserRole.create testUser, userRole, true
+        UserRole.create(testUser, userRole, true)
 
         this.class.getResourceAsStream("authors.txt").eachLine { line ->
 

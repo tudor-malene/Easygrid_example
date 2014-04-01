@@ -1,19 +1,17 @@
 package example
 
-import grids.test.GridsConfig
 import org.grails.plugin.easygrid.Easygrid
 import org.grails.plugin.easygrid.Filter
 import org.springframework.dao.DataIntegrityViolationException
 
-//@Easygrid  (externalGrids = GridsConfig)
+import static com.google.visualization.datasource.datatable.value.ValueType.NUMBER
+
 @Easygrid
 class AuthorController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
-
     def authorClassicGrid = {
-        dataSourceType 'gorm'
         domainClass Author
         gridImpl 'classic'
         columns {
@@ -34,12 +32,11 @@ class AuthorController {
     }
 
     def authorJQGridSelectionGrid = {
-        dataSourceType 'gorm'
         domainClass Author
         gridImpl 'jqgrid'
         inlineEdit false
         jqgrid {
-            width '"900"'
+            width '900'
         }
         columns {
             id {
@@ -66,8 +63,8 @@ class AuthorController {
             labelValue { val, params ->
                 "${val.name} (${val.nationality})"
             }
-            textBoxFilterClosure { filter ->
-                ilike('name', "%${filter.paramValue}%")
+            textBoxFilterClosure {
+                ilike('name', "%${params.term}%")
             }
             constraintsFilterClosure { params ->
                 if (params.nationality) {
@@ -78,35 +75,12 @@ class AuthorController {
     }
 
     def authorJQGridGrid = {
-        dataSourceType 'gorm'
         domainClass Author
         gridImpl 'jqgrid'
-        inlineEdit true
-        enableFilter true
         export {
             export_title 'Author'
             pdf {
                 'border.color' java.awt.Color.BLUE
-            }
-        }
-        filterForm {
-            fields {
-                'ff.name' {
-                    label 'name'
-                    type 'text'
-                    filterClosure { Filter filter ->
-                        ilike('name', "%${filter.paramValue}%")
-                    }
-                }
-                'estSales' {
-                    label 'estSales'
-                    type 'interval'
-                    filterClosure { Filter filter ->
-                        if (filter.params.estSales.from && filter.params.estSales.to) {
-                            between('maxEstSales', filter.params.estSales.from as BigInteger, filter.params.estSales.to as BigInteger)
-                        }
-                    }
-                }
             }
         }
         columns {
@@ -116,47 +90,29 @@ class AuthorController {
             id {
                 type 'id'
             }
-            name {
-                jqgrid {
-                    editable false
-                }
-            }
+            name
             minEstSales {
-                enableFilter false
+//                enableFilter false
                 formatName 'nrToString'
                 jqgrid {
                     editable false
                 }
             }
             maxEstSales {
-                enableFilter false
+//                enableFilter false
                 formatName 'nrToString'
                 jqgrid {
                     editable false
                 }
             }
-            language {
-                jqgrid {
-                    editable true
-                }
-            }
-            nrBooks {
-                enableFilter false
-                jqgrid {
-                    editable true
-                }
-            }
-            nationality {
-                jqgrid {
-                    editable true
-                }
-            }
+            language
+            nrBooks
+            nationality
             version {
                 type 'version'
             }
         }
     }
-
 
     def authorVisualizationGrid = {
         dataSourceType 'gorm'
@@ -167,16 +123,13 @@ class AuthorController {
                 'ff.name' {
                     label 'name'
                     type 'text'
-                    filterClosure { Filter filter ->
-                        ilike('name', "%${filter.paramValue}%")
-                    }
                 }
                 'estSales' {
                     label 'estSales'
                     type 'interval'
                     filterClosure { Filter filter ->
-                        if (filter.params.estSales.from && filter.params.estSales.to) {
-                            between('maxEstSales', filter.params.estSales.from as BigInteger, filter.params.estSales.to as BigInteger)
+                        if (params.estSales.from && params.estSales.to) {
+                            between('maxEstSales', params.estSales.from as BigInteger, params.estSales.to as BigInteger)
                         }
                     }
                 }
@@ -193,9 +146,6 @@ class AuthorController {
             }
             maxEstSales {
                 formatName 'nrToString'
-                filterClosure { filter ->
-                    gt('maxEstSales', filter.paramValue as BigInteger)
-                }
                 visualization {
                     searchType 'number'
                 }
@@ -209,47 +159,41 @@ class AuthorController {
     }
 
     def authorVisualizationChartGrid = {
-        dataSourceType 'gorm'
         domainClass Author
         initialCriteria {
-            gte('maxEstSales', 500000000G)
+//            gte('maxEstSales', 500000000G)
         }
         gridImpl 'visualization'
         columns {
             name
             minEstSales {
                 visualization {
-                    valueType = com.google.visualization.datasource.datatable.value.ValueType.NUMBER
+                    valueType = NUMBER
                 }
             }
             maxEstSales {
                 visualization {
-                    valueType = com.google.visualization.datasource.datatable.value.ValueType.NUMBER
+                    valueType = NUMBER
                 }
             }
         }
     }
 
     def authorDatatablesGrid = {
-        dataSourceType 'gorm'
         domainClass Author
         gridImpl 'dataTables'
-        fixedColumns true
         filterForm {
             fields {
                 'ff.name' {
                     label 'name'
                     type 'text'
-                    filterClosure { Filter filter ->
-                        ilike('name', "%${filter.paramValue}%")
-                    }
                 }
                 'estSales' {
                     label 'estSales'
                     type 'interval'
                     filterClosure { Filter filter ->
-                        if (filter.params.estSales.from && filter.params.estSales.to) {
-                            between('maxEstSales', filter.params.estSales.from as BigInteger, filter.params.estSales.to as BigInteger)
+                        if (params.estSales.from && params.estSales.to) {
+                            between('maxEstSales', params.estSales.from as BigInteger, params.estSales.to as BigInteger)
                         }
                     }
                 }
@@ -259,7 +203,7 @@ class AuthorController {
             name {
                 formatName 'authorWikiFormat'
                 export {
-                    //define a different value for the export
+                    //define a different value for export
                     value { Author author ->
                         "(${author.id}) ${author.name}"
                     }
@@ -270,9 +214,7 @@ class AuthorController {
                 formatName 'nrToString'
             }
             maxEstSales {
-                filterClosure { filter ->
-                    gt('maxEstSales', filter.paramValue as BigInteger)
-                }
+                enableFilter false
                 formatName 'nrToString'
             }
             language
@@ -283,24 +225,24 @@ class AuthorController {
         }
     }
 
-
     def authorDatatablesOverBillGrid = {
-        dataSourceType 'gorm'
         domainClass Author
         gridImpl 'dataTables'
         initialCriteria {
             gte('maxEstSales', 1000000000G)
         }
-        roles 'ROLE_USER'
+        roles([list: 'ROLE_USER', add: 'ROLE_USER'])
         columns {
             name {
                 formatName 'authorWikiFormat'
             }
             minEstSales {
                 formatName 'nrToString'
+                enableFilter false
             }
             maxEstSales {
                 formatName 'nrToString'
+                enableFilter false
             }
             language
             nrBooks
@@ -311,14 +253,14 @@ class AuthorController {
     def jqgridTreeGrid = {
         dataSourceType 'custom'
         gridImpl 'jqgrid'
-        gridRenderer '/templates/treeGridRenderer'
         inlineEdit false
         jqgrid {
-            'ExpandColumn' '"name"'
-            treeGrid 'true'
-            treeGridModel '"adjacency"'
-            treedatatype '"json"'
-            'ExpandColClick' "true"
+            ExpandColumn('name')
+            treeGrid true
+            treeGridModel "adjacency"
+            treedatatype "json"
+            ExpandColClick true
+            mtype 'GET'
         }
         dataProvider { gridConfig, filters, listParams ->
             println params
@@ -344,7 +286,7 @@ class AuthorController {
             id {
                 label 'Id'
                 jqgrid {
-                    hidden 'true'
+                    hidden true
                 }
                 value { domain ->
                     (domain instanceof Book) ? "b_${domain.id}" : "a_${domain.id}"
@@ -360,28 +302,28 @@ class AuthorController {
             }
             level {
                 label 'level'
-                treeProperty true
+                render false
                 value { domain, params ->
                     (domain instanceof Book) ? "1" : '0'
                 }
             }
             parent {
                 label 'parent'
-                treeProperty true
+                render false
                 value { domain, params ->
                     (domain instanceof Book) ? "a_${domain.author.id}" : 'null'
                 }
             }
             isLeaf {
                 label 'isLeaf'
-                treeProperty true
+                render false
                 value { domain, params ->
                     (domain instanceof Book) ? "true" : "false"
                 }
             }
             expanded {
                 label 'expanded'
-                treeProperty true
+                render false
                 value {
                     false
                 }

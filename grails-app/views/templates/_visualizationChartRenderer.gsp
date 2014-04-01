@@ -1,41 +1,23 @@
-<script type="text/javascript">
-    google.load('visualization', '1', {'packages':['corechart']});
-    google.setOnLoadCallback(init${attrs.id});
-    var baseDataSourceUrl = '${g.createLink(action: "${gridConfig.id}Rows")}';
-    var dataSourceUrl = baseDataSourceUrl;
-
-    var query, options, container;
-
-    function init${attrs.id}() {
-        query = new google.visualization.Query(dataSourceUrl);
-        container = document.getElementById("${attrs.id}_div");
-
-        // Send the query with a callback function.
-        query.send(handleQueryResponse${attrs.id});
-
-    }
-
-    function handleQueryResponse${attrs.id}(response) {
-        if (response.isError()) {
-            alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
-            return;
-        }
-
-        var data = response.getDataTable();
-        var visualization = new google.visualization.BarChart(container);
-        var options = {
-            <g:each in="${gridConfig.visualization}" var="property" status="idx">
-            <g:if test="${idx>0}">,</g:if> "${property.key}":${property.value}
-            </g:each>
-        };
-
-        var view = new google.visualization.DataView(data);
-        console.log(view);
-        visualization.draw(view, options);
-    }
-
-</script>
+<%@ page import="org.grails.plugin.easygrid.JsUtils" defaultCodec="none" %>
+<jq:jquery>
+   google.load('visualization', '1', {'packages':['corechart'],"callback":function(){
+       var query = new google.visualization.Query('${g.createLink(action: "${gridConfig.id}Rows")}');
+        query.send(function(response) {
+            if (response.isError()) {
+                alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+                return;
+            }
+            var container = $('#${attrs.id}_div');
+            var visualization = new google.visualization.BarChart(container[0]);
+            var options =  ${JsUtils.convertToJs(gridConfig.visualization-[width:gridConfig.visualization.width]-[height:gridConfig.visualization.height])};
+            var view = new google.visualization.DataView(response.getDataTable());
+            visualization.draw(view, options);
+        });
+     }
+   });
+</jq:jquery>
 
 
-<div id="${attrs.id}_div" style="width: ${attrs.width}; height: ${attrs.height};"></div>
+<div id="${attrs.id}_div"
+     style="width: ${gridConfig.visualization.width}; height: ${gridConfig.visualization.height};"></div>
 
