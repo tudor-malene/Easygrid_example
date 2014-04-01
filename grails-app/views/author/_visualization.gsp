@@ -1,6 +1,5 @@
 <r:require modules="easygrid-visualization-dev,jquery-dev,export"/>
 
-<grid:filterForm name="authorVisualization"/>
 <grid:grid name='authorVisualization'/>
 <grid:exportButton name='authorVisualization' formats="['csv', 'excel']"/>
 
@@ -13,23 +12,6 @@
          dataSourceType 'gorm'
          domainClass Author
          gridImpl 'visualization'
-         filterForm {
-             fields {
-                 'ff.name' {
-                     label 'name'
-                     type 'text'
-                 }
-                 'estSales' {
-                     label 'estSales'
-                     type 'interval'
-                     filterClosure { Filter filter ->
-                         if (params.estSales.from && params.estSales.to) {
-                             between('maxEstSales', params.estSales.from as BigInteger, params.estSales.to as BigInteger)
-                         }
-                     }
-                 }
-             }
-         }
          columns {
              id {
                  type 'id'

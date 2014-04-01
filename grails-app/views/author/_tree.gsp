@@ -47,7 +47,7 @@
                     hidden true
                 }
                 value { domain ->
-                    (domain instanceof Book) ? "b_${domain.id}" : "a_${domain.id}"
+                    (domain instanceof Book) ? "b_$ {domain.id}" : "a_$ {domain.id}"
 
                 }
             }
@@ -69,7 +69,7 @@
                 label 'parent'
                 render false
                 value { domain, params ->
-                    (domain instanceof Book) ? "a_${domain.author.id}" : 'null'
+                    (domain instanceof Book) ? "a_$ {domain.author.id}" : 'null'
                 }
             }
             isLeaf {
