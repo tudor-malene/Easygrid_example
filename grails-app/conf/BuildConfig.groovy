@@ -11,7 +11,7 @@ grails.project.fork = false
 
 grails.project.dependency.resolver = "maven" // or ivy
 // Useful to test plugins you are developing.
-grails.plugin.location.easygrid ="../Easygrid"
+//grails.plugin.location.easygrid ="../Easygrid"
 //grails.plugin.location.ajaxify ="../ajaxify-tag"
 
 grails.project.dependency.resolution = {
@@ -58,7 +58,7 @@ grails.project.dependency.resolution = {
         runtime(':google-visualization:0.6.2')
 //
 //        //only for 2.2.0
-//        compile ":easygrid:1.4.1"
+        compile ":easygrid:1.5.0"
 
         compile ":markdown:1.1.1"
     }
