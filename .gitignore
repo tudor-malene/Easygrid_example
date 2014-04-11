@@ -133,7 +133,7 @@ Desktop.ini
 
 
 # web application files
-/web-app/WEB-INF
+#/web-app/WEB-INF
 
 # IDE support files
 /.classpath
