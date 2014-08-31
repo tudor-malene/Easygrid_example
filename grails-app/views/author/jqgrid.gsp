@@ -37,8 +37,8 @@
 <fieldset>
     <legend>Source Code:</legend>
     <src:controller from="75" to="116"/>
-    <src:gsp gsp="jqgrid" from="7" to="9"/>
-    <src:gsp gsp="jqgrid" from="13" to="36"/>
+    <src:gsp gsp="jqgrid" from="6" to="8"/>
+    <src:gsp gsp="jqgrid" from="13" to="35"/>
 </fieldset>
 
 

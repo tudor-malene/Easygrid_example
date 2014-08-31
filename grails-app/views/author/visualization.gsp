@@ -16,7 +16,7 @@
 
 <fieldset>
     <legend>Source Code:</legend>
-    <src:controller from="116" to="142"/>
+    <src:controller from="116" to="141"/>
     <src:gsp gsp="visualization" from="12" to="15"/>
 </fieldset>
 

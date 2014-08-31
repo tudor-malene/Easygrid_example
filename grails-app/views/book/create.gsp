@@ -46,8 +46,8 @@
 </div>
 <fieldset>
     <legend>Source Code:</legend>
-    <src:controller from="34" to="76"/>
-    <src:gsp controller="book" gsp="_form" from="43" to="49"/>
+    <src:controller from="33" to="74"/>
+    <src:gsp controller="book" gsp="_form" from="42" to="48"/>
 </fieldset>
 
 <asset:deferredScripts/>

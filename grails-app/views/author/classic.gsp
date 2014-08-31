@@ -13,8 +13,8 @@
 
 <fieldset>
     <legend>Source Code:</legend>
-    <src:controller from="13" to="33"/>
-    <src:gsp gsp="classic" from="10" to="13"/>
+    <src:controller from="13" to="32"/>
+    <src:gsp gsp="classic" from="10" to="12"/>
 </fieldset>
 
 </body>
