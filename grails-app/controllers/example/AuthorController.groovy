@@ -1,7 +1,7 @@
 package example
 
+import grails.converters.JSON
 import org.grails.plugin.easygrid.Easygrid
-import org.grails.plugin.easygrid.Filter
 import org.springframework.dao.DataIntegrityViolationException
 
 import static com.google.visualization.datasource.datatable.value.ValueType.NUMBER
@@ -59,7 +59,6 @@ class AuthorController {
         }
         autocomplete {
             idProp 'id'
-//                labelProp 'name'
             labelValue { val, params ->
                 "${val.name} (${val.nationality})"
             }
@@ -77,6 +76,9 @@ class AuthorController {
     def authorJQGridGrid = {
         domainClass Author
         gridImpl 'jqgrid'
+        jqgrid {
+            sortname 'name'
+        }
         export {
             export_title 'Author'
             pdf {
@@ -92,14 +94,12 @@ class AuthorController {
             }
             name
             minEstSales {
-//                enableFilter false
                 formatName 'nrToString'
                 jqgrid {
                     editable false
                 }
             }
             maxEstSales {
-//                enableFilter false
                 formatName 'nrToString'
                 jqgrid {
                     editable false
@@ -387,5 +387,42 @@ class AuthorController {
             flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'author.label', default: 'Author'), id])
             redirect(action: "show", id: id)
         }
+    }
+
+    def classic(){
+    }
+    def jqgrid(){
+    }
+    def tree(){
+    }
+    def visualization(){
+    }
+    def visualizationChart(){
+    }
+    def dataTables(){
+    }
+    def dataTablesFilter(){
+    }
+
+    def tutorial_react() {
+
+    }
+
+    static def list =[
+            ["author": "Ghita muresan", "text": "This is one comment"],
+            ["author": "Pete Hunt", "text": "This is one comment"],
+            ["author": "Jordan Walke", "text": "This is *another* comment"],
+//                ["author": "Jordan Walke", "text": "This is *another* comment---"]
+    ]
+
+    def comments() {
+        if(request.method=='GET'){
+            render(list as JSON)
+        }else{
+            println params
+            list.add params
+            render(list as JSON)
+        }
+
     }
 }

@@ -1,16 +1,16 @@
-<%@ page import="org.grails.plugin.easygrid.JsUtils" defaultCodec="none" %>
-
+<%@ page import="org.grails.plugin.easygrid.GridUtils; org.grails.plugin.easygrid.JsUtils" defaultCodec="none" %>
+<g:set var="gridId" value="${attrs.id}_datatable"/>
 <jq:jquery>
-    var oTable = $('#${attrs.id}_datatable').dataTable({
-    ${JsUtils.convertToJs(gridConfig.dataTables, true)},
-    "sAjaxSource": '${g.createLink(controller: attrs.controller, action: "${gridConfig.id}Rows", params: params)}',
-        "fnInitComplete":easygrid.initComplete('${attrs.id}',${gridConfig.fixedColumns == true}, ${gridConfig.noFixedColumns?:-1}),
+    var oTable = $('#${gridId}').dataTable({
+    ${JsUtils.convertToJs(gridConfig.dataTables, gridId, true)},
+    "sAjaxSource": '${g.createLink(controller: attrs.controller, action: "${gridConfig.id}Rows", params: GridUtils.externalParams(gridConfig))}',
+        "fnInitComplete":easygrid.initComplete('${attrs.id}',${gridConfig.fixedColumns == true}, ${gridConfig.noFixedColumns ?: -1}, ${gridConfig.hideSearch}),
         "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) { },
         "fnServerParams": easygrid.serverParams('${attrs.id}'),
         "aoColumns": [
     <grid:eachColumn gridConfig="${gridConfig}">
         <g:if test="${col.render}">
-            {${JsUtils.convertToJs(col.dataTables + [sName: col.name, bSearchable: col.enableFilter, bSortable: col.sortable], true)}
+            {${JsUtils.convertToJs(col.dataTables + [sName: col.name, bSearchable: col.enableFilter], gridId, true)}
             <g:if test="${col.otherProperties}">
                 ,${col.otherProperties}
             </g:if>
@@ -50,7 +50,7 @@ $("tfoot input").blur(function (i) {
 </jq:jquery>
 
 
-<table id="${attrs.id}_datatable" cellpadding="0" cellspacing="0" border="0"
+<table id="${gridId}" cellpadding="0" cellspacing="0" border="0"
        class="display">%{--width="${gridConfig.datatable.width}">--}%
     <thead>
     <tr>
@@ -65,19 +65,21 @@ $("tfoot input").blur(function (i) {
     </tr>
     </tbody>
     <tfoot>
-    <tr>
-        <grid:eachColumn gridConfig="${gridConfig}">
-            <td>
-                <g:if test="${(gridConfig.fixedColumns != 'true') && gridConfig.enableFilter && col.enableFilter}">
-                %{--todo - add variables--}%
-                    <input type="text" name="search_${col.name}" class="search_init" size="10"/>
-                </g:if>
-                <g:else>
-                    &nbsp;
-                </g:else>
-            </td>
-        </grid:eachColumn>
-    </tr>
+    <g:if test="${gridConfig.hideSearch}">
+        <tr>
+            <grid:eachColumn gridConfig="${gridConfig}">
+                <td>
+                    <g:if test="${(gridConfig.fixedColumns != 'true') && gridConfig.enableFilter && col.enableFilter}">
+                    %{--todo - add variables--}%
+                        <input type="text" name="search_${col.name}" class="search_init" size="10"/>
+                    </g:if>
+                    <g:else>
+                        &nbsp;
+                    </g:else>
+                </td>
+            </grid:eachColumn>
+        </tr>
+    </g:if>
     </tfoot>
 </table>
 

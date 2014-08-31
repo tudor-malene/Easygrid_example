@@ -1,9 +1,8 @@
 <%@ page import="example.Book" %>
 
-<r:require modules="easygrid-selection-dev"/>
-<r:script>
+<asset:script type="text/javascript">
 var firstTime = true;
-</r:script>
+</asset:script>
 
 <div class="fieldcontain ${hasErrors(bean: bookInstance, field: 'title', 'error')} ">
     <label for="title">
@@ -14,7 +13,7 @@ var firstTime = true;
 
 
 <div class="fieldcontain ">
-    <label for="constraint_nationality">
+    <label for="nationality">
         Nationality
     </label>
 

@@ -9,7 +9,7 @@
             }
             var container = $('#${attrs.id}_div');
             var visualization = new google.visualization.BarChart(container[0]);
-            var options =  ${JsUtils.convertToJs(gridConfig.visualization-[width:gridConfig.visualization.width]-[height:gridConfig.visualization.height])};
+            var options =  ${JsUtils.convertToJs(gridConfig.visualization-[width:gridConfig.visualization.width]-[height:gridConfig.visualization.height], "${attrs.id}_div")};
             var view = new google.visualization.DataView(response.getDataTable());
             visualization.draw(view, options);
         });

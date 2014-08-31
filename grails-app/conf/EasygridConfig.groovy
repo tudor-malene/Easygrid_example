@@ -40,5 +40,11 @@ easygrid {
             SpringSecurityUtils.ifAllGranted(grantedRoles.join(','))
         }
 
+        jqgrid {
+            filterToolbar {
+                searchOperators = false
+            }
+        }
+
     }
 }

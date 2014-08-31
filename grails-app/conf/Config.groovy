@@ -12,39 +12,58 @@
 // }
 
 grails.project.groupId = EasygridShowcase // change this to alter the default package name and Maven publishing destination
-grails.mime.file.extensions = true // enables the parsing of file extensions from URLs into the request format
-grails.mime.use.accept.header = false
+grails.mime.disable.accept.header.userAgents = ['Gecko', 'WebKit', 'Presto', 'Trident']
 //export plugin
-grails.mime.types = [html         : ['text/html', 'application/xhtml+xml'],
-                     xml          : ['text/xml', 'application/xml'],
-                     text         : 'text-plain',
-                     js           : 'text/javascript',
-                     rss          : 'application/rss+xml',
-                     atom         : 'application/atom+xml',
-                     css          : 'text/css',
-                     csv          : 'text/csv',
-                     pdf          : 'application/pdf',
-                     rtf          : 'application/rtf',
-                     excel        : 'application/vnd.ms-excel',
-                     ods          : 'application/vnd.oasis.opendocument.spreadsheet',
-                     all          : '*/*',
-                     json         : ['application/json', 'text/json'],
-                     form         : 'application/x-www-form-urlencoded',
-                     multipartForm: 'multipart/form-data'
+grails.mime.types = [
+        all          : '*/*', // 'all' maps to '*' or the first available format in withFormat
+        html         : ['text/html', 'application/xhtml+xml'],
+        xml          : ['text/xml', 'application/xml'],
+        text         : 'text-plain',
+        js           : 'text/javascript',
+        rss          : 'application/rss+xml',
+        atom         : 'application/atom+xml',
+        css          : 'text/css',
+        csv          : 'text/csv',
+        pdf          : 'application/pdf',
+        rtf          : 'application/rtf',
+        excel        : 'application/vnd.ms-excel',
+        ods          : 'application/vnd.oasis.opendocument.spreadsheet',
+        all          : '*/*',
+        json         : ['application/json', 'text/json'],
+        form         : 'application/x-www-form-urlencoded',
+        multipartForm: 'multipart/form-data'
 ]
 
 // URL Mapping Cache Max Size, defaults to 5000
 //grails.urlmapping.cache.maxsize = 1000
 
-// What URL patterns should be processed by the resources plugin
-grails.resources.adhoc.patterns = ['/images/*', '/css/*', '/js/*', '/plugins/*']
+// Legacy setting for codec used to encode data with ${}
+grails.views.default.codec = "html"
 
-// The default codec used to encode data with ${}
-grails.views.default.codec = "none" // none, html, base64
-grails.views.gsp.encoding = "UTF-8"
+// The default scope for controllers. May be prototype, session or singleton.
+// If unspecified, controllers are prototype scoped.
+grails.controllers.defaultScope = 'singleton'
+
+// GSP settings
+grails {
+    views {
+        gsp {
+            encoding = 'UTF-8'
+            htmlcodec = 'xml' // use xml escaping instead of HTML4 escaping
+            codecs {
+                expression = 'html' // escapes values inside ${}
+                scriptlet = 'html' // escapes output from scriptlets in GSPs
+                taglib = 'none' // escapes output from taglibs
+                staticparts = 'none' // escapes output from static template parts
+            }
+        }
+        // escapes all not-encoded output at final stage of outputting
+        // filteringCodecForContentType.'text/html' = 'html'
+    }
+}
+
+
 grails.converters.encoding = "UTF-8"
-// enable Sitemesh preprocessing of GSP pages
-grails.views.gsp.sitemesh.preprocess = true
 // scaffolding templates configuration
 grails.scaffolding.templates.domainSuffix = 'Instance'
 
@@ -63,6 +82,12 @@ grails.exceptionresolver.params.exclude = ['password']
 // configure auto-caching of queries by default (if false you can cache individual queries with 'cache: true')
 grails.hibernate.cache.queries = false
 
+// configure passing transaction's read-only attribute to Hibernate session, queries and criterias
+// set "singleSession = false" OSIV mode in hibernate configuration after enabling
+grails.hibernate.pass.readonly = false
+// configure passing read-only to OSIV session by default, requires "singleSession = false" OSIV mode
+grails.hibernate.osiv.readonly = false
+
 environments {
     development {
         grails.logging.jul.usebridge = true
@@ -74,12 +99,12 @@ environments {
 }
 
 // log4j configuration
-log4j = {
+log4j.main = {
     // Example of changing the log pattern for the default console appender:
     //
-    appenders {
-        console name: 'stdout', layout: pattern(conversionPattern: '%c{2} %m%n')
-    }
+    //appenders {
+    //    console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
+    //}
 
     error 'org.codehaus.groovy.grails.web.servlet',        // controllers
             'org.codehaus.groovy.grails.web.pages',          // GSP
@@ -96,29 +121,6 @@ log4j = {
             'org.grails.plugin.easygrid'
 }
 
-// Uncomment and edit the following lines to start using Grails encoding & escaping improvements
-
-/* remove this line 
-// GSP settings
-grails {
-    views {
-        gsp {
-            encoding = 'UTF-8'
-            htmlcodec = 'xml' // use xml escaping instead of HTML4 escaping
-            codecs {
-                expression = 'html' // escapes values inside null
-                scriptlet = 'none' // escapes output from scriptlets in GSPs
-                taglib = 'none' // escapes output from taglibs
-                staticparts = 'none' // escapes output from static template parts
-            }
-        }
-        // escapes all not-encoded output at final stage of outputting
-        filteringCodecForContentType {
-            //'text/html' = 'html'
-        }
-    }
-}
-remove this line */
 
 // Added by the Spring Security Core plugin:
 grails.plugin.springsecurity.userLookup.userDomainClassName = 'example.sec.User'
@@ -130,6 +132,7 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
         '/book/**'     : ['permitAll'],
         '/index'         : ['permitAll'],
         '/index.gsp'     : ['permitAll'],
+        '/assets/**'      : ['permitAll'],
         '/**/js/**'      : ['permitAll'],
         '/**/css/**'     : ['permitAll'],
         '/**/images/**'  : ['permitAll'],
